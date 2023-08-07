@@ -8,36 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var promptText = ""
-    @State var response = "Answer goes here."
-    
     var openAI: OpenAICoordinator
     
     var body: some View {
-        VStack {
-            HStack {
-                TextField("Ask a question", text: $promptText)
-                Button("Ask") {
-                    Task {
-                        await ask()
-                    }
-                }
-            }
-            Text(response)
-        }
-        .padding()
-    }
-    
-    func ask() async {
-        await response = openAI.ask(question: promptText)
+        ChatView(openAI: openAI)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let aiCoordinator = OpenAICoordinator(key: ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? "",
-                                              org: ProcessInfo.processInfo.environment["OPENAI_ORG_KEY"] ?? "")
+        let openAIKey = KeyStore.key(from: .openAI)
+        let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
         ContentView(openAI: aiCoordinator)
     }
 }

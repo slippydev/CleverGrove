@@ -19,6 +19,14 @@
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
 		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
 		5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1192A81744A00C093C8 /* KeyStore.swift */; };
+		5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */; };
+		5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1202A81841500C093C8 /* ExpertListView.swift */; };
+		5BA8F1232A8187E500C093C8 /* ExpertProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */; };
+		5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1242A8190F800C093C8 /* ChatBubble.swift */; };
+		5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1262A8192E700C093C8 /* ChatModel.swift */; };
+		5BA8F1292A81933200C093C8 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1282A81933200C093C8 /* CustomScrollView.swift */; };
+		5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F12A2A81939200C093C8 /* ChatView.swift */; };
+		5BA8F12E2A81B04F00C093C8 /* hi_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F12D2A81B04F00C093C8 /* hi_rules.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +62,14 @@
 		5B94515A2A8084F200E30E9E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
 		5BA8F1192A81744A00C093C8 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
+		5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSummary.swift; sourceTree = "<group>"; };
+		5BA8F1202A81841500C093C8 /* ExpertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertListView.swift; sourceTree = "<group>"; };
+		5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertProfile.swift; sourceTree = "<group>"; };
+		5BA8F1242A8190F800C093C8 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
+		5BA8F1262A8192E700C093C8 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		5BA8F1282A81933200C093C8 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
+		5BA8F12A2A81939200C093C8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		5BA8F12D2A81B04F00C093C8 /* hi_rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hi_rules.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,12 +122,14 @@
 			isa = PBXGroup;
 			children = (
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
-				5B9451522A80848D00E30E9E /* Embeddings.swift */,
 				5B94515A2A8084F200E30E9E /* ContentView.swift */,
+				5BA8F11D2A817F8D00C093C8 /* Chat */,
+				5B9451522A80848D00E30E9E /* Embeddings.swift */,
 				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
 				5B94512B2A8083F100E30E9E /* Assets.xcassets */,
 				5B94512D2A8083F100E30E9E /* CleverGrove.entitlements */,
 				5B94512E2A8083F100E30E9E /* Preview Content */,
+				5BA8F12C2A81B02A00C093C8 /* Resources */,
 				5BA8F11B2A817BA800C093C8 /* keys */,
 			);
 			path = CleverGrove;
@@ -149,6 +167,28 @@
 				5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */,
 			);
 			path = keys;
+			sourceTree = "<group>";
+		};
+		5BA8F11D2A817F8D00C093C8 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				5BA8F12A2A81939200C093C8 /* ChatView.swift */,
+				5BA8F1242A8190F800C093C8 /* ChatBubble.swift */,
+				5BA8F1262A8192E700C093C8 /* ChatModel.swift */,
+				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
+				5BA8F1202A81841500C093C8 /* ExpertListView.swift */,
+				5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */,
+				5BA8F1282A81933200C093C8 /* CustomScrollView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		5BA8F12C2A81B02A00C093C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5BA8F12D2A81B04F00C093C8 /* hi_rules.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +301,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA8F12E2A81B04F00C093C8 /* hi_rules.json in Resources */,
 				5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */,
 				5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */,
 				5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */,
@@ -290,9 +331,16 @@
 			files = (
 				5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */,
 				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
+				5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */,
+				5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */,
+				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
 				5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */,
+				5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,
+				5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */,
+				5BA8F1232A8187E500C093C8 /* ExpertProfile.swift in Sources */,
+				5BA8F1292A81933200C093C8 /* CustomScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
