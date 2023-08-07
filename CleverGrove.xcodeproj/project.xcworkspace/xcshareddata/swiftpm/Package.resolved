@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "openai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/FuturraGroup/OpenAI",
+      "state" : {
+        "revision" : "9431444ae7f729e9c0dba1c49f975907b2eca32a",
+        "version" : "1.5.0"
+      }
+    }
+  ],
+  "version" : 2
+}
