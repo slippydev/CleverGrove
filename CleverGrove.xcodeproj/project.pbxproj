@@ -18,6 +18,7 @@
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
 		5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B94515A2A8084F200E30E9E /* ContentView.swift */; };
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
+		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		5B9451542A80848D00E30E9E /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
 		5B94515A2A8084F200E30E9E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				5B94512B2A8083F100E30E9E /* Assets.xcassets */,
 				5B94512D2A8083F100E30E9E /* CleverGrove.entitlements */,
 				5B94512E2A8083F100E30E9E /* Preview Content */,
+				5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */,
 			);
 			path = CleverGrove;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */,
+				5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */,
 				5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
