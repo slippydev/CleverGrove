@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-let aiCoordinator = OpenAICoordinator(key: ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? "",
-                                      org: ProcessInfo.processInfo.environment["OPENAI_ORG_KEY"] ?? "")
-
+let openAIKey = KeyStore.key(from: .openAI)
+let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
 
 @main
 struct CleverGroveApp: App {

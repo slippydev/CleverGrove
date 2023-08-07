@@ -14,11 +14,11 @@
 		5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */; };
 		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
 		5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451522A80848D00E30E9E /* Embeddings.swift */; };
-		5B9451582A80848D00E30E9E /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451542A80848D00E30E9E /* Environment.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
 		5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B94515A2A8084F200E30E9E /* ContentView.swift */; };
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
 		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
+		5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1192A81744A00C093C8 /* KeyStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,10 +50,10 @@
 		5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITests.swift; sourceTree = "<group>"; };
 		5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B9451522A80848D00E30E9E /* Embeddings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Embeddings.swift; sourceTree = "<group>"; };
-		5B9451542A80848D00E30E9E /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
 		5B94515A2A8084F200E30E9E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
+		5BA8F1192A81744A00C093C8 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +108,11 @@
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
 				5B9451522A80848D00E30E9E /* Embeddings.swift */,
 				5B94515A2A8084F200E30E9E /* ContentView.swift */,
-				5B9451542A80848D00E30E9E /* Environment.swift */,
 				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
 				5B94512B2A8083F100E30E9E /* Assets.xcassets */,
 				5B94512D2A8083F100E30E9E /* CleverGrove.entitlements */,
 				5B94512E2A8083F100E30E9E /* Preview Content */,
-				5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */,
+				5BA8F11B2A817BA800C093C8 /* keys */,
 			);
 			path = CleverGrove;
 			sourceTree = "<group>";
@@ -141,6 +140,15 @@
 				5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */,
 			);
 			path = CleverGroveUITests;
+			sourceTree = "<group>";
+		};
+		5BA8F11B2A817BA800C093C8 /* keys */ = {
+			isa = PBXGroup;
+			children = (
+				5BA8F1192A81744A00C093C8 /* KeyStore.swift */,
+				5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */,
+			);
+			path = keys;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,10 +289,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */,
+				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
 				5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,
-				5B9451582A80848D00E30E9E /* Environment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
