@@ -12,4 +12,5 @@ struct ExpertProfile: Identifiable {
     let image: String?
     let name: String
     let description: String
+    var openAI: OpenAICoordinator
 }

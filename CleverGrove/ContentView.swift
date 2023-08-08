@@ -9,9 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     var openAI: OpenAICoordinator
+    let experts = [ExpertProfile(image: "SampleProfile1", name: "George", description: "Personal recipes expert.", openAI: aiCoordinator),
+                   ExpertProfile(image: "SampleProfile2", name: "Sarah", description: "Dungeons & Dragons expert.", openAI: aiCoordinator),
+                   ExpertProfile(image: "SampleProfile3", name: "Imran", description: "Knows everything about my insurance documentation.", openAI: aiCoordinator)]
     
     var body: some View {
-        ChatView(openAI: openAI)
+        
+        ExpertListView(experts: experts)
+//        ChatView(openAI: openAI)
     }
 }
 

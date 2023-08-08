@@ -124,13 +124,12 @@
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
 				5B94515A2A8084F200E30E9E /* ContentView.swift */,
 				5BA8F11D2A817F8D00C093C8 /* Chat */,
-				5B9451522A80848D00E30E9E /* Embeddings.swift */,
-				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
-				5B94512B2A8083F100E30E9E /* Assets.xcassets */,
-				5B94512D2A8083F100E30E9E /* CleverGrove.entitlements */,
+				5BA8F12F2A81B40800C093C8 /* AI */,
 				5B94512E2A8083F100E30E9E /* Preview Content */,
 				5BA8F12C2A81B02A00C093C8 /* Resources */,
 				5BA8F11B2A817BA800C093C8 /* keys */,
+				5B94512B2A8083F100E30E9E /* Assets.xcassets */,
+				5B94512D2A8083F100E30E9E /* CleverGrove.entitlements */,
 			);
 			path = CleverGrove;
 			sourceTree = "<group>";
@@ -189,6 +188,15 @@
 				5BA8F12D2A81B04F00C093C8 /* hi_rules.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5BA8F12F2A81B40800C093C8 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				5B9451522A80848D00E30E9E /* Embeddings.swift */,
+				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
+			);
+			path = AI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

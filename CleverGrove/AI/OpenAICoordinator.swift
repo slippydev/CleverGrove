@@ -7,6 +7,7 @@
 
 import Foundation
 import OpenAIKit
+import OSLog
 
 class OpenAICoordinator {
     let openAI: OpenAIKit
@@ -19,6 +20,9 @@ class OpenAICoordinator {
     func ask(question: String) async -> String {
         var answer = ""
         let message = queryMessage(query: question)
+        
+        Logger().info("MESSAGE TO OPENAI:\n\n===========\n\n\(message)\n\n===========\n\n")
+        
         let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: message), model: .gptV3_5(.gptTurbo), maxTokens: 512, temperature: 2.0)
         switch result {
         case .success(let aiResult):
