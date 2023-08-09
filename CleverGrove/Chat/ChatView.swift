@@ -12,12 +12,23 @@ struct ChatView: View {
     @State private var isWaitingForAnswer = false
     @State private var message = ""
     @State private var response = ""
-    
-    var openAI: OpenAICoordinator
-    
+    @State private var showingExpertView = false
+    @Binding var expert: ExpertProfile
+        
     var body: some View {
         GeometryReader { geo in
             VStack {
+                HStack {
+                    ExpertSummary(expert: expert)
+                    Button {
+                        showingExpertView = true
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .resizable()
+                            .frame(width: 40, height: 40, alignment: .topTrailing)
+                            .padding(.horizontal)
+                    }
+                }
                 CustomScrollView(scrollToEnd: true) {
                     LazyVStack {
                         ForEach(0..<model.messages.count, id:\.self) { index in
@@ -59,12 +70,15 @@ struct ChatView: View {
                 })
                 .padding()
             }
+            .sheet(isPresented: $showingExpertView) {
+                ExpertView(expert: $expert)
+            }
         }
     }
     
     func ask(message: String) async {
         isWaitingForAnswer = true
-        await response = openAI.ask(question: message)
+        await response = expert.openAI.ask(question: message)
         isWaitingForAnswer = false
     }
     
@@ -72,9 +86,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        let openAIKey = KeyStore.key(from: .openAI)
-        let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
-
-        ChatView(openAI: aiCoordinator)
+        ChatView(expert: .constant(PreviewSamples.expert))
     }
 }

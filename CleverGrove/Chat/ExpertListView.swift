@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ExpertListView: View {
     
-    let experts: [ExpertProfile]
+    @Binding var experts: [ExpertProfile]
+//    @State var expert: ExpertProfile
     
     var body: some View {
         NavigationView {
@@ -36,9 +37,9 @@ struct ExpertListView: View {
                                 .padding(.bottom, 20)
                             
                             VStack(spacing: 25) {
-                                ForEach(experts) { expert in
+                                ForEach($experts) { $expert in
                                     NavigationLink {
-                                        ChatView(openAI: expert.openAI)
+                                        ChatView(expert: $expert)
                                     } label: {
                                         ExpertSummary(expert: expert)
                                     }
@@ -61,12 +62,6 @@ struct ExpertListView: View {
 
 struct ExpertListView_Previews: PreviewProvider {
     static var previews: some View {
-        let openAIKey = KeyStore.key(from: .openAI)
-        let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
-
-        let experts = [ExpertProfile(image: "SampleProfile1", name: "George", description: "Personal recipes expert.", openAI: aiCoordinator),
-                       ExpertProfile(image: "SampleProfile2", name: "Sarah", description: "Dungeons & Dragons expert.", openAI: aiCoordinator),
-                       ExpertProfile(image: "SampleProfile3", name: "Imran", description: "Knows everything about my insurance documentation.", openAI: aiCoordinator)]
-        ExpertListView(experts: experts)
+        ExpertListView(experts: .constant(PreviewSamples.experts))
     }
 }

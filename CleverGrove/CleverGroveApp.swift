@@ -8,13 +8,13 @@
 import SwiftUI
 
 let openAIKey = KeyStore.key(from: .openAI)
-let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
+//let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
 
 @main
 struct CleverGroveApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(openAI: aiCoordinator)
+            ContentView()
         }
     }
 }
