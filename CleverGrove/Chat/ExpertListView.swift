@@ -11,7 +11,6 @@ struct ExpertListView: View {
     
     let experts: [ExpertProfile]
     
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -19,9 +18,15 @@ struct ExpertListView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Image(systemName: "person.fill.badge.plus")
-                            .foregroundColor(Color("Primary"))
-                            .font(.title2)
+                        Button() {
+                            Task {
+                                await getEmbeddings()
+                            }
+                        } label: {
+                            Image(systemName: "person.fill.badge.plus")
+                                .foregroundColor(Color("Primary"))
+                                .font(.title2)
+                        }
                     }
                     
                     ScrollView() {
@@ -47,6 +52,10 @@ struct ExpertListView: View {
             }
             .navigationTitle("My Experts")
         }
+    }
+    
+    func getEmbeddings() async {
+        let embeddings = await experts[0].openAI.getEmbeddings(for: SampleText.text)
     }
 }
 

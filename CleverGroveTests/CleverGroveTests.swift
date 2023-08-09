@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import CleverGrove
 
 final class CleverGroveTests: XCTestCase {
 
@@ -17,12 +18,23 @@ final class CleverGroveTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testDecodeEmbeddingsResponse() throws {
+        // Read in a json file represeting Embeddings API response from https://platform.openai.com/docs/api-reference/embeddings
+        // Decode the json into a valid EmbeddingsResponse object
+        
+        let url = Bundle(for: Self.self).url(forResource: "EmbeddingResponse", withExtension: "json")
+        let data = try? Data(contentsOf: url!)
+        let response = EmbeddingsResponse.decode(data: data!)
+        XCTAssertNotNil(response)
+        XCTAssertEqual(response!.model, "text-embedding-ada-002")
+        XCTAssertEqual(response!.object, "list")
+        XCTAssertEqual(response!.usage.promptTokens, 8)
+        XCTAssertEqual(response!.usage.totalTokens, 8)
+        let embeddings = response!.data.first!
+        XCTAssertEqual(embeddings.embedding, response!.embedding)
+        XCTAssertEqual(embeddings.object, "embedding")
+        XCTAssertEqual(embeddings.index, 0)
+        XCTAssertTrue(embeddings.embedding.count == 8)
     }
 
     func testPerformanceExample() throws {

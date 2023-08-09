@@ -11,10 +11,22 @@ import OSLog
 
 class OpenAICoordinator {
     let openAI: OpenAIKit
+    let openAIEmbedding = OpenAI()
     var embeddings: Embeddings = Embeddings(modelName: "hi_rules")
     
     init(key: String, org: String) {
         openAI = OpenAIKit(apiToken: key, organization: org)
+    }
+    
+    func getEmbeddings(for text: String) async -> EmbeddingsResponse? {
+        let result = await openAIEmbedding.getEmbeddings(input: text)
+        switch result {
+        case .success(let embeddings):
+            return embeddings
+        case .failure(let error):
+            print(error.localizedDescription)
+            return nil
+        }
     }
     
     func ask(question: String) async -> String {

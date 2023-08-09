@@ -27,6 +27,11 @@
 		5BA8F1292A81933200C093C8 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1282A81933200C093C8 /* CustomScrollView.swift */; };
 		5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F12A2A81939200C093C8 /* ChatView.swift */; };
 		5BA8F12E2A81B04F00C093C8 /* hi_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F12D2A81B04F00C093C8 /* hi_rules.json */; };
+		5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */; };
+		5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */; };
+		5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1342A82E03300C093C8 /* SampleText.swift */; };
+		5BA8F1372A83095700C093C8 /* EmbeddingResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1362A83095700C093C8 /* EmbeddingResponse.json */; };
+		5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +75,11 @@
 		5BA8F1282A81933200C093C8 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		5BA8F12A2A81939200C093C8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		5BA8F12D2A81B04F00C093C8 /* hi_rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hi_rules.json; sourceTree = "<group>"; };
+		5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEmbeddings.swift; sourceTree = "<group>"; };
+		5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI-Extensions.swift"; sourceTree = "<group>"; };
+		5BA8F1342A82E03300C093C8 /* SampleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleText.swift; sourceTree = "<group>"; };
+		5BA8F1362A83095700C093C8 /* EmbeddingResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EmbeddingResponse.json; sourceTree = "<group>"; };
+		5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAINetwork.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				5B9451392A8083F100E30E9E /* CleverGroveTests.swift */,
+				5BA8F1362A83095700C093C8 /* EmbeddingResponse.json */,
 			);
 			path = CleverGroveTests;
 			sourceTree = "<group>";
@@ -186,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA8F12D2A81B04F00C093C8 /* hi_rules.json */,
+				5BA8F1342A82E03300C093C8 /* SampleText.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -195,6 +207,9 @@
 			children = (
 				5B9451522A80848D00E30E9E /* Embeddings.swift */,
 				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
+				5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */,
+				5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */,
+				5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -320,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA8F1372A83095700C093C8 /* EmbeddingResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,12 +354,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */,
+				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
 				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
 				5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */,
+				5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */,
+				5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */,
 				5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
 				5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */,
 				5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */,
+				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,
 				5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */,
