@@ -13,14 +13,16 @@ struct ExpertProfile: Identifiable {
     let name: String
     let description: String
     var documents = [DocumentInfo]()
-    var openAI: OpenAICoordinator
     
-    init(id: UUID = UUID(), image: String?, name: String, description: String, documents: [DocumentInfo] = [DocumentInfo](), openAI: OpenAICoordinator) {
+    init(id: UUID = UUID(), image: String?, name: String, description: String, documents: [DocumentInfo] = [DocumentInfo]()) {
         self.id = id
         self.image = image
         self.name = name
         self.description = description
         self.documents = documents
-        self.openAI = openAI
+    }
+    
+    static func emptyExpert() -> ExpertProfile {
+        return ExpertProfile(image: nil, name: "Name Your Expert", description: "Describe your expert")
     }
 }

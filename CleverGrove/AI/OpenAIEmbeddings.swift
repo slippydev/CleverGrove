@@ -54,16 +54,17 @@ struct EmbeddingsResponse: Codable, DecodableResponse {
 }
 
 struct OpenAI {
+    let info = EmbeddingsInfo()
+    
     var baseHeaders: [String: String] {
         var headers: [String: String] = [:]
-        headers["Authorization"] = "Bearer \(openAIKey.api_key)"
+        headers["Authorization"] = "Bearer \(info.openAIKey.api_key)"
         headers["content-type"] = "application/json"
         return headers
     }
     
     func getEmbeddings(input: String) async -> Result<EmbeddingsResponse, OpenAIError>
     {
-        let info = EmbeddingsInfo()
         let jsonEncoder = JSONEncoder.openAIEncoder
         let requestBody = EmbeddingsRequest(model: info.model, input: input)
         let requestData = try? jsonEncoder.encode(requestBody)

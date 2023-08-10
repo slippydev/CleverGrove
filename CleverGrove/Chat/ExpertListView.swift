@@ -10,7 +10,10 @@ import SwiftUI
 struct ExpertListView: View {
     
     @Binding var experts: [ExpertProfile]
-//    @State var expert: ExpertProfile
+    @State private var isShowingEditExpertSheet = false
+    @FetchRequest(sortDescriptors: [
+        SortDescriptor(\.name)
+    ]) var cachedExperts: FetchedResults<CDExpert>
     
     var body: some View {
         NavigationView {
@@ -20,9 +23,7 @@ struct ExpertListView: View {
                     HStack {
                         Spacer()
                         Button() {
-                            Task {
-                                await getEmbeddings()
-                            }
+                            isShowingEditExpertSheet = true
                         } label: {
                             Image(systemName: "person.fill.badge.plus")
                                 .foregroundColor(Color("Primary"))
@@ -37,9 +38,10 @@ struct ExpertListView: View {
                                 .padding(.bottom, 20)
                             
                             VStack(spacing: 25) {
-                                ForEach($experts) { $expert in
+                                ForEach(cachedExperts) { cachedExpert in
+                                    var expert = cachedExpert.expertProfile()
                                     NavigationLink {
-                                        ChatView(expert: $expert)
+                                        ChatView(expert: .constant(expert))
                                     } label: {
                                         ExpertSummary(expert: expert)
                                     }
@@ -52,12 +54,17 @@ struct ExpertListView: View {
                 .padding(.horizontal)
             }
             .navigationTitle("My Experts")
+            .sheet(isPresented: $isShowingEditExpertSheet) {
+                EditExpertView(expert: .constant(ExpertProfile.emptyExpert()))
+            }
         }
     }
     
-    func getEmbeddings() async {
-        let embeddings = await experts[0].openAI.getEmbeddings(for: SampleText.text)
-    }
+    
+    
+//    func getEmbeddings() async {
+//        let embeddings = await aiCoordinator.getEmbeddings(for: SampleText.text)
+//    }
 }
 
 struct ExpertListView_Previews: PreviewProvider {

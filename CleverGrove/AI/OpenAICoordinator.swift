@@ -8,6 +8,18 @@
 import Foundation
 import OpenAIKit
 import OSLog
+import SwiftUI
+
+private struct aiCoordinatorKey: EnvironmentKey {
+    static let defaultValue = OpenAICoordinator(key: "", org: "")
+}
+
+extension EnvironmentValues {
+    var aiCoordinator: OpenAICoordinator {
+        get { self[aiCoordinatorKey.self] }
+        set { self[aiCoordinatorKey.self] = newValue }
+    }
+}
 
 class OpenAICoordinator {
     let openAI: OpenAIKit

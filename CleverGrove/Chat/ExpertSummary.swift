@@ -38,10 +38,7 @@ struct ExpertSummary: View {
 
 struct ExpertSummary_Previews: PreviewProvider {
     static var previews: some View {
-        let openAIKey = KeyStore.key(from: .openAI)
-        let aiCoordinator = OpenAICoordinator(key: openAIKey.api_key, org: openAIKey.org_key)
-
-        let expert = ExpertProfile(image: "SampleProfile1", name: "Bobby", description: "Dungeons & Dragons expert", openAI: aiCoordinator)
+        let expert = ExpertProfile(image: "SampleProfile1", name: "Bobby", description: "Dungeons & Dragons expert")
         ExpertSummary(expert: expert)
     }
 }

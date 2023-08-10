@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct DocumentInfo: Identifiable {
-    let id = UUID()
-    let image: Image
-    let fileName: String
-    let status: String
-}
-
 struct DocumentCapsule: View {
     
     let info: DocumentInfo
@@ -32,7 +25,7 @@ struct DocumentCapsule: View {
                 Text(info.fileName)
                     .foregroundColor(Color("Primary"))
                     .font(.headline)
-                Text(info.status)
+                Text(info.status.rawValue)
                     .foregroundColor(.secondary)
             }
         }
@@ -42,7 +35,6 @@ struct DocumentCapsule: View {
 
 struct DocumentCapsule_Previews: PreviewProvider {
     static var previews: some View {
-        let info = DocumentInfo(image: Image(systemName: "doc.plaintext"), fileName: "Hope Inhumanity Rules", status: "Trained")
-        DocumentCapsule(info: info)
+        DocumentCapsule(info: PreviewSamples.document)
     }
 }

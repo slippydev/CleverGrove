@@ -9,6 +9,8 @@ import SwiftUI
 
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) var moc
+    
     @Binding var expert: ExpertProfile
     @State private var name: String = ""
     @State private var description: String = ""
@@ -84,29 +86,25 @@ struct EditExpertView: View {
     }
     
     func saveChanges() {
-        expert = ExpertProfile(image: nil,
+        let newExpert = ExpertProfile(image: "SampleProfile1",
                                name: name,
                                description: description,
-                               documents: expert.documents,
-                               openAI: expert.openAI)
+                               documents: expert.documents)
         
+        // FIXME:
+        // Don't just save a new expert to Core Data. This may be
+        // an update to an existing Expert.
+        let managedExpert = CDExpert.managedExpert(from: newExpert, context: moc)
+        do {
+            try moc.save()
+        } catch {
+            print("Error saving to Core data")
+        }
     }
 }
 
 struct EditExpertView_Previews: PreviewProvider {
-    static let docs = [
-        DocumentInfo(image: Image(systemName: "doc.plaintext"), fileName: "Hope Inhumanity Rules", status: "Trained"),
-        DocumentInfo(image: Image(systemName: "doc.plaintext"), fileName: "Apocalypse World Rules", status: "Trained")
-    ]
-    static var expert = ExpertProfile(image: "SampleProfile1",
-                                      name: "Davy Jones",
-                                      description: "This is the description of the expert. They are an expert at something specific, and you can talk to them.",
-                                      documents: docs,
-                                      openAI: OpenAICoordinator(key: "", org: ""))
-    
-    
-    
     static var previews: some View {
-        EditExpertView(expert: .constant(expert))
+        EditExpertView(expert: .constant(PreviewSamples.expert))
     }
 }

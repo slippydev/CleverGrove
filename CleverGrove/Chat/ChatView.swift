@@ -14,7 +14,9 @@ struct ChatView: View {
     @State private var response = ""
     @State private var showingExpertView = false
     @Binding var expert: ExpertProfile
-        
+    @Environment(\.aiCoordinator) var aiCoordinator
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         GeometryReader { geo in
             VStack {
@@ -71,6 +73,7 @@ struct ChatView: View {
                 .padding()
             }
             .sheet(isPresented: $showingExpertView) {
+//                dismiss()
                 ExpertView(expert: $expert)
             }
         }
@@ -78,7 +81,7 @@ struct ChatView: View {
     
     func ask(message: String) async {
         isWaitingForAnswer = true
-        await response = expert.openAI.ask(question: message)
+        await response = aiCoordinator.ask(question: message)
         isWaitingForAnswer = false
     }
     
