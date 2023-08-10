@@ -19,62 +19,67 @@ struct ChatView: View {
     
     var body: some View {
         GeometryReader { geo in
-            VStack {
-                HStack {
-                    ExpertSummary(expert: expert)
-                    Button {
-                        showingExpertView = true
-                    } label: {
-                        Image(systemName: "square.and.pencil")
-                            .resizable()
-                            .frame(width: 40, height: 40, alignment: .topTrailing)
-                            .padding(.horizontal)
+            ScrollViewReader { scroller in
+                VStack {
+                    HStack {
+                        ExpertSummary(expert: expert)
+                        Button {
+                            showingExpertView = true
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                                .resizable()
+                                .frame(width: 40, height: 40, alignment: .topTrailing)
+                                .padding(.horizontal)
+                        }
                     }
-                }
-                CustomScrollView(scrollToEnd: true) {
-                    LazyVStack {
+                    
+                    ScrollView {
                         ForEach(0..<model.messages.count, id:\.self) { index in
                             let color = Color(model.positions[index] == BubblePosition.right ? "ChatBubbleRight" : "ChatBubbleLeft")
                             ChatBubble(position: model.positions[index], color: color) {
                                 Text(model.messages[index])
                             }
+                            .id(index)
                         }
                     }
-                }
-                .padding(.top)
-                
-                HStack {
-                    ZStack {
-                        TextEditor(text: $message)
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke()
-                            .foregroundColor(.gray)
+                    .onAppear() {
+                        scroller.scrollTo(model.messages.count-1, anchor: .bottom)
                     }
-                    .frame(height: 50)
+                    .padding(.top)
                     
-                    Button() {
-                        if !message.isEmpty {
-                            model.addUserChat(message: message)
-                            let query = message
-                            message = ""
-                            Task {
-                                await ask(message: query)
-                            }
+                    HStack {
+                        ZStack {
+                            TextEditor(text: $message)
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke()
+                                .foregroundColor(.gray)
                         }
-                    } label: {
-                        Image(systemName: "arrow.up.circle.fill")
+                        .frame(height: 50)
+                        
+                        Button() {
+                            if !message.isEmpty {
+                                model.addUserChat(message: message)
+                                let query = message
+                                message = ""
+                                Task {
+                                    await ask(message: query)
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "arrow.up.circle.fill")
+                        }
+                        .frame(height: 50)
                     }
-                    .frame(height: 50)
+                    .disabled(isWaitingForAnswer == true)
+                    .onChange(of: response, perform: { _ in
+                        model.addResponse(message: response)
+                    })
+                    .padding()
                 }
-                .disabled(isWaitingForAnswer == true)
-                .onChange(of: response, perform: { _ in
-                    model.addResponse(message: response)
-                })
-                .padding()
-            }
-            .sheet(isPresented: $showingExpertView) {
-//                dismiss()
-                ExpertView(expert: $expert)
+                .sheet(isPresented: $showingExpertView) {
+                    //                dismiss()
+                    ExpertView(expert: $expert)
+                }
             }
         }
     }
@@ -89,6 +94,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(expert: .constant(PreviewSamples.expert))
+        ChatView(model: PreviewSamples.chatModel, expert: .constant(PreviewSamples.expert))
     }
 }
