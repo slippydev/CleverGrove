@@ -2,7 +2,7 @@
 //  CDDocument+CoreDataProperties.swift
 //  CleverGrove
 //
-//  Created by Derek Gour on 2023-08-10.
+//  Created by Derek Gour on 2023-08-11.
 //
 //
 
@@ -22,6 +22,24 @@ extension CDDocument {
     @NSManaged public var path: String?
     @NSManaged public var status: String?
     @NSManaged public var expert: CDExpert?
+    @NSManaged public var textChunks: NSSet?
+
+}
+
+// MARK: Generated accessors for textChunks
+extension CDDocument {
+
+    @objc(addTextChunksObject:)
+    @NSManaged public func addToTextChunks(_ value: CDTextChunk)
+
+    @objc(removeTextChunksObject:)
+    @NSManaged public func removeFromTextChunks(_ value: CDTextChunk)
+
+    @objc(addTextChunks:)
+    @NSManaged public func addToTextChunks(_ values: NSSet)
+
+    @objc(removeTextChunks:)
+    @NSManaged public func removeFromTextChunks(_ values: NSSet)
 
 }
 

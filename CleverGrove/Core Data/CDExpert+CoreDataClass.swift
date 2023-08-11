@@ -18,15 +18,11 @@ public class CDExpert: NSManagedObject {
         managedExpert.desc = expert.description
         managedExpert.id = expert.id
         for doc in expert.documents {
-            let managedDoc = CDDocument(context: context)
-            managedDoc.id = doc.id
-            managedDoc.fileName = doc.fileName
-            managedDoc.path = doc.path
-            managedDoc.status = doc.status.rawValue
-            managedDoc.filetype = doc.fileType.rawValue
+            let managedDoc = CDDocument.managedDocument(from: doc, context: context)
             managedDoc.expert = managedExpert
             managedExpert.addToDocuments(managedDoc)
         }
+        
         return managedExpert
     }
     
@@ -41,7 +37,7 @@ public class CDExpert: NSManagedObject {
     var documentsArray: [DocumentInfo] {
         let set = documents as? Set<CDDocument> ?? []
         return set.map { managedDocument in
-            CDDocument.document(from: managedDocument)
+            managedDocument.document()
         }
     }
 }

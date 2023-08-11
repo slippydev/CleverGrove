@@ -20,4 +20,16 @@ class DataController: ObservableObject {
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     }
     
+    func fetchDocument(id: UUID) -> CDDocument? {
+        let fetchRequest = CDDocument.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return try? container.viewContext.fetch(fetchRequest).first
+    }
+    
+    func fetchExpert(id: UUID) -> CDExpert? {
+        let fetchRequest = CDExpert.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return try? container.viewContext.fetch(fetchRequest).first
+    }
+    
 }
