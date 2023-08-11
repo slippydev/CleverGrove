@@ -2,7 +2,7 @@
 //  CDExpert+CoreDataClass.swift
 //  CleverGrove
 //
-//  Created by Derek Gour on 2023-08-09.
+//  Created by Derek Gour on 2023-08-10.
 //
 //
 
@@ -11,7 +11,6 @@ import CoreData
 
 @objc(CDExpert)
 public class CDExpert: NSManagedObject {
-
     static func managedExpert(from expert: ExpertProfile, context: NSManagedObjectContext) -> CDExpert {
         let managedExpert = CDExpert(context: context)
         managedExpert.image = expert.image
@@ -25,12 +24,18 @@ public class CDExpert: NSManagedObject {
             managedDoc.path = doc.path
             managedDoc.status = doc.status.rawValue
             managedDoc.filetype = doc.fileType.rawValue
+            managedDoc.expert = managedExpert
+            managedExpert.addToDocuments(managedDoc)
         }
         return managedExpert
     }
     
     func expertProfile() -> ExpertProfile {
-        return ExpertProfile(image: image, name: name ?? "", description: desc ?? "")
+        return ExpertProfile(id: id ?? UUID(),
+                             image: image,
+                             name: name ?? "",
+                             description: desc ?? "",
+                             documents: documentsArray)
     }
     
     var documentsArray: [DocumentInfo] {

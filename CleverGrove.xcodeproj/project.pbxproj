@@ -15,10 +15,11 @@
 		5B58A1492A8437520008C270 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1482A8437520008C270 /* DataController.swift */; };
 		5B58A14C2A84379E0008C270 /* CleverGrove.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A14A2A84379E0008C270 /* CleverGrove.xcdatamodeld */; };
 		5B58A14E2A84386A0008C270 /* DocumentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A14D2A84386A0008C270 /* DocumentInfo.swift */; };
-		5B58A1612A843CA70008C270 /* CDDocument+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A15B2A843CA70008C270 /* CDDocument+CoreDataClass.swift */; };
-		5B58A1622A843CA70008C270 /* CDDocument+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A15C2A843CA70008C270 /* CDDocument+CoreDataProperties.swift */; };
-		5B58A1652A843CA70008C270 /* CDExpert+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A15F2A843CA70008C270 /* CDExpert+CoreDataClass.swift */; };
-		5B58A1662A843CA70008C270 /* CDExpert+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1602A843CA70008C270 /* CDExpert+CoreDataProperties.swift */; };
+		5B58A16C2A8533D30008C270 /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A16B2A8533D30008C270 /* FilePicker.swift */; };
+		5B58A1AD2A85E6FD0008C270 /* CDDocument+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1A92A85E6FD0008C270 /* CDDocument+CoreDataClass.swift */; };
+		5B58A1AE2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AA2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift */; };
+		5B58A1AF2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AB2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift */; };
+		5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
 		5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */; };
@@ -36,7 +37,6 @@
 		5BA8F1232A8187E500C093C8 /* ExpertProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */; };
 		5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1242A8190F800C093C8 /* ChatBubble.swift */; };
 		5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1262A8192E700C093C8 /* ChatModel.swift */; };
-		5BA8F1292A81933200C093C8 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1282A81933200C093C8 /* CustomScrollView.swift */; };
 		5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F12A2A81939200C093C8 /* ChatView.swift */; };
 		5BA8F12E2A81B04F00C093C8 /* hi_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F12D2A81B04F00C093C8 /* hi_rules.json */; };
 		5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */; };
@@ -73,10 +73,12 @@
 		5B58A1482A8437520008C270 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		5B58A14B2A84379E0008C270 /* CleverGrove.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CleverGrove.xcdatamodel; sourceTree = "<group>"; };
 		5B58A14D2A84386A0008C270 /* DocumentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInfo.swift; sourceTree = "<group>"; };
-		5B58A15B2A843CA70008C270 /* CDDocument+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDocument+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		5B58A15C2A843CA70008C270 /* CDDocument+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDocument+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		5B58A15F2A843CA70008C270 /* CDExpert+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		5B58A1602A843CA70008C270 /* CDExpert+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		5B58A16B2A8533D30008C270 /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
+		5B58A16D2A853B240008C270 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5B58A1A92A85E6FD0008C270 /* CDDocument+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDocument+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5B58A1AA2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDocument+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5B58A1AB2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
 		5B94512B2A8083F100E30E9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,7 +99,6 @@
 		5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertProfile.swift; sourceTree = "<group>"; };
 		5BA8F1242A8190F800C093C8 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
 		5BA8F1262A8192E700C093C8 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
-		5BA8F1282A81933200C093C8 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		5BA8F12A2A81939200C093C8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		5BA8F12D2A81B04F00C093C8 /* hi_rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hi_rules.json; sourceTree = "<group>"; };
 		5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEmbeddings.swift; sourceTree = "<group>"; };
@@ -137,12 +138,12 @@
 		5B58A1472A8437380008C270 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				5B58A1A92A85E6FD0008C270 /* CDDocument+CoreDataClass.swift */,
+				5B58A1AA2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift */,
+				5B58A1AB2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift */,
+				5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */,
 				5B58A1482A8437520008C270 /* DataController.swift */,
 				5B58A14A2A84379E0008C270 /* CleverGrove.xcdatamodeld */,
-				5B58A15B2A843CA70008C270 /* CDDocument+CoreDataClass.swift */,
-				5B58A15C2A843CA70008C270 /* CDDocument+CoreDataProperties.swift */,
-				5B58A15F2A843CA70008C270 /* CDExpert+CoreDataClass.swift */,
-				5B58A1602A843CA70008C270 /* CDExpert+CoreDataProperties.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -170,8 +171,10 @@
 		5B9451262A8083F000E30E9E /* CleverGrove */ = {
 			isa = PBXGroup;
 			children = (
+				5B58A16D2A853B240008C270 /* Info.plist */,
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
 				5B94515A2A8084F200E30E9E /* ContentView.swift */,
+				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
 				5BA8F13A2A83FE9800C093C8 /* Expert */,
 				5BA8F11D2A817F8D00C093C8 /* Chat */,
 				5BA8F12F2A81B40800C093C8 /* AI */,
@@ -224,12 +227,9 @@
 		5BA8F11D2A817F8D00C093C8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				5BA8F1202A81841500C093C8 /* ExpertListView.swift */,
 				5BA8F12A2A81939200C093C8 /* ChatView.swift */,
 				5BA8F1242A8190F800C093C8 /* ChatBubble.swift */,
 				5BA8F1262A8192E700C093C8 /* ChatModel.swift */,
-				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
-				5BA8F1282A81933200C093C8 /* CustomScrollView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -258,10 +258,12 @@
 		5BA8F13A2A83FE9800C093C8 /* Expert */ = {
 			isa = PBXGroup;
 			children = (
+				5BA8F1202A81841500C093C8 /* ExpertListView.swift */,
 				5B58A1412A840B310008C270 /* ExpertView.swift */,
 				5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */,
 				5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */,
 				5B58A13D2A8400030008C270 /* ExpertProfileImage.swift */,
+				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
 				5B58A1432A840F600008C270 /* SelectionBox.swift */,
 				5B58A13F2A8402940008C270 /* DocumentCapsule.swift */,
 				5B58A14D2A84386A0008C270 /* DocumentInfo.swift */,
@@ -408,35 +410,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */,
-				5B58A1662A843CA70008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
 				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
 				5B58A14C2A84379E0008C270 /* CleverGrove.xcdatamodeld in Sources */,
 				5B58A14E2A84386A0008C270 /* DocumentInfo.swift in Sources */,
 				5B58A1462A8424150008C270 /* PreviewSamples.swift in Sources */,
+				5B58A1AF2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift in Sources */,
 				5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */,
 				5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */,
 				5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */,
 				5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
 				5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */,
-				5B58A1612A843CA70008C270 /* CDDocument+CoreDataClass.swift in Sources */,
 				5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */,
 				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
-				5B58A1652A843CA70008C270 /* CDExpert+CoreDataClass.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,
 				5B58A1402A8402940008C270 /* DocumentCapsule.swift in Sources */,
-				5B58A1622A843CA70008C270 /* CDDocument+CoreDataProperties.swift in Sources */,
+				5B58A1AE2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift in Sources */,
 				5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */,
 				5B58A13E2A8400030008C270 /* ExpertProfileImage.swift in Sources */,
+				5B58A1AD2A85E6FD0008C270 /* CDDocument+CoreDataClass.swift in Sources */,
 				5BA8F1232A8187E500C093C8 /* ExpertProfile.swift in Sources */,
 				5B58A1422A840B310008C270 /* ExpertView.swift in Sources */,
 				5B58A1492A8437520008C270 /* DataController.swift in Sources */,
+				5B58A16C2A8533D30008C270 /* FilePicker.swift in Sources */,
 				5B58A1442A840F600008C270 /* SelectionBox.swift in Sources */,
-				5BA8F1292A81933200C093C8 /* CustomScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +597,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CleverGrove/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -633,6 +636,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CleverGrove/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

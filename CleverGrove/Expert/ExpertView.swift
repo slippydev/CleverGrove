@@ -10,6 +10,7 @@ import SwiftUI
 struct ExpertView: View {
     @Binding var expert: ExpertProfile
     @State private var showingEditView = false
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
@@ -44,19 +45,25 @@ struct ExpertView: View {
                 }
             }
             .toolbar {
-                Spacer()
-                Button() {
-                    showingEditView = true
-                } label: {
-                    Image(systemName: "square.and.pencil")
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                    Button(role: .cancel) {
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                    }
+                }
+                
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    Button() {
+                        showingEditView = true
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
                 }
             }
             .sheet(isPresented: $showingEditView) {
-                EditExpertView(expert: $expert)
+                EditExpertView(expert: expert)
             }
-//            .onChange(of: expert) { newValue in
-//                expert = newValue
-//            }
         }
     }
 }

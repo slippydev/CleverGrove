@@ -7,14 +7,35 @@
 
 import SwiftUI
 
+struct DocumentList: View {
+    @Binding var documents: [DocumentInfo]
+    
+    var body: some View {
+        ScrollView() {
+            VStack(alignment: .leading) {
+                ForEach(documents) { document in
+                    NavigationLink {
+                        // Link to document
+                    } label: {
+                        DocumentCapsule(info: document)
+                    }
+                }
+            }
+        }
+    }
+}
+
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
-    @Binding var expert: ExpertProfile
+    @State var expert: ExpertProfile
     @State private var name: String = ""
     @State private var description: String = ""
     @State private var image: Image = Image(systemName: "questionmark.square.dashed")
+    @State private var isShowingFilePicker = false
+    @State private var fileData: Data?
+    @State private var fileURL: URL?
     
     var body: some View {
         NavigationView {
@@ -46,7 +67,7 @@ struct EditExpertView: View {
                             .foregroundColor(Color("Primary"))
                         Spacer()
                         Button() {
-                            
+                            isShowingFilePicker = true
                         } label: {
                             Image(systemName: "plus.square")
                                 .resizable()
@@ -54,18 +75,8 @@ struct EditExpertView: View {
                                 .padding(10)
                         }
                     }
-                    ScrollView() {
-                        VStack(alignment: .leading) {
-                            ForEach(expert.documents) { document in
-                                NavigationLink {
-                                    // Link to document
-                                } label: {
-                                    DocumentCapsule(info: document)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.bottom)
+                    DocumentList(documents: $expert.documents)
+                        .padding(.bottom)
                 }
             }
             .toolbar {
@@ -82,19 +93,33 @@ struct EditExpertView: View {
                 name = expert.name
                 image = Image(expert.image ?? "")
             }
+            .sheet(isPresented: $isShowingFilePicker) {
+                FilePicker(fileData: $fileData, fileURL: $fileURL)
+            }
+            .onChange(of: fileData) { newValue in
+                addDocument()
+            }
         }
     }
     
+    func addDocument() {
+        guard let path = fileURL?.absoluteString, let fileName = fileURL?.lastPathComponent else {
+            print("Error reading selected file URL")
+            return
+        }
+        let newDoc = DocumentInfo(fileType: .text, fileName: fileName, path: path, status: .untrained)
+        expert.documents.append(newDoc)
+        // The new document will be automagically created when we save the managed expert because of their relationship
+    }
+    
     func saveChanges() {
-        let newExpert = ExpertProfile(image: "SampleProfile1",
-                               name: name,
-                               description: description,
-                               documents: expert.documents)
+        let newExpert = ExpertProfile(id: expert.id,
+                                      image: "SampleProfile1",
+                                      name: name,
+                                      description: description,
+                                      documents: expert.documents)
         
-        // FIXME:
-        // Don't just save a new expert to Core Data. This may be
-        // an update to an existing Expert.
-        let managedExpert = CDExpert.managedExpert(from: newExpert, context: moc)
+        let _ = CDExpert.managedExpert(from: newExpert, context: moc)
         do {
             try moc.save()
         } catch {
@@ -105,6 +130,7 @@ struct EditExpertView: View {
 
 struct EditExpertView_Previews: PreviewProvider {
     static var previews: some View {
-        EditExpertView(expert: .constant(PreviewSamples.expert))
+        EditExpertView(expert: PreviewSamples.expert)
     }
 }
+

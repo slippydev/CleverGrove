@@ -39,7 +39,7 @@ struct ExpertListView: View {
                             
                             VStack(spacing: 25) {
                                 ForEach(cachedExperts) { cachedExpert in
-                                    var expert = cachedExpert.expertProfile()
+                                    let expert = cachedExpert.expertProfile()
                                     NavigationLink {
                                         ChatView(expert: .constant(expert))
                                     } label: {
@@ -55,7 +55,7 @@ struct ExpertListView: View {
             }
             .navigationTitle("My Experts")
             .sheet(isPresented: $isShowingEditExpertSheet) {
-                EditExpertView(expert: .constant(ExpertProfile.emptyExpert()))
+                EditExpertView(expert: ExpertProfile.emptyExpert())
             }
         }
     }
