@@ -29,7 +29,6 @@ struct FilePicker: UIViewControllerRepresentable {
             var error: NSError? = nil
             NSFileCoordinator().coordinate(readingItemAt: url, error: &error) { url in
                 guard let data = try? Data(contentsOf: url) else { return }
-//                let str = String(decoding: data, as: UTF8.self)
                 self.parent.fileURL = url
                 self.parent.fileData = data
             }

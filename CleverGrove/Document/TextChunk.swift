@@ -11,15 +11,11 @@ struct TextChunk: Identifiable {
     let id: UUID
     let text: String
     let embedding: [Double]
-    let document: DocumentInfo
-    let expert: ExpertProfile
     
-    init(id: UUID = UUID(), text: String, embedding: [Double], document: DocumentInfo, expert: ExpertProfile) {
+    init(id: UUID = UUID(), text: String, embedding: [Double]) {
         self.id = id
         self.text = text
         self.embedding = embedding
-        self.document = document
-        self.expert = expert
     }
     
     var embeddingAsString: String {
@@ -31,4 +27,5 @@ struct TextChunk: Identifiable {
             .split(separator: ",")
             .compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
     }
+    
 }

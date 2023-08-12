@@ -24,7 +24,9 @@ extension EnvironmentValues {
 class OpenAICoordinator {
     let openAI: OpenAIKit
     let openAIEmbedding = OpenAI()
-    var embeddings: Embeddings = Embeddings(modelName: "hi_rules")
+    
+    // FIXME: Need to use document embeddings from Core Data for the current expert, not these hardcoded embeddings.
+    var embeddings: Embeddings = Embeddings(modelName: "hi_rules")  // This has to
     
     init(key: String, org: String) {
         openAI = OpenAIKit(apiToken: key, organization: org)
@@ -38,6 +40,21 @@ class OpenAICoordinator {
         case .failure(let error):
             print(error.localizedDescription)
             return nil
+        }
+    }
+    
+    func getEmbeddings(for chunks: [String]) async -> Result<[[Double]], OpenAIError> {
+        let result = await openAIEmbedding.getEmbeddings(input: chunks)
+        var embeddings = [[Double]]()
+        switch result {
+        case .success(let dictOfEmbeddings):
+            for i in 0..<dictOfEmbeddings.count {
+                guard let embedding = dictOfEmbeddings[i] else { return .failure(.jsonDecodingError) }
+                embeddings.append(embedding)
+            }
+            return .success(embeddings)
+        case .failure(let error):
+            return .failure(error)
         }
     }
     

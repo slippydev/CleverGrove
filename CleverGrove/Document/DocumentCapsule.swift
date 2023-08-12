@@ -9,11 +9,11 @@ import SwiftUI
 
 struct DocumentCapsule: View {
     
-    let info: DocumentInfo
+    @Binding var document: DocumentInfo
     
     var body: some View {
         HStack {
-            info.image
+            document.image
                 .resizable()
                 .frame(width: 40, height: 48)
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 3.0, height: 3.0)))
@@ -22,10 +22,10 @@ struct DocumentCapsule: View {
                         .strokeBorder(.white, lineWidth: 1)
                     )
             VStack(alignment: .leading) {
-                Text(info.fileName)
+                Text(document.fileName)
                     .foregroundColor(Color("Primary"))
                     .font(.headline)
-                Text(info.status.rawValue)
+                Text(document.status.rawValue)
                     .foregroundColor(.secondary)
             }
         }
@@ -35,6 +35,6 @@ struct DocumentCapsule: View {
 
 struct DocumentCapsule_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentCapsule(info: PreviewSamples.document)
+        DocumentCapsule(document: .constant(PreviewSamples.document))
     }
 }

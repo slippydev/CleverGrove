@@ -24,6 +24,8 @@
 		5B58A1BE2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1BC2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift */; };
 		5B58A1BF2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1BD2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift */; };
 		5B5993112A8680A5009FC4CB /* TextChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993102A8680A5009FC4CB /* TextChunkTests.swift */; };
+		5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993122A86D34D009FC4CB /* DocumentParser.swift */; };
+		5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993142A86F7D9009FC4CB /* DocumentList.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
 		5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */; };
@@ -87,6 +89,8 @@
 		5B58A1BC2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTextChunk+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5B58A1BD2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTextChunk+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5B5993102A8680A5009FC4CB /* TextChunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChunkTests.swift; sourceTree = "<group>"; };
+		5B5993122A86D34D009FC4CB /* DocumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentParser.swift; sourceTree = "<group>"; };
+		5B5993142A86F7D9009FC4CB /* DocumentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentList.swift; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
 		5B94512B2A8083F100E30E9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,8 +165,10 @@
 		5B58A1B12A86791E0008C270 /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				5B58A13F2A8402940008C270 /* DocumentCapsule.swift */,
+				5B5993122A86D34D009FC4CB /* DocumentParser.swift */,
 				5B58A14D2A84386A0008C270 /* DocumentInfo.swift */,
+				5B5993142A86F7D9009FC4CB /* DocumentList.swift */,
+				5B58A13F2A8402940008C270 /* DocumentCapsule.swift */,
 				5B58A1B22A86793D0008C270 /* TextChunk.swift */,
 			);
 			path = Document;
@@ -432,6 +438,7 @@
 			files = (
 				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */,
+				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
 				5B58A1B32A86793D0008C270 /* TextChunk.swift in Sources */,
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
@@ -450,6 +457,7 @@
 				5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */,
 				5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */,
 				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
+				5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,
 				5B58A1402A8402940008C270 /* DocumentCapsule.swift in Sources */,

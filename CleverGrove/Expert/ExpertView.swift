@@ -32,11 +32,11 @@ struct ExpertView: View {
                         .foregroundColor(Color("Primary"))
                     ScrollView() {
                         VStack(alignment: .leading) {
-                            ForEach(expert.documents) { document in
+                            ForEach($expert.documents) { $document in
                                 NavigationLink {
                                     // Link to document
                                 } label: {
-                                    DocumentCapsule(info: document)
+                                    DocumentCapsule(document: $document)
                                 }
                             }
                         }
