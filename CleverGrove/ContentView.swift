@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var experts = PreviewSamples.experts
+//    @State var experts = PreviewSamples.experts
     
     var body: some View {
-        ExpertListView(experts: $experts)
+        ExpertListView()
     }
 }
 

@@ -45,6 +45,10 @@ struct EmbeddingsResponse: Codable, DecodableResponse {
         return data.first?.embedding
     }
     
+    public var index: Int? {
+        return data.first?.index
+    }
+    
     static func decode(data: Data) -> EmbeddingsResponse? {
         let decoder = JSONDecoder.openAIDecoder
         let response = try? decoder.decode(EmbeddingsResponse.self, from: data)
@@ -71,6 +75,22 @@ struct OpenAI {
         let network = OpenAINetwork()
         let result: Result<EmbeddingsResponse, OpenAIError> = await network.request(info.method, url: info.path, body: requestData, headers: baseHeaders)
         return result
+    }
+    
+    func getEmbeddings(input chunks: [String]) async -> Result<[Int:[Double]], OpenAIError> {
+        var embeddings = [Int:[Double]]()
+        for (i, chunk) in chunks.enumerated() {
+            let result = await getEmbeddings(input: chunk)
+            switch result {
+            case .success(let response):
+                if let embedding = response.embedding {
+                    embeddings[i] = embedding
+                }
+            case .failure(let error):
+                return .failure(error)
+            }
+        }
+        return .success(embeddings)
     }
 }
 

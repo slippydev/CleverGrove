@@ -7,6 +7,7 @@
         <attribute name="path" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <relationship name="expert" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDExpert" inverseName="documents" inverseEntity="CDExpert"/>
+        <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTextChunk" inverseName="document" inverseEntity="CDTextChunk"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -19,6 +20,19 @@
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="documents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDDocument" inverseName="expert" inverseEntity="CDDocument"/>
+        <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTextChunk" inverseName="expert" inverseEntity="CDTextChunk"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="CDTextChunk" representedClassName="CDTextChunk" syncable="YES">
+        <attribute name="embedding" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="document" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDDocument" inverseName="textChunks" inverseEntity="CDDocument"/>
+        <relationship name="expert" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDExpert" inverseName="textChunks" inverseEntity="CDExpert"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>

@@ -21,11 +21,12 @@ public class CDDocument: NSManagedObject {
         return managedDoc
     }
     
-    static func document(from managedDocument: CDDocument) -> DocumentInfo {
-        return DocumentInfo(id: managedDocument.id ?? UUID(),
-                            fileType: FileType(rawValue: managedDocument.filetype ?? "text") ?? .text,
-                            fileName: managedDocument.fileName ?? "",
-                            path: managedDocument.path ?? "",
-                            status: DocumentStatus(rawValue: managedDocument.status ?? "") ?? .untrained)
+    func document() -> DocumentInfo {
+        return DocumentInfo(id: id ?? UUID(),
+                            fileType: FileType(rawValue: filetype ?? "text") ?? .text,
+                            fileName: fileName ?? "",
+                            path: path ?? "",
+                            status: DocumentStatus(rawValue: status ?? "") ?? .untrained)
     }
+    
 }

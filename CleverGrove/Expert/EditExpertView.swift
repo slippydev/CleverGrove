@@ -7,35 +7,20 @@
 
 import SwiftUI
 
-struct DocumentList: View {
-    @Binding var documents: [DocumentInfo]
-    
-    var body: some View {
-        ScrollView() {
-            VStack(alignment: .leading) {
-                ForEach(documents) { document in
-                    NavigationLink {
-                        // Link to document
-                    } label: {
-                        DocumentCapsule(info: document)
-                    }
-                }
-            }
-        }
-    }
-}
 
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) var moc
     
     @State var expert: ExpertProfile
     @State private var name: String = ""
     @State private var description: String = ""
     @State private var image: Image = Image(systemName: "questionmark.square.dashed")
-    @State private var isShowingFilePicker = false
     @State private var fileData: Data?
     @State private var fileURL: URL?
+    @State private var documents = [DocumentInfo]()
+    
+    @State private var isShowingFilePicker = false
+    @State private var isShowingParsingError = false
     
     var body: some View {
         NavigationView {
@@ -57,7 +42,6 @@ struct EditExpertView: View {
                         TextEditor(text: $description)
                             .padding(.horizontal, 20)
                             .multilineTextAlignment(.center)
-                        
                     }
                     Divider()
                     HStack {
@@ -75,7 +59,7 @@ struct EditExpertView: View {
                                 .padding(10)
                         }
                     }
-                    DocumentList(documents: $expert.documents)
+                    DocumentList(documents: $documents)
                         .padding(.bottom)
                 }
             }
@@ -92,24 +76,33 @@ struct EditExpertView: View {
                 description = expert.description
                 name = expert.name
                 image = Image(expert.image ?? "")
+                documents = expert.documents
             }
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL)
             }
             .onChange(of: fileData) { newValue in
-                addDocument()
+                if let data = fileData, let url = fileURL {
+                    addDocument(data: data, url: url)
+                }
             }
         }
     }
     
-    func addDocument() {
-        guard let path = fileURL?.absoluteString, let fileName = fileURL?.lastPathComponent else {
-            print("Error reading selected file URL")
-            return
+    func addDocument(data: Data, url: URL) {
+        let moc = DataController.shared.managedObjectContext
+        var document = DocumentInfo(fileURL: url, fileType: .text, status: .training)
+        documents.append(document)
+        let managedDocument = CDDocument.managedDocument(from: document, context: moc)
+        let managedExpert = CDExpert.managedExpert(from: expert, context: moc)
+        managedExpert.addToDocuments(managedDocument)
+        let parser = DocumentParser(data: data, document: managedDocument, expert: managedExpert)
+        Task {
+            do {
+                try await parser.parse()
+            } catch {}
         }
-        let newDoc = DocumentInfo(fileType: .text, fileName: fileName, path: path, status: .untrained)
-        expert.documents.append(newDoc)
-        // The new document will be automagically created when we save the managed expert because of their relationship
+        document.changeStatus(newStatus: .trained)
     }
     
     func saveChanges() {
@@ -118,7 +111,7 @@ struct EditExpertView: View {
                                       name: name,
                                       description: description,
                                       documents: expert.documents)
-        
+        let moc = DataController.shared.managedObjectContext
         let _ = CDExpert.managedExpert(from: newExpert, context: moc)
         do {
             try moc.save()

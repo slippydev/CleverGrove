@@ -14,7 +14,8 @@ struct ChatView: View {
     @State private var response = ""
     @State private var showingExpertView = false
     @Binding var expert: ExpertProfile
-    @Environment(\.aiCoordinator) var aiCoordinator
+    @State var managedExpert: CDExpert?
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -82,11 +83,20 @@ struct ChatView: View {
                 }
             }
         }
+        .onAppear() {
+            let fetchRequest = CDExpert.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", expert.id as CVarArg)
+            let moc = DataController.shared.managedObjectContext
+            managedExpert = try? moc.fetch(fetchRequest).first
+        }
     }
     
     func ask(message: String) async {
         isWaitingForAnswer = true
-        await response = aiCoordinator.ask(question: message)
+        if let managedExpert = managedExpert {
+            let ai = OpenAICoordinator.shared
+            await response = ai.ask(question: message, expert: managedExpert)
+        }
         isWaitingForAnswer = false
     }
     

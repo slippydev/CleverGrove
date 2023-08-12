@@ -12,7 +12,7 @@ struct DocumentInfo: Identifiable {
     let fileType: FileType
     let fileName: String
     let path: String
-    let status: DocumentStatus
+    var status: DocumentStatus
     
     init(id: UUID = UUID(), fileType: FileType, fileName: String, path: String, status: DocumentStatus) {
         self.id = id
@@ -22,8 +22,20 @@ struct DocumentInfo: Identifiable {
         self.status = status
     }
     
+    init(fileURL: URL, fileType: FileType, status: DocumentStatus) {
+        self.path = fileURL.absoluteString
+        self.fileName = fileURL.lastPathComponent
+        self.id = UUID()
+        self.fileType = fileType
+        self.status = status
+    }
+    
     var image: Image {
         fileType.image
+    }
+    
+    mutating func changeStatus(newStatus: DocumentStatus) {
+        self.status = newStatus
     }
 }
 
@@ -45,5 +57,6 @@ enum FileType: String {
 
 enum DocumentStatus: String {
     case untrained = "Untrained"
+    case training = "Training"
     case trained = "Trained"
 }
