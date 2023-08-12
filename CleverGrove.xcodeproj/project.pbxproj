@@ -32,7 +32,6 @@
 		5B94513A2A8083F100E30E9E /* EmbeddingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451392A8083F100E30E9E /* EmbeddingTests.swift */; };
 		5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */; };
 		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
-		5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451522A80848D00E30E9E /* Embeddings.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
 		5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B94515A2A8084F200E30E9E /* ContentView.swift */; };
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
@@ -101,7 +100,6 @@
 		5B94513F2A8083F100E30E9E /* CleverGroveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleverGroveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITests.swift; sourceTree = "<group>"; };
 		5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		5B9451522A80848D00E30E9E /* Embeddings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Embeddings.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
 		5B94515A2A8084F200E30E9E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
@@ -274,7 +272,6 @@
 		5BA8F12F2A81B40800C093C8 /* AI */ = {
 			isa = PBXGroup;
 			children = (
-				5B9451522A80848D00E30E9E /* Embeddings.swift */,
 				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
 				5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */,
 				5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */,
@@ -437,7 +434,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
-				5B9451562A80848D00E30E9E /* Embeddings.swift in Sources */,
 				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
 				5B58A1B32A86793D0008C270 /* TextChunk.swift in Sources */,
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,

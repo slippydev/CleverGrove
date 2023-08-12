@@ -79,12 +79,12 @@ struct OpenAI {
     
     func getEmbeddings(input chunks: [String]) async -> Result<[Int:[Double]], OpenAIError> {
         var embeddings = [Int:[Double]]()
-        for chunk in chunks {
+        for (i, chunk) in chunks.enumerated() {
             let result = await getEmbeddings(input: chunk)
             switch result {
             case .success(let response):
-                if let index = response.index, let embedding = response.embedding {
-                    embeddings[index] = embedding
+                if let embedding = response.embedding {
+                    embeddings[i] = embedding
                 }
             case .failure(let error):
                 return .failure(error)

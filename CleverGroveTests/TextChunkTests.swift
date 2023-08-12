@@ -12,7 +12,7 @@ final class TextChunkTests: XCTestCase {
 
     func testEmbeddingAsString() {
         let embedding = [0.938383, -0.363763, -2.181818, 0.0, 3.1010101]
-        let textChunk = TextChunk(text: "Random Text", embedding: embedding, document: PreviewSamples.document, expert: PreviewSamples.expert)
+        let textChunk = TextChunk(text: "Random Text", embedding: embedding)
         let embeddingText = textChunk.embeddingAsString
         let expectedText = "0.938383, -0.363763, -2.181818, 0.0, 3.1010101"
         XCTAssertEqual(embeddingText, expectedText)

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) var moc
     
     @State var expert: ExpertProfile
     @State private var name: String = ""
@@ -91,6 +90,7 @@ struct EditExpertView: View {
     }
     
     func addDocument(data: Data, url: URL) {
+        let moc = DataController.shared.managedObjectContext
         var document = DocumentInfo(fileURL: url, fileType: .text, status: .training)
         documents.append(document)
         let managedDocument = CDDocument.managedDocument(from: document, context: moc)
@@ -111,7 +111,7 @@ struct EditExpertView: View {
                                       name: name,
                                       description: description,
                                       documents: expert.documents)
-        
+        let moc = DataController.shared.managedObjectContext
         let _ = CDExpert.managedExpert(from: newExpert, context: moc)
         do {
             try moc.save()

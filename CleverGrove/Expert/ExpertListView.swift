@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ExpertListView: View {
-    
-    @Binding var experts: [ExpertProfile]
+
     @State private var isShowingEditExpertSheet = false
     @FetchRequest(sortDescriptors: [
         SortDescriptor(\.name)
@@ -59,16 +58,10 @@ struct ExpertListView: View {
             }
         }
     }
-    
-    
-    
-//    func getEmbeddings() async {
-//        let embeddings = await aiCoordinator.getEmbeddings(for: SampleText.text)
-//    }
 }
 
 struct ExpertListView_Previews: PreviewProvider {
     static var previews: some View {
-        ExpertListView(experts: .constant(PreviewSamples.experts))
+        ExpertListView()
     }
 }
