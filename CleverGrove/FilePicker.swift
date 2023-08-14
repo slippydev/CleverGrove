@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct FilePicker: UIViewControllerRepresentable {
     
     @Binding var fileData: Data?
     @Binding var fileURL: URL?
+    @Binding var documentType: UTType?
+    
+    private let contentTypes:[UTType] = [.folder, .text, .pdf]
     
     class Coordinator: NSObject, UIDocumentPickerDelegate {
         var parent: FilePicker
@@ -31,6 +35,7 @@ struct FilePicker: UIViewControllerRepresentable {
                 guard let data = try? Data(contentsOf: url) else { return }
                 self.parent.fileURL = url
                 self.parent.fileData = data
+                self.parent.documentType = UTType(filenameExtension: url.pathExtension)
             }
             if let error = error {
                 print("Error \(error.localizedDescription)")
@@ -39,7 +44,7 @@ struct FilePicker: UIViewControllerRepresentable {
     }
         
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.folder, .text])
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: contentTypes)
         documentPicker.delegate = context.coordinator
         return documentPicker
     }

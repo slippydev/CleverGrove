@@ -26,6 +26,7 @@
 		5B5993112A8680A5009FC4CB /* TextChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993102A8680A5009FC4CB /* TextChunkTests.swift */; };
 		5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993122A86D34D009FC4CB /* DocumentParser.swift */; };
 		5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993142A86F7D9009FC4CB /* DocumentList.swift */; };
+		5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993162A89B158009FC4CB /* DocumentDecoder.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
 		5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */; };
@@ -90,6 +91,7 @@
 		5B5993102A8680A5009FC4CB /* TextChunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChunkTests.swift; sourceTree = "<group>"; };
 		5B5993122A86D34D009FC4CB /* DocumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentParser.swift; sourceTree = "<group>"; };
 		5B5993142A86F7D9009FC4CB /* DocumentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentList.swift; sourceTree = "<group>"; };
+		5B5993162A89B158009FC4CB /* DocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDecoder.swift; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
 		5B94512B2A8083F100E30E9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				5B5993122A86D34D009FC4CB /* DocumentParser.swift */,
+				5B5993162A89B158009FC4CB /* DocumentDecoder.swift */,
 				5B58A14D2A84386A0008C270 /* DocumentInfo.swift */,
 				5B5993142A86F7D9009FC4CB /* DocumentList.swift */,
 				5B58A13F2A8402940008C270 /* DocumentCapsule.swift */,
@@ -444,6 +447,7 @@
 				5B58A1BE2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift in Sources */,
 				5B58A1462A8424150008C270 /* PreviewSamples.swift in Sources */,
 				5B58A1AF2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift in Sources */,
+				5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */,
 				5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */,
 				5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */,
 				5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */,
