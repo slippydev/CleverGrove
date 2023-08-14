@@ -9,36 +9,43 @@ import SwiftUI
 
 struct ExpertSummary: View {
     
-    var expert: ExpertProfile
-    
+    @ObservedObject var expert: CDExpert
+
     var body: some View {
-        HStack {
-            Image(expert.image ?? "")
-                .resizable()
-                .background( Color("BackgroundInverted").opacity(0.05))
-                .frame(width: 80, height: 80)
-                .clipShape(Circle())
-            VStack(alignment: .leading, spacing: 8) {
-                HStack{
-                    Text(expert.name)
+        ZStack {
+            HStack(alignment: .top) {
+                Image(expert.image ?? "")
+                    .resizable()
+                    .frame(width: 75, height: 75, alignment: .topLeading)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    .padding([.top, .bottom, .leading], 5)
+                
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(expert.name ?? "")
+                        .font(.headline)
                         .fontWeight(.semibold)
                         .padding(.top, 3)
+                    
+                    Text(expert.desc ?? "")
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil) // Allow unlimited lines for description
+                        .fixedSize(horizontal: false, vertical: true) // Allow vertical expansion
                 }
-                
-                Text(expert.description)
-                    .foregroundColor(Color("BackgroundInverted").opacity(0.5))
-                    .lineLimit(5)
-                Divider()
-                    .padding(.top, 8)
+                .padding([.vertical, .horizontal], 5)
             }
-            .padding(.horizontal, 10)
         }
     }
 }
 
-struct ExpertSummary_Previews: PreviewProvider {
-    static var previews: some View {
-        let expert = ExpertProfile(image: "SampleProfile1", name: "Bobby", description: "Dungeons & Dragons expert")
-        ExpertSummary(expert: expert)
-    }
-}
+
+//struct ExpertSummary_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let expert = ExpertProfile(image: "SampleProfile1", name: "Bobby", description: "Dungeons & Dragons expert")
+//        ExpertSummary(expert: expert, expertIDToEdit: .constant(nil), isShowingEditExpertSheet: .constant(false))
+//    }
+//}

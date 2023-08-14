@@ -8,54 +8,63 @@
 import SwiftUI
 
 struct ExpertListView: View {
-
-    @State private var isShowingEditExpertSheet = false
+    
     @FetchRequest(sortDescriptors: [
         SortDescriptor(\.name)
-    ]) var cachedExperts: FetchedResults<CDExpert>
+    ]) var experts: FetchedResults<CDExpert>
+    
+    @State var isShowingEditSheet = false
+    @StateObject var expertToEdit = ExpertToEdit()
     
     var body: some View {
         NavigationView {
-            ZStack {
-                Color("Background").edgesIgnoringSafeArea(.all)
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button() {
-                            isShowingEditExpertSheet = true
+            VStack {
+                HStack {
+                    Text("CleverGrove")
+                        .font(.title2)
+                        .frame(alignment: .bottomLeading)
+                        .padding([.leading], 10)
+                }
+                
+                Button {
+                    //
+                } label: {
+                    Text("Train a new expert")
+                        .foregroundColor(.blue)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .padding(.vertical, 10)
+                
+                List {
+                    ForEach(experts, id: \.self) { expert in
+                        NavigationLink {
+                            ChatView(expert: expert)
                         } label: {
-                            Image(systemName: "person.fill.badge.plus")
-                                .foregroundColor(Color("Primary"))
-                                .font(.title2)
+                            ExpertSummary(expert: expert)
                         }
-                    }
-                    
-                    ScrollView() {
-                        VStack(alignment: .leading, spacing: 5) {
+                        .swipeActions() {
+                            Button {
+                                expertToEdit.expert = expert
+                                isShowingEditSheet = true
+                            } label: {
+                                Label("Edit", systemImage: "gearshape.fill")
+                            }
+                            .tint(.indigo)
                             
-                            Divider()
-                                .padding(.bottom, 20)
-                            
-                            VStack(spacing: 25) {
-                                ForEach(cachedExperts) { cachedExpert in
-                                    let expert = cachedExpert.expertProfile()
-                                    NavigationLink {
-                                        ChatView(expert: .constant(expert))
-                                    } label: {
-                                        ExpertSummary(expert: expert)
-                                    }
-                                }
+                            Button(role: .destructive) {
+                                // Remove the expert from Core Data
+                            } label: {
+                                Label("Delete", systemImage: "trash.fill")
                             }
                         }
                     }
                 }
-                .padding(.top)
-                .padding(.horizontal)
+                .scrollIndicators(.hidden)
             }
-            .navigationTitle("My Experts")
-            .sheet(isPresented: $isShowingEditExpertSheet) {
-                EditExpertView(expert: ExpertProfile.emptyExpert())
-            }
+        }
+        .sheet(isPresented: $isShowingEditSheet) {
+            EditExpertView(expert: expertToEdit.expert ?? CDExpert(context: DataController.shared.managedObjectContext))
         }
     }
 }

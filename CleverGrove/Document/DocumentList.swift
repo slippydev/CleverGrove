@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct DocumentList: View {
-    @Binding var documents: [DocumentInfo]
+    @ObservedObject var expert: CDExpert
     
     var body: some View {
         ScrollView() {
             VStack(alignment: .leading) {
-                ForEach($documents) { $document in
+                ForEach(expert.documentsAsArray) { document in
                     NavigationLink {
                         // Link to document
                     } label: {
-                        DocumentCapsule(document: $document)
+                        DocumentCapsule(document: document)
                     }
                 }
             }
@@ -26,8 +26,8 @@ struct DocumentList: View {
 }
 
 
-struct DocumentList_Previews: PreviewProvider {
-    static var previews: some View {
-        DocumentList(documents: .constant(PreviewSamples.documents))
-    }
-}
+//struct DocumentList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DocumentList(documents: .constant(PreviewSamples.documents))
+//    }
+//}

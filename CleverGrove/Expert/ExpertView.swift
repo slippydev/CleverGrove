@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct ExpertView: View {
-    @Binding var expert: ExpertProfile
+    @ObservedObject var expert: CDExpert
+    
+    @State private var name: String = ""
+    @State private var description: String = ""
+    @State private var image: Image = Image(systemName: "questionmark.square.dashed")
+    @State private var documents = [CDDocument]()
+    
     @State private var showingEditView = false
     @Environment(\.dismiss) var dismiss
     
@@ -19,10 +25,10 @@ struct ExpertView: View {
                     VStack {
                         ExpertProfileImage(image: Image(expert.image ?? ""), geo: geometry)
                         Divider()
-                        Text(expert.name)
+                        Text(name)
                             .font(.title.bold())
                             .padding(.bottom, 5)
-                        Text(expert.description)
+                        Text(description)
                             .padding(.horizontal, 20)
                     }
                     Divider()
@@ -30,18 +36,8 @@ struct ExpertView: View {
                         .font(.title2)
                         .padding([.bottom, .top], 10)
                         .foregroundColor(Color("Primary"))
-                    ScrollView() {
-                        VStack(alignment: .leading) {
-                            ForEach($expert.documents) { $document in
-                                NavigationLink {
-                                    // Link to document
-                                } label: {
-                                    DocumentCapsule(document: $document)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.bottom)
+                    DocumentList(expert: expert)
+                        .padding(.bottom)
                 }
             }
             .toolbar {
@@ -61,15 +57,12 @@ struct ExpertView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingEditView) {
-                EditExpertView(expert: expert)
-            }
         }
     }
 }
 
-struct ExpertView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExpertView(expert: .constant(PreviewSamples.expert))
-    }
-}
+//struct ExpertView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExpertView(expert: .constant(PreviewSamples.expert))
+//    }
+//}

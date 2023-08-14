@@ -27,6 +27,7 @@
 		5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993122A86D34D009FC4CB /* DocumentParser.swift */; };
 		5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993142A86F7D9009FC4CB /* DocumentList.swift */; };
 		5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993162A89B158009FC4CB /* DocumentDecoder.swift */; };
+		5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
 		5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */; };
@@ -34,13 +35,11 @@
 		5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */; };
 		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
-		5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B94515A2A8084F200E30E9E /* ContentView.swift */; };
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
 		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
 		5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1192A81744A00C093C8 /* KeyStore.swift */; };
 		5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */; };
 		5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1202A81841500C093C8 /* ExpertListView.swift */; };
-		5BA8F1232A8187E500C093C8 /* ExpertProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */; };
 		5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1242A8190F800C093C8 /* ChatBubble.swift */; };
 		5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1262A8192E700C093C8 /* ChatModel.swift */; };
 		5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F12A2A81939200C093C8 /* ChatView.swift */; };
@@ -92,6 +91,7 @@
 		5B5993122A86D34D009FC4CB /* DocumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentParser.swift; sourceTree = "<group>"; };
 		5B5993142A86F7D9009FC4CB /* DocumentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentList.swift; sourceTree = "<group>"; };
 		5B5993162A89B158009FC4CB /* DocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDecoder.swift; sourceTree = "<group>"; };
+		5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewHeader.swift; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
 		5B94512B2A8083F100E30E9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,12 +103,10 @@
 		5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITests.swift; sourceTree = "<group>"; };
 		5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
-		5B94515A2A8084F200E30E9E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
 		5BA8F1192A81744A00C093C8 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
 		5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSummary.swift; sourceTree = "<group>"; };
 		5BA8F1202A81841500C093C8 /* ExpertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertListView.swift; sourceTree = "<group>"; };
-		5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertProfile.swift; sourceTree = "<group>"; };
 		5BA8F1242A8190F800C093C8 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
 		5BA8F1262A8192E700C093C8 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		5BA8F12A2A81939200C093C8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 			children = (
 				5B58A16D2A853B240008C270 /* Info.plist */,
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
-				5B94515A2A8084F200E30E9E /* ContentView.swift */,
 				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
 				5BA8F13A2A83FE9800C093C8 /* Expert */,
 				5B58A1B12A86791E0008C270 /* Document */,
@@ -257,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA8F12A2A81939200C093C8 /* ChatView.swift */,
+				5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */,
 				5BA8F1242A8190F800C093C8 /* ChatBubble.swift */,
 				5BA8F1262A8192E700C093C8 /* ChatModel.swift */,
 			);
@@ -289,7 +287,6 @@
 				5BA8F1202A81841500C093C8 /* ExpertListView.swift */,
 				5B58A1412A840B310008C270 /* ExpertView.swift */,
 				5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */,
-				5BA8F1222A8187E500C093C8 /* ExpertProfile.swift */,
 				5B58A13D2A8400030008C270 /* ExpertProfileImage.swift */,
 				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
 				5B58A1432A840F600008C270 /* SelectionBox.swift */,
@@ -436,6 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */,
 				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
 				5B58A1B32A86793D0008C270 /* TextChunk.swift in Sources */,
@@ -454,7 +452,6 @@
 				5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */,
 				5B58A1BF2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
-				5B94515B2A8084F200E30E9E /* ContentView.swift in Sources */,
 				5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */,
 				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
 				5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */,
@@ -465,7 +462,6 @@
 				5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */,
 				5B58A13E2A8400030008C270 /* ExpertProfileImage.swift in Sources */,
 				5B58A1AD2A85E6FD0008C270 /* CDDocument+CoreDataClass.swift in Sources */,
-				5BA8F1232A8187E500C093C8 /* ExpertProfile.swift in Sources */,
 				5B58A1422A840B310008C270 /* ExpertView.swift in Sources */,
 				5B58A1492A8437520008C270 /* DataController.swift in Sources */,
 				5B58A16C2A8533D30008C270 /* FilePicker.swift in Sources */,
