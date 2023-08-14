@@ -34,6 +34,7 @@ class OpenAICoordinator {
     }
     
     func getEmbeddings(for chunks: [String]) async -> Result<[[Double]], OpenAIError> {
+        //TODO: Add some mechanism for tracking progress, and sending the chunk progress out to the UI
         let result = await openAIEmbedding.getEmbeddings(input: chunks)
         var embeddings = [[Double]]()
         switch result {

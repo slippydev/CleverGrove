@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import UniformTypeIdentifiers
 
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
@@ -17,6 +17,7 @@ struct EditExpertView: View {
     @State private var image: Image = Image(systemName: "questionmark.square.dashed")
     @State private var fileData: Data?
     @State private var fileURL: URL?
+    @State private var documentType: UTType?
     @State private var documents = [DocumentInfo]()
     
     @State private var isShowingFilePicker = false
@@ -79,24 +80,27 @@ struct EditExpertView: View {
                 documents = expert.documents
             }
             .sheet(isPresented: $isShowingFilePicker) {
-                FilePicker(fileData: $fileData, fileURL: $fileURL)
+                FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
             }
             .onChange(of: fileData) { newValue in
-                if let data = fileData, let url = fileURL {
-                    addDocument(data: data, url: url)
+                if let data = fileData, let url = fileURL, let dataType = documentType {
+                    addDocument(data: data, url: url, dataType: dataType)
                 }
             }
         }
     }
     
-    func addDocument(data: Data, url: URL) {
+    func addDocument(data: Data, url: URL, dataType: UTType) {
         let moc = DataController.shared.managedObjectContext
         var document = DocumentInfo(fileURL: url, fileType: .text, status: .training)
         documents.append(document)
         let managedDocument = CDDocument.managedDocument(from: document, context: moc)
         let managedExpert = CDExpert.managedExpert(from: expert, context: moc)
         managedExpert.addToDocuments(managedDocument)
-        let parser = DocumentParser(data: data, document: managedDocument, expert: managedExpert)
+        let parser = DocumentParser(data: data,
+                                    dataType: dataType,
+                                    document: managedDocument,
+                                    expert: managedExpert)
         Task {
             do {
                 try await parser.parse()
