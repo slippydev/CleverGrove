@@ -8,40 +8,45 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+class ExpertToEdit: ObservableObject {
+    @Published var expert: CDExpert?
+}
+
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
     
-    @State var expert: ExpertProfile
+    @ObservedObject var expert: CDExpert
     @State private var name: String = ""
     @State private var description: String = ""
     @State private var image: Image = Image(systemName: "questionmark.square.dashed")
     @State private var fileData: Data?
     @State private var fileURL: URL?
     @State private var documentType: UTType?
-    @State private var documents = [DocumentInfo]()
-    
+    @State private var documents = [CDDocument]()
+    @State private var trainingProgress = 0.0
+
     @State private var isShowingFilePicker = false
     @State private var isShowingParsingError = false
+    @State private var parsingTask: Task<Void, Never>? = nil
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
-                ScrollView {
+                VStack {
                     VStack(alignment: .center) {
                         ZStack {
-                            ExpertProfileImage(image: image, geo: geometry)
+                            ExpertProfileImage(image: Image(expert.image ?? ""), geo: geometry)
                                 .colorMultiply(.gray)
                                 .saturation(0.5)
                             SelectionBox(geo: geometry)
                         }
                         Divider()
-                        TextField(expert.name, text: $name)
+                        TextField(expert.name ?? "", text: $name)
                             .font(.title.bold())
                             .padding(.bottom, 5)
                             .multilineTextAlignment(.center)
                         
                         TextEditor(text: $description)
-                            .padding(.horizontal, 20)
                             .multilineTextAlignment(.center)
                     }
                     Divider()
@@ -59,8 +64,9 @@ struct EditExpertView: View {
                                 .frame(width: 25, height: 25)
                                 .padding(10)
                         }
+                        .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
                     }
-                    DocumentList(documents: $documents)
+                    DocumentList(expert: expert, trainingProgress: $trainingProgress)
                         .padding(.bottom)
                 }
             }
@@ -73,61 +79,71 @@ struct EditExpertView: View {
                     Text("Done")
                 }
             }
-            .onAppear() {
-                description = expert.description
-                name = expert.name
-                image = Image(expert.image ?? "")
-                documents = expert.documents
-            }
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
+            }
+            .alert("Parsing failure with this document.", isPresented: $isShowingParsingError) {
+                Button("OK", role: .cancel) { }
             }
             .onChange(of: fileData) { newValue in
                 if let data = fileData, let url = fileURL, let dataType = documentType {
                     addDocument(data: data, url: url, dataType: dataType)
                 }
             }
+            .onAppear() {
+                description = expert.desc ?? ""
+                name = expert.name ?? ""
+            }
+            .onDisappear {
+                // Cancel the parsing task if the view is disappearing
+                parsingTask?.cancel()
+            }
         }
     }
     
     func addDocument(data: Data, url: URL, dataType: UTType) {
-        let moc = DataController.shared.managedObjectContext
-        var document = DocumentInfo(fileURL: url, fileType: .text, status: .training)
-        documents.append(document)
-        let managedDocument = CDDocument.managedDocument(from: document, context: moc)
-        let managedExpert = CDExpert.managedExpert(from: expert, context: moc)
-        managedExpert.addToDocuments(managedDocument)
+        let document = CDDocument.document(context: DataController.shared.managedObjectContext,
+                                           fileURL: url,
+                                           fileType: FileType.fileType(for: dataType) ?? .text,
+                                           status: .training)
+        expert.addToDocuments(document)
+        DataController.shared.save()
+        
         let parser = DocumentParser(data: data,
                                     dataType: dataType,
-                                    document: managedDocument,
-                                    expert: managedExpert)
-        Task {
-            do {
-                try await parser.parse()
-            } catch {}
+                                    document: document,
+                                    expert: expert)
+        let progressHandler: (Double) -> Void = { progress in
+            DispatchQueue.main.async {
+                self.trainingProgress = progress
+            }
         }
-        document.changeStatus(newStatus: .trained)
+        
+        parsingTask = Task {
+            do {
+                try await parser.parse(progressHandler: progressHandler)
+                document.status = DocumentStatus.trained.rawValue
+                DataController.shared.save()
+            } catch {
+                // Parsing failed
+                expert.removeFromDocuments(document)
+                DataController.shared.save()
+            }
+        }
     }
     
     func saveChanges() {
-        let newExpert = ExpertProfile(id: expert.id,
-                                      image: "SampleProfile1",
-                                      name: name,
-                                      description: description,
-                                      documents: expert.documents)
-        let moc = DataController.shared.managedObjectContext
-        let _ = CDExpert.managedExpert(from: newExpert, context: moc)
-        do {
-            try moc.save()
-        } catch {
-            print("Error saving to Core data")
-        }
+        expert.name = name
+        expert.desc = description
+        expert.image = "SampleProfile1"
+        DataController.shared.save()
     }
+    
 }
 
-struct EditExpertView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditExpertView(expert: PreviewSamples.expert)
-    }
-}
+//struct EditExpertView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditExpertView(expert: PreviewSamples.expert)
+//    }
+//}
 

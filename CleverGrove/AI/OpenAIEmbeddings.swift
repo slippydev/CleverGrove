@@ -7,6 +7,7 @@
 
 import Foundation
 import OpenAIKit
+import SwiftUI
 
 struct EmbeddingsInfo {
     let path = "https://api.openai.com/v1/embeddings"
@@ -57,7 +58,7 @@ struct EmbeddingsResponse: Codable, DecodableResponse {
     
 }
 
-struct OpenAI {
+class OpenAI {
     let info = EmbeddingsInfo()
     
     var baseHeaders: [String: String] {
@@ -77,12 +78,17 @@ struct OpenAI {
         return result
     }
     
-    func getEmbeddings(input chunks: [String]) async -> Result<[Int:[Double]], OpenAIError> {
+    func getEmbeddings(input chunks: [String], progressHandler: @escaping (Double) -> Void) async -> Result<[Int:[Double]], OpenAIError> {
         var embeddings = [Int:[Double]]()
         for (i, chunk) in chunks.enumerated() {
+            if Task.isCancelled {
+                return .failure(.cancelled)
+            }
             let result = await getEmbeddings(input: chunk)
             switch result {
             case .success(let response):
+                progressHandler(Double(i) / Double(chunks.count))
+                
                 if let embedding = response.embedding {
                     embeddings[i] = embedding
                 }

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct DocumentCapsule: View {
     
-    @Binding var document: DocumentInfo
+    @ObservedObject var document: CDDocument
+    @Binding var trainingProgress: Double
     
     var body: some View {
         HStack {
-            document.image
+            FileType(rawValue: document.filetype ?? "")?.image
                 .resizable()
                 .frame(width: 40, height: 48)
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 3.0, height: 3.0)))
@@ -22,11 +23,15 @@ struct DocumentCapsule: View {
                         .strokeBorder(.white, lineWidth: 1)
                     )
             VStack(alignment: .leading) {
-                Text(document.fileName)
-                    .foregroundColor(Color("Primary"))
+                Text(document.fileName ?? "")
+                    .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .trained) ? Color.primary : Color.red)
                     .font(.headline)
-                Text(document.status.rawValue)
-                    .foregroundColor(.secondary)
+                Text(document.status ?? "")
+                    .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .trained) ? Color.secondary : Color.red)
+                if DocumentStatus(rawValue:document.status ?? "") == .training {
+                    ProgressView("Training…  \(Int(trainingProgress * 100))%", value: trainingProgress, total: 1.0)
+                        .foregroundColor(Color.blue)
+                }
             }
         }
         .padding(.horizontal)
@@ -35,6 +40,7 @@ struct DocumentCapsule: View {
 
 struct DocumentCapsule_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentCapsule(document: .constant(PreviewSamples.document))
+//        DocumentCapsule(document: PreviewSamples.documentTrained, trainingProgress: .constant(0.34))
+        DocumentCapsule(document: PreviewSamples.documentTraining, trainingProgress: .constant(0.69))
     }
 }

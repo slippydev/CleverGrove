@@ -20,11 +20,12 @@ struct DocumentParser {
     let dataType: UTType
     let document: CDDocument
     let expert: CDExpert
+    
     let batchSize = 1024  // can submit up to 2048 embedding inputs per request
     private let ai = OpenAICoordinator.shared
     private let moc = DataController.shared.managedObjectContext
     
-    func parse() async throws {
+    func parse(progressHandler: @escaping (Double) -> Void) async throws {
         guard let decoder = documentDecoder(for: dataType) else {
             return // FIXME: probably want to let the user know
         }
@@ -34,7 +35,7 @@ struct DocumentParser {
         } catch {
             throw error
         }
-        let result = await ai.getEmbeddings(for: chunks)
+        let result = await ai.getEmbeddings(for: chunks, progressHandler:progressHandler)
         
         // Create an array of CDTextChunk objects out of the document
         switch result {
@@ -49,13 +50,6 @@ struct DocumentParser {
             }
         case .failure(let error):
             print(error.localizedDescription)
-            throw ParserError.parsingError
-        }
-        
-        // Save the chunks to Core Data
-        do {
-            try moc.save()
-        } catch {
             throw ParserError.parsingError
         }
     }

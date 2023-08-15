@@ -15,7 +15,7 @@ class OpenAICoordinator {
     static let shared = OpenAICoordinator()
     
     let openAI: OpenAIKit
-    let openAIEmbedding = OpenAI()
+    var openAIEmbedding = OpenAI()
     
     private init() {
         openAI = OpenAIKit(apiToken: KeyStore.key(from: .openAI).api_key,
@@ -33,9 +33,8 @@ class OpenAICoordinator {
         }
     }
     
-    func getEmbeddings(for chunks: [String]) async -> Result<[[Double]], OpenAIError> {
-        //TODO: Add some mechanism for tracking progress, and sending the chunk progress out to the UI
-        let result = await openAIEmbedding.getEmbeddings(input: chunks)
+    func getEmbeddings(for chunks: [String], progressHandler: @escaping (Double) -> Void) async -> Result<[[Double]], OpenAIError> {
+        let result = await openAIEmbedding.getEmbeddings(input: chunks, progressHandler: progressHandler)
         var embeddings = [[Double]]()
         switch result {
         case .success(let dictOfEmbeddings):

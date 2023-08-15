@@ -8,26 +8,39 @@
 import SwiftUI
 
 struct DocumentList: View {
-    @Binding var documents: [DocumentInfo]
+    @ObservedObject var expert: CDExpert
+    @Binding var trainingProgress: Double
     
     var body: some View {
-        ScrollView() {
-            VStack(alignment: .leading) {
-                ForEach($documents) { $document in
+        VStack(alignment: .leading) {
+            List {
+                ForEach(expert.documentsAsArray) { document in
                     NavigationLink {
                         // Link to document
                     } label: {
-                        DocumentCapsule(document: $document)
+                        DocumentCapsule(document: document, trainingProgress: $trainingProgress)
+                    }
+                    .swipeActions() {
+                        Button(role: .destructive) {
+                            remove(document: document, from: expert)
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
+                        }
                     }
                 }
             }
         }
+    }
+    
+    func remove(document: CDDocument, from expert: CDExpert) {
+        expert.removeFromDocuments(document)
+        DataController.shared.save()
     }
 }
 
 
 struct DocumentList_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentList(documents: .constant(PreviewSamples.documents))
+        DocumentList(expert: PreviewSamples.expert, trainingProgress: .constant(1.0))
     }
 }
