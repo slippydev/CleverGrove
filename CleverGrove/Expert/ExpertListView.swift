@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+class ExpertToDelete: ObservableObject {
+    @Published var expert: CDExpert?
+}
+
 struct ExpertListView: View {
     
     @FetchRequest(sortDescriptors: [
@@ -14,6 +18,8 @@ struct ExpertListView: View {
     ]) var experts: FetchedResults<CDExpert>
     
     @State var isShowingEditSheet = false
+    @State var isShowingDeleteExpertConfirmation = false
+    @StateObject var expertToDelete = ExpertToDelete()
     @StateObject var expertToEdit = ExpertToEdit()
     
     var body: some View {
@@ -53,7 +59,8 @@ struct ExpertListView: View {
                             .tint(.indigo)
                             
                             Button(role: .destructive) {
-                                // Remove the expert from Core Data
+                                expertToDelete.expert = expert
+                                isShowingDeleteExpertConfirmation = true
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
@@ -66,6 +73,27 @@ struct ExpertListView: View {
         .sheet(isPresented: $isShowingEditSheet) {
             EditExpertView(expert: expertToEdit.expert ?? CDExpert(context: DataController.shared.managedObjectContext))
         }
+        .alert("Delete Expert?", isPresented: $isShowingDeleteExpertConfirmation) {
+            Button(role: .destructive) {
+                if let expert = expertToDelete.expert {
+                    expertToDelete.expert = nil
+                    remove(expert: expert)
+                }
+            } label: {
+                Text("Delete \(expertToDelete.expert?.name ?? "")")
+            }
+            Button(role: .cancel) {
+                expertToDelete.expert = nil
+            } label: {
+                Text("Don't Delete")
+            }
+        }
+    }
+    
+    func remove(expert: CDExpert) {
+        print("Deleted")
+        DataController.shared.managedObjectContext.delete(expert)
+        DataController.shared.save()
     }
 }
 
