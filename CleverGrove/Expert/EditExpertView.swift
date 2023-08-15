@@ -32,7 +32,7 @@ struct EditExpertView: View {
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
-                ScrollView {
+                VStack {
                     VStack(alignment: .center) {
                         ZStack {
                             ExpertProfileImage(image: Image(expert.image ?? ""), geo: geometry)
@@ -47,7 +47,6 @@ struct EditExpertView: View {
                             .multilineTextAlignment(.center)
                         
                         TextEditor(text: $description)
-                            .padding(.horizontal, 20)
                             .multilineTextAlignment(.center)
                     }
                     Divider()

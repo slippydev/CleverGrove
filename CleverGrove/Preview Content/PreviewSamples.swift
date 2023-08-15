@@ -33,4 +33,22 @@ struct PreviewSamples {
     static var documentTrained: CDDocument {
         CDDocument.document(context: DataController.shared.managedObjectContext, fileURL: URL(string: "file://test/me/myfile.txt")!, fileType: .text, status: .trained)
     }
+    
+    static var documents: [CDDocument] {
+        let moc = DataController.shared.managedObjectContext
+        return [CDDocument.document(context: moc, fileURL: URL(string: "file://test/me/myfile.txt")!, fileType: .text, status: .trained),
+                CDDocument.document(context: moc, fileURL: URL(string: "file://test/me/myfile.pdf")!, fileType: .pdf, status: .trained),
+                CDDocument.document(context: moc, fileURL: URL(string: "file://test/me/coolfile.txt")!, fileType: .text, status: .training)]
+    }
+    
+    static var expert: CDExpert {
+        let expert = CDExpert(context: DataController.shared.managedObjectContext)
+        expert.id = UUID()
+        expert.name = "Bobby Bo Body"
+        expert.desc = "Bobby knows all"
+        expert.image = "SampleProfile3"
+        expert.addToDocuments(PreviewSamples.documentTrained)
+        // FIXME: Add Text chunks.
+        return expert
+    }
 }
