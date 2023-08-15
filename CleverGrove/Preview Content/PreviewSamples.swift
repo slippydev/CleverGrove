@@ -9,12 +9,6 @@ import Foundation
 import SwiftUI
 
 struct PreviewSamples {
-    static let document = DocumentInfo(fileType: .text, fileName: "HopeInhumanityRules", path: "file:///somewhere/Documents/HopeInhumanityRules.txt", status: .untrained)
-    
-    static let documents = [
-        DocumentInfo(fileType: .text, fileName: "ApolalypseWorldRules", path: "file:///somewhere/Documents/ApolalypseWorldRules.txt", status: .trained),
-        DocumentInfo(fileType: .text, fileName: "HopeInhumanityRules", path: "file:///somewhere/Documents/HopeInhumanityRules.txt", status: .untrained)
-    ]
     
     static var chatModel: ChatModel {
         let model = ChatModel()

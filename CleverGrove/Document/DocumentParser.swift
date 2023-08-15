@@ -52,12 +52,12 @@ struct DocumentParser {
             throw ParserError.parsingError
         }
         
-        // Save the chunks to Core Data
-        do {
-            try moc.save()
-        } catch {
-            throw ParserError.parsingError
-        }
+//        // Save the chunks to Core Data
+//        do {
+//            try moc.save()
+//        } catch {
+//            throw ParserError.parsingError
+//        }
     }
     
     private func documentDecoder(for type: UTType) -> DocumentDecoder? {

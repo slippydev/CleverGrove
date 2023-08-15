@@ -80,6 +80,9 @@ struct EditExpertView: View {
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
             }
+            .alert("Parsing failure with this document.", isPresented: $isShowingParsingError) {
+                Button("OK", role: .cancel) { }
+            }
             .onChange(of: fileData) { newValue in
                 if let data = fileData, let url = fileURL, let dataType = documentType {
                     addDocument(data: data, url: url, dataType: dataType)
@@ -93,33 +96,37 @@ struct EditExpertView: View {
     }
     
     func addDocument(data: Data, url: URL, dataType: UTType) {
-        let moc = DataController.shared.managedObjectContext
-        var document = DocumentInfo(fileURL: url, fileType: .text, status: .training)
-        let managedDocument = CDDocument.managedDocument(from: document, context: moc)
-        expert.addToDocuments(managedDocument)
+        let document = CDDocument.document(context: DataController.shared.managedObjectContext,
+                                           fileURL: url,
+                                           fileType: FileType.fileType(for: dataType) ?? .text,
+                                           status: .training)
+        expert.addToDocuments(document)
+        DataController.shared.save()
+        
         let parser = DocumentParser(data: data,
                                     dataType: dataType,
-                                    document: managedDocument,
+                                    document: document,
                                     expert: expert)
         Task {
             do {
                 try await parser.parse()
-            } catch {}
+                document.status = DocumentStatus.trained.rawValue
+                DataController.shared.save()
+            } catch {
+                // Parsing failed
+                document.status = DocumentStatus.untrained.rawValue
+                DataController.shared.save()
+            }
         }
-        document.changeStatus(newStatus: .trained)
     }
     
     func saveChanges() {
         expert.name = name
         expert.desc = description
         expert.image = "SampleProfile1"
-        let moc = DataController.shared.managedObjectContext
-        do {
-            try moc.save()
-        } catch {
-            print("Error saving to Core data")
-        }
+        DataController.shared.save()
     }
+    
 }
 
 //struct EditExpertView_Previews: PreviewProvider {

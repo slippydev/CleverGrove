@@ -25,6 +25,14 @@ class DataController: ObservableObject {
         container.viewContext
     }
     
+    func save() {
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Error saving to Core data")
+        }
+    }
+    
     func fetchDocument(id: UUID) -> CDDocument? {
         let fetchRequest = CDDocument.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
