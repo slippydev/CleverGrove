@@ -22,7 +22,6 @@ struct PreviewSamples {
         model.addUserChat(message: "waaaasssuuuuup!")
         model.addResponse(message: "bruh")
         model.addUserChat(message: "wut?")
-        model.addResponse(message: "dude that's so 20 years ago what are you 76 years old?")
         return model
     }
     

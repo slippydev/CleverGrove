@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ChatView: View {
     @ObservedObject var model = ChatModel()
-    @State private var isWaitingForAnswer = false
+    @State var isWaitingForAnswer = false
     @State private var message = ""
     @State private var response = ""
     @ObservedObject var expert: CDExpert
@@ -27,6 +27,11 @@ struct ChatView: View {
                             Text(model.messages[index])
                         }
                         .id(index)
+                    }
+                    if isWaitingForAnswer {
+                        ChatBubble(position: .left, color: Color("ChatBubbleLeft")) {
+                            TypingIndicator()
+                        }
                     }
                 }
                 .onAppear() {
@@ -78,16 +83,14 @@ struct ChatView: View {
 
     func ask(message: String) async {
         isWaitingForAnswer = true
-//        if let expert = expert {
-            await response = OpenAICoordinator.shared.ask(question: message, expert: expert)
-//        }
+        await response = OpenAICoordinator.shared.ask(question: message, expert: expert)
         isWaitingForAnswer = false
     }
     
 }
 
-//struct ChatView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChatView(model: PreviewSamples.chatModel, expert: .constant(PreviewSamples.expert))
-//    }
-//}
+struct ChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChatView(model: PreviewSamples.chatModel, isWaitingForAnswer: true, expert: PreviewSamples.expert)
+    }
+}
