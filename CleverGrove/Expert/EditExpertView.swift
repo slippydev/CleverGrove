@@ -23,10 +23,12 @@ struct EditExpertView: View {
     @State private var fileURL: URL?
     @State private var documentType: UTType?
     @State private var documents = [CDDocument]()
-    
+    @State private var trainingProgress = 0.0
+
     @State private var isShowingFilePicker = false
     @State private var isShowingParsingError = false
-   
+    @State private var parsingTask: Task<Void, Never>? = nil
+    
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -63,8 +65,9 @@ struct EditExpertView: View {
                                 .frame(width: 25, height: 25)
                                 .padding(10)
                         }
+                        .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
                     }
-                    DocumentList(expert: expert)
+                    DocumentList(expert: expert, trainingProgress: $trainingProgress)
                         .padding(.bottom)
                 }
             }
@@ -92,6 +95,10 @@ struct EditExpertView: View {
                 description = expert.desc ?? ""
                 name = expert.name ?? ""
             }
+            .onDisappear {
+                // Cancel the parsing task if the view is disappearing
+                parsingTask?.cancel()
+            }
         }
     }
     
@@ -107,14 +114,20 @@ struct EditExpertView: View {
                                     dataType: dataType,
                                     document: document,
                                     expert: expert)
-        Task {
+        let progressHandler: (Double) -> Void = { progress in
+            DispatchQueue.main.async {
+                self.trainingProgress = progress
+            }
+        }
+        
+        parsingTask = Task {
             do {
-                try await parser.parse()
+                try await parser.parse(progressHandler: progressHandler)
                 document.status = DocumentStatus.trained.rawValue
                 DataController.shared.save()
             } catch {
                 // Parsing failed
-                document.status = DocumentStatus.untrained.rawValue
+                expert.removeFromDocuments(document)
                 DataController.shared.save()
             }
         }

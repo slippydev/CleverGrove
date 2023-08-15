@@ -25,4 +25,12 @@ struct PreviewSamples {
         model.addResponse(message: "dude that's so 20 years ago what are you 76 years old?")
         return model
     }
+    
+    static var documentTraining: CDDocument {
+        CDDocument.document(context: DataController.shared.managedObjectContext, fileURL: URL(string: "file://test/me/myfile.txt")!, fileType: .text, status: .training)
+    }
+    
+    static var documentTrained: CDDocument {
+        CDDocument.document(context: DataController.shared.managedObjectContext, fileURL: URL(string: "file://test/me/myfile.txt")!, fileType: .text, status: .trained)
+    }
 }

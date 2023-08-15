@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DocumentList: View {
     @ObservedObject var expert: CDExpert
+    @Binding var trainingProgress: Double
     
     var body: some View {
         ScrollView() {
@@ -17,7 +18,7 @@ struct DocumentList: View {
                     NavigationLink {
                         // Link to document
                     } label: {
-                        DocumentCapsule(document: document)
+                        DocumentCapsule(document: document, trainingProgress: $trainingProgress)
                     }
                 }
             }

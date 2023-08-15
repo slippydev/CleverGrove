@@ -14,6 +14,7 @@ struct ExpertView: View {
     @State private var description: String = ""
     @State private var image: Image = Image(systemName: "questionmark.square.dashed")
     @State private var documents = [CDDocument]()
+    @State private var trainingProgress = 0.0
     
     @State private var showingEditView = false
     @Environment(\.dismiss) var dismiss
@@ -36,7 +37,7 @@ struct ExpertView: View {
                         .font(.title2)
                         .padding([.bottom, .top], 10)
                         .foregroundColor(Color("Primary"))
-                    DocumentList(expert: expert)
+                    DocumentList(expert: expert, trainingProgress: $trainingProgress)
                         .padding(.bottom)
                 }
             }

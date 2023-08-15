@@ -25,6 +25,7 @@ enum OpenAIError: Error {
     case invalidResponse
     case badStatus(String)
     case jsonDecodingError
+    case cancelled
 }
 
 struct OpenAINetwork {
