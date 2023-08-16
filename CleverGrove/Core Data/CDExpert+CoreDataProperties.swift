@@ -2,7 +2,7 @@
 //  CDExpert+CoreDataProperties.swift
 //  CleverGrove
 //
-//  Created by Derek Gour on 2023-08-11.
+//  Created by Derek Gour on 2023-08-16.
 //
 //
 
@@ -16,12 +16,13 @@ extension CDExpert {
         return NSFetchRequest<CDExpert>(entityName: "CDExpert")
     }
 
-    @NSManaged public var image: String?
-    @NSManaged public var name: String?
     @NSManaged public var desc: String?
     @NSManaged public var id: UUID?
+    @NSManaged public var image: String?
+    @NSManaged public var name: String?
     @NSManaged public var documents: NSSet?
     @NSManaged public var textChunks: NSSet?
+    @NSManaged public var chatExchanges: NSSet?
 
 }
 
@@ -56,6 +57,23 @@ extension CDExpert {
 
     @objc(removeTextChunks:)
     @NSManaged public func removeFromTextChunks(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for chatExchanges
+extension CDExpert {
+
+    @objc(addChatExchangesObject:)
+    @NSManaged public func addToChatExchanges(_ value: CDChatExchange)
+
+    @objc(removeChatExchangesObject:)
+    @NSManaged public func removeFromChatExchanges(_ value: CDChatExchange)
+
+    @objc(addChatExchanges:)
+    @NSManaged public func addToChatExchanges(_ values: NSSet)
+
+    @objc(removeChatExchanges:)
+    @NSManaged public func removeFromChatExchanges(_ values: NSSet)
 
 }
 
