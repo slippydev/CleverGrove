@@ -11,7 +11,7 @@ import SwiftUI
 
 @main
 struct CleverGroveApp: App {
-    
+
     var body: some Scene {
         WindowGroup {
             ExpertListView()

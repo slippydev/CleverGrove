@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */; };
 		5B58510D2A8C1B7200A01AAA /* View-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */; };
+		5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */; };
 		5B58A13E2A8400030008C270 /* ExpertProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A13D2A8400030008C270 /* ExpertProfileImage.swift */; };
 		5B58A1402A8402940008C270 /* DocumentCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A13F2A8402940008C270 /* DocumentCapsule.swift */; };
 		5B58A1422A840B310008C270 /* ExpertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1412A840B310008C270 /* ExpertView.swift */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extensions.swift"; sourceTree = "<group>"; };
+		5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPicker.swift; sourceTree = "<group>"; };
 		5B58A13D2A8400030008C270 /* ExpertProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertProfileImage.swift; sourceTree = "<group>"; };
 		5B58A13F2A8402940008C270 /* DocumentCapsule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCapsule.swift; sourceTree = "<group>"; };
 		5B58A1412A840B310008C270 /* ExpertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertView.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				5B58A13D2A8400030008C270 /* ExpertProfileImage.swift */,
 				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
 				5B58A1432A840F600008C270 /* SelectionBox.swift */,
+				5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */,
 			);
 			path = Expert;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */,
 				5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */,
 				5B58A1BF2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift in Sources */,
+				5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
 				5BA8F1272A8192E700C093C8 /* ChatModel.swift in Sources */,
 				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,

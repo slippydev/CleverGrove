@@ -24,9 +24,11 @@ struct EditExpertView: View {
     @State private var documentType: UTType?
     @State private var documents = [CDDocument]()
     @State private var trainingProgress = 0.0
-
+    @State private var selectedProfileImage: String = ""
+    
     @State private var isShowingFilePicker = false
     @State private var isShowingParsingError = false
+    @State private var isShowingImagePicker = false
     @State private var parsingTask: Task<Void, Never>? = nil
     
     var body: some View {
@@ -39,6 +41,9 @@ struct EditExpertView: View {
                                 .colorMultiply(.gray)
                                 .saturation(0.5)
                             SelectionBox(geo: geometry)
+                                .onTapGesture {
+                                    isShowingImagePicker = true
+                                }
                         }
                         Divider()
                         TextField(expert.name ?? "", text: $name)
@@ -82,6 +87,9 @@ struct EditExpertView: View {
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
             }
+            .sheet(isPresented: $isShowingImagePicker) {
+                CharacterPicker(selectedImage: $selectedProfileImage)
+            }
             .alert("Parsing failure with this document.", isPresented: $isShowingParsingError) {
                 Button("OK", role: .cancel) { }
             }
@@ -90,6 +98,9 @@ struct EditExpertView: View {
                     addDocument(data: data, url: url, dataType: dataType)
                 }
             }
+            .onChange(of: selectedProfileImage, perform: { _ in
+                expert.image = selectedProfileImage
+            })
             .onAppear() {
                 description = expert.desc ?? ""
                 name = expert.name ?? ""
@@ -135,7 +146,7 @@ struct EditExpertView: View {
     func saveChanges() {
         expert.name = name
         expert.desc = description
-        expert.image = "SampleProfile1"
+        expert.image = selectedProfileImage
         DataController.shared.save()
     }
     
