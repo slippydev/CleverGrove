@@ -14,7 +14,7 @@ struct ChatViewHeader: View {
         HStack(alignment: .top) {
             Image(expert.image ?? "")
                 .resizable()
-                .frame(width: 50, height: 50, alignment: .topLeading)
+                .frame(width: 45, height: 45, alignment: .topLeading)
                 .clipShape(Circle())
                 .overlay(
                     Circle()
@@ -32,8 +32,8 @@ struct ChatViewHeader: View {
     }
 }
 
-//struct ChatViewHeader_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChatViewHeader(name: .constant("Bob"), image: .constant("SampleProfile3"))
-//    }
-//}
+struct ChatViewHeader_Previews: PreviewProvider {
+    static var previews: some View {
+        ChatViewHeader(expert: PreviewSamples.expert)
+    }
+}

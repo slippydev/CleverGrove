@@ -9,38 +9,51 @@ import SwiftUI
 
 
 struct ChatView: View {
-    @ObservedObject var model = ChatModel()
     @State var isWaitingForAnswer = false
-    @State private var message = ""
+    @State var recentQuery = ""
+    @State private var userInput = ""
     @State private var response = ""
+    @State private var relevantChunks = [CDTextChunk]()
     @ObservedObject var expert: CDExpert
     
     @FocusState private var inputInFocus: Bool
+    
+    var chatExchanges: [CDChatExchange] {
+        expert.chatExchanges() // by default this is limted to 20 exchanges
+    }
+    
+    var exchangeCount: Int {
+        chatExchanges.count - 1
+    }
     
     var body: some View {
         ScrollViewReader { scroller in
             VStack {
                 ScrollView {
-                    ForEach(0..<model.messages.count, id:\.self) { index in
-                        let color = Color(model.positions[index] == BubblePosition.right ? "ChatBubbleRight" : "ChatBubbleLeft")
-                        ChatBubble(position: model.positions[index], color: color) {
-                            Text(model.messages[index])
+                    ForEach(Array(chatExchanges.enumerated()), id:\.element) { index, exchange in
+                        VStack {
+                            ChatBubble(position: .right, color: Color("ChatBubbleRight")) {
+                                Text(exchange.query ?? "")
+                            }
+                            ChatBubble(position: .left, color: Color("ChatBubbleLeft")) {
+                                Text(exchange.response ?? "")
+                            }
                         }
                         .id(index)
                     }
                     if isWaitingForAnswer {
+                        ChatBubble(position: .right, color: Color("ChatBubbleRight")) {
+                            Text(recentQuery)
+                        }
                         ChatBubble(position: .left, color: Color("ChatBubbleLeft")) {
                             TypingIndicator()
                         }
                     }
+                    Spacer()
                 }
-                .onAppear() {
-                    scroller.scrollTo(model.messages.count-1, anchor: .bottom)
-                }
-                .padding(.top)
-
+                
                 HStack {
-                    TextEditor(text: $message)
+                    TextEditor(text: $userInput)
                         .focused($inputInFocus)
                     Button() {
                         processChat()
@@ -56,11 +69,14 @@ struct ChatView: View {
                 )
                 .frame(height: 40)
                 .disabled(isWaitingForAnswer == true)
-                .onChange(of: response, perform: { _ in
-                    model.addResponse(message: response)
-                })
-                .padding()
+                .padding([.horizontal], 10)
             }
+            .onAppear() {
+                scroller.scrollTo(exchangeCount, anchor: .bottom)
+            }
+            .onChange(of: isWaitingForAnswer, perform: { _ in
+                scroller.scrollTo(exchangeCount, anchor: .bottom)
+            })
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -71,26 +87,39 @@ struct ChatView: View {
 
     func processChat() {
         inputInFocus = false
-        if !message.isEmpty {
-            model.addUserChat(message: message)
-            let query = message
-            message = ""
+        if !userInput.isEmpty {
+            recentQuery = userInput
+            userInput = ""
             Task {
-                await ask(message: query)
+                await ask(query: recentQuery)
             }
         }
     }
 
-    func ask(message: String) async {
+    func ask(query: String) async {
         isWaitingForAnswer = true
-        await response = OpenAICoordinator.shared.ask(question: message, expert: expert)
+        await (response, relevantChunks) = OpenAICoordinator.shared.ask(question: query, expert: expert)
+        saveExchange(query: query, tokenUsage: 0)
         isWaitingForAnswer = false
+    }
+    
+    func saveExchange(query: String, tokenUsage: Int) {
+        let exchange = CDChatExchange.chatExchange(context: DataController.shared.managedObjectContext,
+                                                   query: query,
+                                                   response: response,
+                                                   date: Date.now,
+                                                   tokenUsage: tokenUsage)
+        expert.addToChatExchanges(exchange)
+        exchange.addToTextchunks(NSSet(array: relevantChunks))
+        DataController.shared.save()
     }
     
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(model: PreviewSamples.chatModel, isWaitingForAnswer: true, expert: PreviewSamples.expert)
+        ChatView(isWaitingForAnswer: true,
+                 recentQuery: "wanna go for lunch?",
+                 expert: PreviewSamples.expert)
     }
 }

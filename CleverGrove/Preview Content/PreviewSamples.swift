@@ -10,19 +10,12 @@ import SwiftUI
 
 struct PreviewSamples {
     
-    static var chatModel: ChatModel {
-        let model = ChatModel()
-        model.addUserChat(message: "hello")
-        model.addResponse(message: "How are you?")
-        model.addUserChat(message: "you up?")
-        model.addUserChat(message: "nah bruh, I'm dead asleep")
-        model.addResponse(message: "cool cool")
-        model.addUserChat(message: "wyd")
-        model.addResponse(message: "not much, just chillin, having a bud")
-        model.addUserChat(message: "waaaasssuuuuup!")
-        model.addResponse(message: "bruh")
-        model.addUserChat(message: "wut?")
-        return model
+    static var chatExchanges: [CDChatExchange] {
+        let moc = DataController.shared.managedObjectContext
+//        let date1 = try? Date("2023‐08‐16T19:16:09Z", strategy: .iso8601)
+//        let date2 = try? Date("2023‐08‐16T20:19:09Z", strategy: .iso8601)
+        return [CDChatExchange.chatExchange(context: moc, query: "hello", response: "Hey how are you?", date: Date.now, tokenUsage: 0),
+                CDChatExchange.chatExchange(context: moc, query: "you up?", response: "Nah dog, I'm dead asleep", date: Date.now, tokenUsage: 0)]
     }
     
     static var documentTraining: CDDocument {
@@ -47,6 +40,7 @@ struct PreviewSamples {
         expert.desc = "Bobby knows all"
         expert.image = "SampleProfile3"
         expert.addToDocuments(PreviewSamples.documentTrained)
+        expert.addToChatExchanges(NSSet(array: PreviewSamples.chatExchanges))
         // FIXME: Add Text chunks.
         return expert
     }
