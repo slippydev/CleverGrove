@@ -45,6 +45,16 @@ public class CDExpert: NSManagedObject {
         return Array(slicedArray)
     }
     
+    func pastQueries(in range: Range<Int>) -> String {
+        var pastQueries = String()
+        for exchange in chatExchanges(in:0..<5) {
+            if let pastQuery = exchange.query {
+                pastQueries += "\n\(pastQuery)"
+            }
+        }
+        return pastQueries
+    }
+    
     var chatExchangesAsArray: [CDChatExchange] {
         let set = chatExchanges as? Set<CDChatExchange> ?? []
         let sortedArray = set.sorted { $0.timestamp ?? Date.now < $1.timestamp ?? Date.now }

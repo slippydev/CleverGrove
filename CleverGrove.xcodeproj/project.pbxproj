@@ -39,6 +39,7 @@
 		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
+		5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */; };
 		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
 		5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1192A81744A00C093C8 /* KeyStore.swift */; };
 		5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */; };
@@ -108,6 +109,7 @@
 		5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITests.swift; sourceTree = "<group>"; };
 		5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
+		5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
 		5BA8F1192A81744A00C093C8 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
 		5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSummary.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */,
 				5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */,
 				5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */,
+				5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
 				5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */,
+				5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */,
 				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
 				5B58A14C2A84379E0008C270 /* CleverGrove.xcdatamodeld in Sources */,
 				5B58A14E2A84386A0008C270 /* FileType.swift in Sources */,
