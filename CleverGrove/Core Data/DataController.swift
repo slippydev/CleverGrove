@@ -33,6 +33,10 @@ class DataController: ObservableObject {
         }
     }
     
+    func undoChanges() {
+        managedObjectContext.rollback()
+    }
+    
     func fetchDocument(id: UUID) -> CDDocument? {
         let fetchRequest = CDDocument.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)

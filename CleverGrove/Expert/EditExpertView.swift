@@ -76,12 +76,22 @@ struct EditExpertView: View {
                 }
             }
             .toolbar {
-                Spacer()
-                Button() {
-                    saveChanges()
-                    dismiss()
-                } label: {
-                    Text("Done")
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                    Button(role: .cancel) {
+                        DataController.shared.undoChanges()
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+                
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    Button() {
+                        saveChanges()
+                        dismiss()
+                    } label: {
+                        Text("Save")
+                    }
                 }
             }
             .sheet(isPresented: $isShowingFilePicker) {
@@ -152,9 +162,9 @@ struct EditExpertView: View {
     
 }
 
-//struct EditExpertView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditExpertView(expert: PreviewSamples.expert)
-//    }
-//}
+struct EditExpertView_Previews: PreviewProvider {
+    static var previews: some View {
+        EditExpertView(expert: PreviewSamples.expert)
+    }
+}
 
