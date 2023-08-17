@@ -14,24 +14,28 @@ enum BubblePosition {
 
 struct ChatBubble<Content>: View where Content: View {
     let position: BubblePosition
-    let color : Color
     let content: () -> Content
-    init(position: BubblePosition, color: Color, @ViewBuilder content: @escaping () -> Content) {
-        self.content = content
-        self.color = color
-        self.position = position
+    
+    var backgroundColor: Color {
+        position == .left ? Color("ChatBubbleLeft") : Color("ChatBubbleRight")
+    }
+    
+    var textColor: Color {
+        position == .left ? Color("SystemChatColor") : Color("UserChatColor")
     }
     
     var body: some View {
-        HStack(spacing: 0 ) {
+        HStack(spacing: 0) {
             content()
+//                .font(.body)
+                .font(.system(size: 19, design: .rounded))
                 .padding(.all, 15)
-                .foregroundColor(Color.white)
-                .background(color)
+                .foregroundColor(textColor)
+                .background(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 18))
                 .overlay(
                     Image(systemName: "arrowtriangle.left.fill")
-                        .foregroundColor(color)
+                        .foregroundColor(backgroundColor)
                         .rotationEffect(Angle(degrees: position == .left ? -50 : -130))
                         .offset(x: position == .left ? -5 : 5)
                     ,alignment: position == .left ? .bottomLeading : .bottomTrailing)
@@ -44,8 +48,8 @@ struct ChatBubble<Content>: View where Content: View {
 
 struct ChatBubble_Previews: PreviewProvider {
     static var previews: some View {
-        ChatBubble(position: .left, color: .blue, content: {
+        ChatBubble(position: .left) {
             Text("this is a text bubble")
-        })
+        }
     }
 }

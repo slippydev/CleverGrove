@@ -32,20 +32,20 @@ struct ChatView: View {
                 ScrollView {
                     ForEach(Array(chatExchanges.enumerated()), id:\.element) { index, exchange in
                         VStack {
-                            ChatBubble(position: .right, color: Color("ChatBubbleRight")) {
+                            ChatBubble(position: .right) {
                                 Text(exchange.query ?? "")
                             }
-                            ChatBubble(position: .left, color: Color("ChatBubbleLeft")) {
+                            ChatBubble(position: .left) {
                                 Text(exchange.response ?? "")
                             }
                         }
                         .id(index)
                     }
                     if isWaitingForAnswer {
-                        ChatBubble(position: .right, color: Color("ChatBubbleRight")) {
+                        ChatBubble(position: .right) {
                             Text(recentQuery)
                         }
-                        ChatBubble(position: .left, color: Color("ChatBubbleLeft")) {
+                        ChatBubble(position: .left) {
                             TypingIndicator()
                         }
                     }
@@ -53,23 +53,13 @@ struct ChatView: View {
                 }
                 
                 HStack {
-                    TextEditor(text: $userInput)
-                        .focused($inputInFocus)
-                    Button() {
+                    ChatTextField(string: $userInput, buttonAction: {
                         processChat()
-                    } label: {
-                        Image(systemName: "arrow.up.circle.fill")
-                    }
-                    .frame(height: 40, alignment: .trailing)
-                    .padding([.trailing], 5)
+                    })
+                        .focused($inputInFocus)
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
-                .frame(height: 40)
                 .disabled(isWaitingForAnswer == true)
-                .padding([.horizontal], 10)
+                .padding(10)
             }
             .onAppear() {
                 scroller.scrollTo(exchangeCount, anchor: .bottom)

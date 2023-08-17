@@ -30,6 +30,7 @@
 		5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993142A86F7D9009FC4CB /* DocumentList.swift */; };
 		5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993162A89B158009FC4CB /* DocumentDecoder.swift */; };
 		5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */; };
+		5B84DBC72A8E7C23004464EE /* ChatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B84DBC62A8E7C23004464EE /* ChatTextField.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
 		5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */; };
@@ -95,6 +96,7 @@
 		5B5993142A86F7D9009FC4CB /* DocumentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentList.swift; sourceTree = "<group>"; };
 		5B5993162A89B158009FC4CB /* DocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDecoder.swift; sourceTree = "<group>"; };
 		5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewHeader.swift; sourceTree = "<group>"; };
+		5B84DBC62A8E7C23004464EE /* ChatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextField.swift; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
 		5B94512B2A8083F100E30E9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				5BA8F1242A8190F800C093C8 /* ChatBubble.swift */,
 				5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */,
 				5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */,
+				5B84DBC62A8E7C23004464EE /* ChatTextField.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				5B58A1462A8424150008C270 /* PreviewSamples.swift in Sources */,
 				5B58A1AF2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift in Sources */,
 				5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */,
+				5B84DBC72A8E7C23004464EE /* ChatTextField.swift in Sources */,
 				5B5851122A8D1BDB00A01AAA /* CDChatExchange+CoreDataClass.swift in Sources */,
 				5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */,
 				5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */,

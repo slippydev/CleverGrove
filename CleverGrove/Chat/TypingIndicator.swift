@@ -34,8 +34,8 @@ struct TypingIndicator: View {
                                     duration: duration,
                                     delay: Double(index) * duration/3)
                 {
-                    colors[index] = Color.gray
-                    heights[index] = 15
+                    colors[index] = Color.white
+//                    heights[index] = 15
                 }
             }
         }
