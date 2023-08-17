@@ -18,7 +18,6 @@ struct EditExpertView: View {
     @ObservedObject var expert: CDExpert
     @State private var name: String = ""
     @State private var description: String = ""
-    @State private var image: Image = Image(systemName: "questionmark.square.dashed")
     @State private var fileData: Data?
     @State private var fileURL: URL?
     @State private var documentType: UTType?
@@ -31,49 +30,63 @@ struct EditExpertView: View {
     @State private var isShowingImagePicker = false
     @State private var parsingTask: Task<Void, Never>? = nil
     
+    @FocusState private var nameInFocus: Bool
+    
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
-                VStack {
-                    VStack(alignment: .center) {
-                        ZStack {
-                            ExpertProfileImage(image: Image(expert.image ?? ""), geo: geometry)
-                                .colorMultiply(.gray)
-                                .saturation(0.5)
-                            SelectionBox(geo: geometry)
-                                .onTapGesture {
-                                    isShowingImagePicker = true
-                                }
-                        }
-                        Divider()
-                        TextField(expert.name ?? "", text: $name)
-                            .font(.title.bold())
-                            .padding(.bottom, 5)
-                            .multilineTextAlignment(.center)
-                        
-                        TextEditor(text: $description)
-                            .multilineTextAlignment(.center)
+            VStack {
+                VStack(alignment: .center) {
+                    ZStack {
+                        CharacterImage(image: expert.image ?? "Person", isSelected: .constant(false))
+                            .frame(minHeight: 120)
+                            .overlay(alignment: .bottomTrailing) {
+                                Image(systemName: "square.and.pencil.circle")
+                                    .resizable()
+                                    .frame(width: 30, height: 30, alignment: .bottomTrailing)
+                                    .foregroundColor(.blue)
+                                    .offset(CGSize(width: 10, height: 0))
+                            }
+                            .onTapGesture {
+                                isShowingImagePicker = true
+                            }
                     }
+                    
                     Divider()
-                    HStack {
-                        Text("Training Documents")
-                            .font(.title2)
-                            .padding([.bottom, .top, .leading], 10)
-                            .foregroundColor(Color("Primary"))
-                        Spacer()
-                        Button() {
-                            isShowingFilePicker = true
-                        } label: {
-                            Image(systemName: "plus.square")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                                .padding(10)
-                        }
-                        .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
-                    }
-                    DocumentList(expert: expert, trainingProgress: $trainingProgress)
-                        .padding(.bottom)
+                    
+                    TextField(expert.name ?? "", text: $name)
+                        .focused($nameInFocus)
+                        .font(.title.bold())
+                        .padding([.bottom, .leading, .trailing], 5)
+                        .multilineTextAlignment(.center)
+                        .background(.thinMaterial)
+                    
+                    TextEditor(text: $description)
+                        .multilineTextAlignment(.center)
+                        .scrollContentBackground(.hidden) // <- Hide it
+                        .background(.thinMaterial)
+                        .frame(minHeight: 75, maxHeight: 75)
                 }
+                .frame(minHeight: 250)
+                
+                Divider()
+                HStack {
+                    Text("Training Documents")
+                        .font(.title2)
+                        .padding([.bottom, .top, .leading], 10)
+                        .foregroundColor(Color("Primary"))
+                    Spacer()
+                    Button() {
+                        isShowingFilePicker = true
+                    } label: {
+                        Image(systemName: "plus.square")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .padding(10)
+                    }
+                    .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
+                }
+                DocumentList(expert: expert, trainingProgress: $trainingProgress)
+                    .padding(.bottom)
             }
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
@@ -112,11 +125,15 @@ struct EditExpertView: View {
                 expert.image = selectedProfileImage
             })
             .onAppear() {
+                if (expert.image ?? "").isEmpty {
+                    nameInFocus = true
+                }
                 description = expert.desc ?? ""
                 name = expert.name ?? ""
             }
             .onDisappear {
                 // Cancel the parsing task if the view is disappearing
+                DataController.shared.undoChanges()
                 parsingTask?.cancel()
             }
         }
@@ -156,7 +173,9 @@ struct EditExpertView: View {
     func saveChanges() {
         expert.name = name
         expert.desc = description
-        expert.image = selectedProfileImage
+        if !selectedProfileImage.isEmpty {
+            expert.image = selectedProfileImage
+        }
         DataController.shared.save()
     }
     
