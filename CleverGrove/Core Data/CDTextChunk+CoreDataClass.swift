@@ -36,4 +36,14 @@ public class CDTextChunk: NSManagedObject {
                          embedding: TextChunk.embedding(from: embedding ?? ""))
     }
     
+    static func embeddingsArrayFrom(textChunks: [CDTextChunk]) -> [String: [Double]] {
+        var embeddings = [String: [Double]]()
+        for chunk in textChunks {
+            if let text = chunk.text {
+                embeddings[text] = chunk.embeddingAsArray
+            }
+        }
+        return embeddings
+    }
+    
 }

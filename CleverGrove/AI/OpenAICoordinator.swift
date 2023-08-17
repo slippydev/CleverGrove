@@ -48,9 +48,9 @@ class OpenAICoordinator {
         }
     }
     
-    func ask(question: String, expert: CDExpert) async -> String {
+    func ask(question: String, expert: CDExpert) async -> (String, [CDTextChunk]) {
         var answer = ""
-        let message = await queryMessage(query: question, expert: expert)
+        let (message, relevantChunks) = await queryMessage(query: question, expert: expert)
         
         Logger().info("MESSAGE TO OPENAI:\n\n===========\n\n\(message)\n\n===========\n\n")
         
@@ -61,46 +61,36 @@ class OpenAICoordinator {
         case .failure(let error):
             answer = error.localizedDescription
         }
-        return answer
+        return (answer, relevantChunks)
     }
     
-    private func queryMessage(query: String, expert: CDExpert) async -> String {
-        let allEmbeddings = embeddingsForExpert(expert: expert)
-        let relevantTexts = await nearest(query: query, embeddings: allEmbeddings)
+    private func queryMessage(query: String, expert: CDExpert) async -> (String, [CDTextChunk]) {
+        let relevantChunks = await nearest(query: query, expert: expert)
         let description = expert.desc ?? ""
         let introduction = "You are playing the role of an expert on the following topic:\n \(description) Use the information below to answer questions relevant to your area of expertise. These document sections are most relevant to the question. If the answer cannot be found in the documents provided, write \"I could not find an answer.\""
         var message = introduction
         
-        for text in relevantTexts {
+        for chunk in relevantChunks {
+            let text = chunk.text ?? ""
             let nextSection = "\n\nDocument section:\n\"\"\"\n\(text)\n\"\"\""
             message += nextSection
         }
         let question = "\n\nQuestion: \(query)"
         
-        return message + question
+        return (message + question, relevantChunks)
     }
     
-    private func embeddingsForExpert(expert: CDExpert) -> [String: [Double]] {
-        let moc = DataController.shared.managedObjectContext
-        let fetchRequest = CDTextChunk.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "expert == %@", expert as CVarArg)
-        guard let textChunks = try? moc.fetch(fetchRequest) else  { return [String: [Double]]() }
-        var embeddings = [String: [Double]]()
-        for chunk in textChunks {
-            if let text = chunk.text {
-                embeddings[text] = chunk.embeddingAsArray
-            }
-        }
-        return embeddings
+    private func nearest(query: String, expert: CDExpert, max: Int = 3) async -> [CDTextChunk] {
+        let textChunks = expert.textChunksAsArray
+        let (strings, _) = await stringsRankedByRelatedness(query: query, textChunks: textChunks)
+        let shortList = Array(strings.prefix(max))
+        let relevantChunks = expert.findTextChunks(with: shortList)
+        return relevantChunks
     }
     
-    private func nearest(query: String, embeddings: [String: [Double]], max: Int = 3) async -> [String] {
-        let (strings, _) = await stringsRankedByRelatedness(query: query, embeddings: embeddings)
-        return Array(strings.prefix(max))
-    }
-    
-    private func stringsRankedByRelatedness(query: String, embeddings: [String : [Double]]) async -> (strings: [String], relatednesses: [Double]) {
+    private func stringsRankedByRelatedness(query: String, textChunks: [CDTextChunk]) async -> (strings: [String], relatednesses: [Double]) {
         let queryEmbedding = await getEmbeddings(for: query)?.embedding ?? [Double]()
+        let embeddings = CDTextChunk.embeddingsArrayFrom(textChunks: textChunks)
         var result: [(String, Double)] = []
         for (_, row) in embeddings.enumerated() {
             let relatedness = cosineSimilarity(queryEmbedding, row.value)
