@@ -74,9 +74,31 @@ class OpenAICoordinator {
         case .success(let aiResult):
             answer = aiResult.choices.first?.message?.content ?? ""
         case .failure(let error):
+            // FIXME: This prints the error into the chat response. Not sure if this makes sense. Better to have a more natural response.
             answer = error.localizedDescription
         }
         return (answer, relevantChunks)
+    }
+    
+    func introduction(of expert: CDExpert) async -> String? {
+        guard let exchanges = expert.chatExchanges, exchanges.count == 0 else { return nil }
+        
+        var trainingTitles = expert.trainingDocumentTitles
+        let instructions = promptBuilder.introduction(name: expert.name ?? "", expertise: expert.desc ?? "", training: trainingTitles)
+        Logger().info("Introduction Instructions: \(instructions)\n")
+        
+        let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: instructions),
+                                                     previousMessages: [],
+                                                     model: .gptV3_5(.gptTurbo),
+                                                     maxTokens: 512,
+                                                     temperature: 1.0)
+        var introduction = ""
+        switch result {
+        case .success(let aiResult):
+            introduction = aiResult.choices.first?.message?.content ?? ""
+        case .failure(_): break // Do nothing if the introduction fails.
+        }
+        return introduction
     }
     
     private func nearest(query: String, expert: CDExpert, max: Int = 3, usePastQueries: Bool = false) async -> [CDTextChunk] {

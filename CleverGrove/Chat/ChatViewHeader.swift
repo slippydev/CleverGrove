@@ -24,7 +24,8 @@ struct ChatViewHeader: View {
             VStack(alignment: .leading, spacing: 3) {
                 Spacer()
                 Text(expert.name ?? "")
-                    .frame(height: 30, alignment: .bottom)
+                    .frame(height: 30, alignment: .center)
+                    .fontWeight(.bold)
                 Spacer()
             }
         }

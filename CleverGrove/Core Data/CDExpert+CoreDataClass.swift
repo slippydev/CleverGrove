@@ -30,6 +30,18 @@ public class CDExpert: NSManagedObject {
         return set.map { $0 }
     }
     
+    var trainingDocumentTitles: [String] {
+        var titles = [String]()
+        if let documents = documents {
+            for document in documents {
+                if let fileName = (document as AnyObject).fileName ?? "" {
+                    titles.append(fileName)
+                }
+            }
+        }
+        return titles
+    }
+    
     func chatExchanges(in range: Range<Int> = 0..<20) -> [CDChatExchange] {
         let set = chatExchanges as? Set<CDChatExchange> ?? []
         let sortedArray = set.sorted { $0.timestamp ?? Date.now < $1.timestamp ?? Date.now }
@@ -68,4 +80,5 @@ public class CDExpert: NSManagedObject {
         }
         return matchingChunks as! [CDTextChunk]
     }
+    
 }

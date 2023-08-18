@@ -286,8 +286,8 @@
 				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
 				5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */,
 				5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */,
-				5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */,
 				5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */,
+				5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";

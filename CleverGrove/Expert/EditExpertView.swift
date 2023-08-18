@@ -31,6 +31,7 @@ struct EditExpertView: View {
     @State private var parsingTask: Task<Void, Never>? = nil
     
     @FocusState private var nameInFocus: Bool
+    @FocusState private var descriptionInFocus: Bool
     
     var body: some View {
         NavigationView {
@@ -68,6 +69,7 @@ struct EditExpertView: View {
                         .padding(.top, 10)
                         
                     TextEditor(text: $description)
+                        .focused($descriptionInFocus)
                         .multilineTextAlignment(.center)
                         .scrollContentBackground(.hidden)
                         .background(Color("TextFieldBG"))
@@ -85,6 +87,8 @@ struct EditExpertView: View {
                         .padding([.top, .leading], 10)
                     Spacer()
                     Button() {
+                        nameInFocus = false
+                        descriptionInFocus = false
                         isShowingFilePicker = true
                     } label: {
                         Image(systemName: "plus.square")

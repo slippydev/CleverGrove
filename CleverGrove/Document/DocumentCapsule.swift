@@ -26,11 +26,13 @@ struct DocumentCapsule: View {
                 Text(document.fileName ?? "")
                     .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .trained) ? Color.primary : Color.red)
                     .font(.headline)
-                Text(document.status ?? "")
-                    .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .trained) ? Color.secondary : Color.red)
+                
                 if DocumentStatus(rawValue:document.status ?? "") == .training {
                     ProgressView("Training…  \(Int(trainingProgress * 100))%", value: trainingProgress, total: 1.0)
                         .foregroundColor(Color.blue)
+                } else {
+                    Text(document.status ?? "")
+                        .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .trained) ? Color.secondary : Color.red)
                 }
             }
         }

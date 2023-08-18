@@ -12,7 +12,7 @@ import CoreData
 @objc(CDChatExchange)
 public class CDChatExchange: NSManagedObject {
 
-    static func chatExchange(context: NSManagedObjectContext, query: String, response: String, date: Date, tokenUsage: Int) -> CDChatExchange {
+    static func chatExchange(context: NSManagedObjectContext, query: String?, response: String, date: Date, tokenUsage: Int) -> CDChatExchange {
         let chat = CDChatExchange(context: context)
         chat.id = UUID()
         chat.query = query

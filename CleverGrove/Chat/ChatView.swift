@@ -32,8 +32,10 @@ struct ChatView: View {
                 ScrollView {
                     ForEach(Array(chatExchanges.enumerated()), id:\.element) { index, exchange in
                         VStack {
-                            ChatBubble(position: .right) {
-                                Text(exchange.query ?? "")
+                            if let query = exchange.query {
+                                ChatBubble(position: .right) {
+                                    Text(query)
+                                }
                             }
                             ChatBubble(position: .left) {
                                 Text(exchange.response ?? "")
@@ -42,8 +44,10 @@ struct ChatView: View {
                         .id(index)
                     }
                     if isWaitingForAnswer {
-                        ChatBubble(position: .right) {
-                            Text(recentQuery)
+                        if !recentQuery.isEmpty {
+                            ChatBubble(position: .right) {
+                                Text(recentQuery)
+                            }
                         }
                         ChatBubble(position: .left) {
                             TypingIndicator()
@@ -63,6 +67,9 @@ struct ChatView: View {
             }
             .onAppear() {
                 scroller.scrollTo(exchangeCount, anchor: .bottom)
+                Task {
+                   await introduction()
+                }
             }
             .onChange(of: isWaitingForAnswer, perform: { _ in
                 scroller.scrollTo(exchangeCount, anchor: .bottom)
@@ -93,7 +100,16 @@ struct ChatView: View {
         isWaitingForAnswer = false
     }
     
-    func saveExchange(query: String, tokenUsage: Int) {
+    func introduction() async {
+        isWaitingForAnswer = true
+        if let intro = await OpenAICoordinator.shared.introduction(of: expert) {
+            response = intro
+            saveExchange(query: nil, tokenUsage: 0)
+        }
+        isWaitingForAnswer = false
+    }
+    
+    func saveExchange(query: String?, tokenUsage: Int) {
         let exchange = CDChatExchange.chatExchange(context: DataController.shared.managedObjectContext,
                                                    query: query,
                                                    response: response,
