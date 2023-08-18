@@ -40,40 +40,49 @@ struct EditExpertView: View {
                         CharacterImage(image: expert.image ?? "Person", isSelected: .constant(false))
                             .frame(minHeight: 120)
                             .overlay(alignment: .bottomTrailing) {
-                                Image(systemName: "square.and.pencil.circle")
+                                Image(systemName: "square.and.pencil")
                                     .resizable()
-                                    .frame(width: 30, height: 30, alignment: .bottomTrailing)
+                                    .frame(width: 25, height: 25, alignment: .bottomTrailing)
                                     .foregroundColor(.blue)
-                                    .offset(CGSize(width: 10, height: 0))
+                                    .offset(CGSize(width: 15, height: -10))
                             }
                             .onTapGesture {
                                 isShowingImagePicker = true
                             }
                     }
                     
-                    Divider()
-                    
                     TextField(expert.name ?? "", text: $name)
                         .focused($nameInFocus)
                         .font(.title.bold())
-                        .padding([.bottom, .leading, .trailing], 5)
+                        .padding(5)
                         .multilineTextAlignment(.center)
-                        .background(.thinMaterial)
+                        .background(Color("TextFieldBG"))
+                        .cornerRadius(10)
+                        .shadow(radius: 1.0)
                     
+                    Text("\(name) is an expert at:")
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(2)
+                        .padding(.top, 10)
+                        
                     TextEditor(text: $description)
                         .multilineTextAlignment(.center)
-                        .scrollContentBackground(.hidden) // <- Hide it
-                        .background(.thinMaterial)
+                        .scrollContentBackground(.hidden)
+                        .background(Color("TextFieldBG"))
                         .frame(minHeight: 75, maxHeight: 75)
+                        .cornerRadius(10)
+                        .shadow(radius: 1.0)
                 }
                 .frame(minHeight: 250)
+                .padding()
                 
                 Divider()
                 HStack {
                     Text("Training Documents")
                         .font(.title2)
-                        .padding([.bottom, .top, .leading], 10)
-                        .foregroundColor(Color("Primary"))
+                        .padding([.top, .leading], 10)
                     Spacer()
                     Button() {
                         isShowingFilePicker = true
