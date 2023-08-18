@@ -83,7 +83,7 @@ class OpenAICoordinator {
     func introduction(of expert: CDExpert) async -> String? {
         guard let exchanges = expert.chatExchanges, exchanges.count == 0 else { return nil }
         
-        var trainingTitles = expert.trainingDocumentTitles
+        let trainingTitles = expert.trainingDocumentTitles
         let instructions = promptBuilder.introduction(name: expert.name ?? "", expertise: expert.desc ?? "", training: trainingTitles)
         Logger().info("Introduction Instructions: \(instructions)\n")
         
