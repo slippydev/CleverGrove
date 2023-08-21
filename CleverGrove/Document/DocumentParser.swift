@@ -59,6 +59,8 @@ struct DocumentParser {
             return TextDecoder()
         } else if type.conforms(to: .pdf) {
             return PDFDecoder()
+        } else if type.conforms(to: .docx) {
+            return DocxDecoder()
         } else {
             return nil
         }
