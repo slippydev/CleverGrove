@@ -17,6 +17,7 @@ enum DocumentStatus: String {
 enum FileType: String {
     case text = "text"
     case pdf = "pdf"
+    case docx = "docx"
     // href link = "link"
     // ...etc
     
@@ -27,6 +28,8 @@ enum FileType: String {
             image = Image(systemName: "doc.plaintext")
         case .pdf:
             image = Image(systemName: "doc.richtext")
+        case .docx:
+            image = Image(systemName: "doc")
         }
         return image
     }
@@ -37,6 +40,8 @@ enum FileType: String {
             return .text
         case .pdf:
             return .pdf
+        case UTType(filenameExtension: "docx"):
+            return .docx
         default:
             return nil
         }

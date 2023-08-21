@@ -40,6 +40,9 @@
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
 		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
 		5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */; };
+		5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 5B9BD54E2A93A0B70098C1B2 /* Zip */; };
+		5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */; };
+		5B9BD5542A93B5720098C1B2 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 5B9BD5532A93B5720098C1B2 /* XMLCoder */; };
 		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
 		5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1192A81744A00C093C8 /* KeyStore.swift */; };
 		5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */; };
@@ -110,6 +113,7 @@
 		5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
 		5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
+		5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocxDecoder.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
 		5BA8F1192A81744A00C093C8 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
 		5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSummary.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B9BD5542A93B5720098C1B2 /* XMLCoder in Frameworks */,
+				5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */,
 				5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +183,7 @@
 				5B5993142A86F7D9009FC4CB /* DocumentList.swift */,
 				5B58A13F2A8402940008C270 /* DocumentCapsule.swift */,
 				5B58A1B22A86793D0008C270 /* TextChunk.swift */,
+				5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */,
 			);
 			path = Document;
 			sourceTree = "<group>";
@@ -321,6 +328,8 @@
 			name = CleverGrove;
 			packageProductDependencies = (
 				5B94515D2A80852800E30E9E /* OpenAIKit */,
+				5B9BD54E2A93A0B70098C1B2 /* Zip */,
+				5B9BD5532A93B5720098C1B2 /* XMLCoder */,
 			);
 			productName = CleverGrove;
 			productReference = 5B9451242A8083F000E30E9E /* CleverGrove.app */;
@@ -396,6 +405,8 @@
 			mainGroup = 5B94511B2A8083F000E30E9E;
 			packageReferences = (
 				5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */,
+				5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */,
+				5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */,
 			);
 			productRefGroup = 5B9451252A8083F000E30E9E /* Products */;
 			projectDirPath = "";
@@ -447,6 +458,7 @@
 				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
 				5B58A1B32A86793D0008C270 /* TextChunk.swift in Sources */,
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
+				5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
 				5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */,
 				5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */,
@@ -842,6 +854,22 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CoreOffice/XMLCoder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.17.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -849,6 +877,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAIKit;
+		};
+		5B9BD54E2A93A0B70098C1B2 /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
+		};
+		5B9BD5532A93B5720098C1B2 /* XMLCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */;
+			productName = XMLCoder;
 		};
 /* End XCSwiftPackageProductDependency section */
 
