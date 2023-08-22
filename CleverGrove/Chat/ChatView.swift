@@ -26,12 +26,24 @@ struct ChatView: View {
         chatExchanges.count - 1
     }
     
+    func dateTime(from date: Date?) -> String {
+        guard let date = date else { return "" }
+        if date.timeIntervalSinceNow > -(60) {
+            return date.formatted(date: .omitted, time: .shortened)
+        } else {
+            return date.formatted(date: .abbreviated, time: .shortened)
+        }
+    }
+    
     var body: some View {
         ScrollViewReader { scroller in
             VStack {
                 ScrollView {
                     ForEach(Array(chatExchanges.enumerated()), id:\.element) { index, exchange in
                         VStack {
+                            Text(dateTime(from:exchange.timestamp))
+                                .font(.caption2)
+                                .padding(.top, 15)
                             if let query = exchange.query {
                                 ChatBubble(position: .right) {
                                     Text(query)
@@ -45,6 +57,9 @@ struct ChatView: View {
                     }
                     if isWaitingForAnswer {
                         if !recentQuery.isEmpty {
+                            Text(dateTime(from:Date.now))
+                                .font(.caption2)
+                                .padding(.top, 15)
                             ChatBubble(position: .right) {
                                 Text(recentQuery)
                             }
