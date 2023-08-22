@@ -21,7 +21,7 @@
         <attribute name="path" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <relationship name="expert" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDExpert" inverseName="documents" inverseEntity="CDExpert"/>
-        <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTextChunk" inverseName="document" inverseEntity="CDTextChunk"/>
+        <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDTextChunk" inverseName="document" inverseEntity="CDTextChunk"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -33,9 +33,9 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="chatExchanges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDChatExchange" inverseName="expert" inverseEntity="CDChatExchange"/>
-        <relationship name="documents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDDocument" inverseName="expert" inverseEntity="CDDocument"/>
-        <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTextChunk" inverseName="expert" inverseEntity="CDTextChunk"/>
+        <relationship name="chatExchanges" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDChatExchange" inverseName="expert" inverseEntity="CDChatExchange"/>
+        <relationship name="documents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDDocument" inverseName="expert" inverseEntity="CDDocument"/>
+        <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDTextChunk" inverseName="expert" inverseEntity="CDTextChunk"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
