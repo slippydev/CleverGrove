@@ -49,4 +49,13 @@ class DataController: ObservableObject {
         return try? container.viewContext.fetch(fetchRequest).first
     }
     
+    func store(embeddings: [[Double]], textChunks: [String], in document: CDDocument) {
+        for (i, chunk) in textChunks.enumerated() {
+            let textChunk = CDTextChunk.textChunk(context: managedObjectContext, text: chunk, embedding: embeddings[i])
+            document.addToTextChunks(textChunk)
+            document.expert?.addToTextChunks(textChunk)
+            
+        }
+        save()
+    }
 }

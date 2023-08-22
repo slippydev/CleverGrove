@@ -9,7 +9,21 @@ import Foundation
 import PDFKit
 import UniformTypeIdentifiers
 
-
+extension String {
+    func splitIntoChunks(ofSize chunkSize: Int) -> [String] {
+        var startIndex = self.startIndex
+        var chunks: [String] = []
+        
+        while startIndex < self.endIndex {
+            let endIndex = self.index(startIndex, offsetBy: chunkSize, limitedBy: self.endIndex) ?? self.endIndex
+            let chunk = self[startIndex..<endIndex]
+            chunks.append(String(chunk))
+            startIndex = endIndex
+        }
+        
+        return chunks
+    }
+}
 
 protocol DocumentDecoder {
     func decode(from data: Data, chunkSize: Int) throws -> [String]

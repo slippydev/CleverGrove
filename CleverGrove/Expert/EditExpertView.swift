@@ -22,13 +22,11 @@ struct EditExpertView: View {
     @State private var fileURL: URL?
     @State private var documentType: UTType?
     @State private var documents = [CDDocument]()
-    @State private var trainingProgress = 0.0
     @State private var selectedProfileImage: String = ""
     
     @State private var isShowingFilePicker = false
     @State private var isShowingParsingError = false
     @State private var isShowingImagePicker = false
-    @State private var parsingTask: Task<Void, Never>? = nil
     
     @FocusState private var nameInFocus: Bool
     @FocusState private var descriptionInFocus: Bool
@@ -96,9 +94,9 @@ struct EditExpertView: View {
                             .frame(width: 25, height: 25)
                             .padding(10)
                     }
-                    .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
+//                    .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
                 }
-                DocumentList(expert: expert, trainingProgress: $trainingProgress)
+                DocumentList(expert: expert)
                     .padding(.bottom)
             }
             .toolbar {
@@ -145,41 +143,17 @@ struct EditExpertView: View {
                 name = expert.name ?? ""
             }
             .onDisappear {
-                // Cancel the parsing task if the view is disappearing
                 DataController.shared.undoChanges()
-                parsingTask?.cancel()
             }
         }
     }
     
     func addDocument(data: Data, url: URL, dataType: UTType) {
-        let document = CDDocument.document(context: DataController.shared.managedObjectContext,
-                                           fileURL: url,
-                                           fileType: FileType.fileType(for: dataType) ?? .text,
-                                           status: .training)
-        expert.addToDocuments(document)
-        DataController.shared.save()
-        
-        let parser = DocumentParser(data: data,
-                                    dataType: dataType,
-                                    document: document,
-                                    expert: expert)
-        let progressHandler: (Double) -> Void = { progress in
-            DispatchQueue.main.async {
-                self.trainingProgress = progress
-            }
-        }
-        
-        parsingTask = Task {
+        Task {
             do {
-                defer { parsingTask = nil }
-                try await parser.parse(progressHandler: progressHandler)
-                document.status = DocumentStatus.trained.rawValue
-                DataController.shared.save()
+                try await DocumentCoordinator.shared.addDocument(at: url, with: data, to: expert, dataType: dataType)
             } catch {
-                // Parsing failed
-                expert.removeFromDocuments(document)
-                DataController.shared.save()
+                isShowingParsingError = true
             }
         }
     }

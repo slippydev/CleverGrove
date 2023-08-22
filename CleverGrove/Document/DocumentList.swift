@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct DocumentList: View {
-    @ObservedObject var expert: CDExpert
-    @Binding var trainingProgress: Double
+    @ObservedObject var expert: CDExpert    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,7 +17,7 @@ struct DocumentList: View {
                     NavigationLink {
                         // Link to document
                     } label: {
-                        DocumentCapsule(document: document, trainingProgress: $trainingProgress)
+                        DocumentCapsule(document: document)
                     }
                     .swipeActions() {
                         Button(role: .destructive) {
@@ -43,6 +42,6 @@ struct DocumentList: View {
 
 struct DocumentList_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentList(expert: PreviewSamples.expert, trainingProgress: .constant(1.0))
+        DocumentList(expert: PreviewSamples.expert)
     }
 }

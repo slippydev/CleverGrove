@@ -10,7 +10,11 @@ import SwiftUI
 struct DocumentCapsule: View {
     
     @ObservedObject var document: CDDocument
-    @Binding var trainingProgress: Double
+    @ObservedObject var coordinator = DocumentCoordinator.shared
+    
+    var progress: Double {
+        coordinator.jobs[document.id!] ?? 0
+    }
     
     var body: some View {
         HStack {
@@ -28,7 +32,8 @@ struct DocumentCapsule: View {
                     .font(.headline)
                 
                 if DocumentStatus(rawValue:document.status ?? "") == .training {
-                    ProgressView("Training…  \(Int(trainingProgress * 100))%", value: trainingProgress, total: 1.0)
+                    
+                    ProgressView("Training…  \(Int(progress * 100))%", value: progress, total: 1.0)
                         .foregroundColor(Color.blue)
                 } else {
                     Text(document.status ?? "")
@@ -43,6 +48,6 @@ struct DocumentCapsule: View {
 struct DocumentCapsule_Previews: PreviewProvider {
     static var previews: some View {
 //        DocumentCapsule(document: PreviewSamples.documentTrained, trainingProgress: .constant(0.34))
-        DocumentCapsule(document: PreviewSamples.documentTraining, trainingProgress: .constant(0.69))
+        DocumentCapsule(document: PreviewSamples.documentTraining)
     }
 }
