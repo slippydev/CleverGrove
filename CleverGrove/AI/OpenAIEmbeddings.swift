@@ -80,12 +80,19 @@ class OpenAI {
     
     func getEmbeddings(input chunks: [String], progressHandler: @escaping (Double) -> Void) async throws -> [Int: [Double]] {
         var embeddings = [Int: [Double]]()
-        for (i, chunk) in chunks.enumerated() {
-            // FIXME: use Task Groups to optimize this to get embeddings for multiple chunks simultaneously
-            let response = try await getEmbeddings(input: chunk)
-            progressHandler(Double(i) / Double(chunks.count))
-            if let embedding = response.embedding {
-                embeddings[i] = embedding
+        try await withThrowingTaskGroup(of: (Int, [Double]?).self) { group in
+            for (i, chunk) in chunks.enumerated() {
+                group.addTask { [weak self] in
+                    let response = try await self?.getEmbeddings(input: chunk)
+                    return (i, response?.embedding)
+                }
+            }
+            // Obtain results from the child tasks, sequentially, in order of completion.
+            var progress = 0
+            for try await (index, embedding) in group {
+                embeddings[index] = embedding
+                progress += 1
+                progressHandler(Double(progress) / Double(chunks.count))
             }
         }
         return embeddings
