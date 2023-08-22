@@ -172,6 +172,7 @@ struct EditExpertView: View {
         
         parsingTask = Task {
             do {
+                defer { parsingTask = nil }
                 try await parser.parse(progressHandler: progressHandler)
                 document.status = DocumentStatus.trained.rawValue
                 DataController.shared.save()

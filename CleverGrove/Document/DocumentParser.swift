@@ -26,44 +26,20 @@ struct DocumentParser {
     private let moc = DataController.shared.managedObjectContext
     
     func parse(progressHandler: @escaping (Double) -> Void) async throws {
-        guard let decoder = documentDecoder(for: dataType) else {
-            return // FIXME: probably want to let the user know
-        }
-        var chunks = [String]()
-        do {
-            chunks = try decoder.decode(from: data, chunkSize: batchSize)
-        } catch {
-            throw error
-        }
-        let result = await ai.getEmbeddings(for: chunks, progressHandler:progressHandler)
+        
+        let textChunks = try DocumentDecode.decode(data: data, type: dataType, chunkSize: batchSize)
+        let embeddings = try await ai.getEmbeddings(for: textChunks, progressHandler:progressHandler)
         
         // Create an array of CDTextChunk objects out of the document
-        switch result {
-        case .success(let embeddings):
-            guard chunks.count == embeddings.count else { throw OpenAIError.jsonDecodingError }
-            for (i, chunk) in chunks.enumerated() {
-                let embedding = embeddings[i]
-                // FIXME: There's no real need for TextChunk other than in this method call. Fix it
-                let managedTextChunk = CDTextChunk.managedTextChunk(from: TextChunk(text: chunk, embedding:embedding), context: moc)
-                expert.addToTextChunks(managedTextChunk)
-                document.addToTextChunks(managedTextChunk)
-            }
-        case .failure(let error):
-            print(error.localizedDescription)
-            throw ParserError.parsingError
+        guard textChunks.count == embeddings.count else { throw OpenAIError.jsonDecodingError }
+        for (i, chunk) in textChunks.enumerated() {
+            let embedding = embeddings[i]
+            // FIXME: There's no real need for TextChunk other than in this method call. Fix it
+            let managedTextChunk = CDTextChunk.managedTextChunk(from: TextChunk(text: chunk, embedding:embedding), context: moc)
+            expert.addToTextChunks(managedTextChunk)
+            document.addToTextChunks(managedTextChunk)
         }
-    }
-    
-    private func documentDecoder(for type: UTType) -> DocumentDecoder? {
-        if type.conforms(to: .text) {
-            return TextDecoder()
-        } else if type.conforms(to: .pdf) {
-            return PDFDecoder()
-        } else if type.conforms(to: .docx) {
-            return DocxDecoder()
-        } else {
-            return nil
-        }
+        
     }
 }
 

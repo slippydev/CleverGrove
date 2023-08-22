@@ -15,6 +15,25 @@ protocol DocumentDecoder {
     func decode(from data: Data, chunkSize: Int) throws -> [String]
 }
 
+struct DocumentDecode {
+    static func decode(data: Data, type: UTType, chunkSize: Int) throws -> [String] {
+        guard let decoder = decoder(for: type) else { return [] }
+        return try decoder.decode(from: data, chunkSize: chunkSize)
+    }
+    
+    static func decoder(for type: UTType) -> DocumentDecoder? {
+        if type.conforms(to: .text) {
+            return TextDecoder()
+        } else if type.conforms(to: .pdf) {
+            return PDFDecoder()
+        } else if type.conforms(to: .docx) {
+            return DocxDecoder()
+        } else {
+            return nil
+        }
+    }
+}
+
 struct TextDecoder: DocumentDecoder {
     func decode(from data: Data, chunkSize: Int) throws -> [String] {
         let text = String(decoding: data, as: UTF8.self)

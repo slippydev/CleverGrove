@@ -68,35 +68,27 @@ class OpenAI {
         return headers
     }
     
-    func getEmbeddings(input: String) async -> Result<EmbeddingsResponse, OpenAIError>
+    func getEmbeddings(input: String) async throws -> EmbeddingsResponse
     {
         let jsonEncoder = JSONEncoder.openAIEncoder
         let requestBody = EmbeddingsRequest(model: info.model, input: input)
-        let requestData = try? jsonEncoder.encode(requestBody)
+        let requestData = try jsonEncoder.encode(requestBody)
         let network = OpenAINetwork()
-        let result: Result<EmbeddingsResponse, OpenAIError> = await network.request(info.method, url: info.path, body: requestData, headers: baseHeaders)
+        let result: EmbeddingsResponse = try await network.request(info.method, url: info.path, body: requestData, headers: baseHeaders)
         return result
     }
     
-    func getEmbeddings(input chunks: [String], progressHandler: @escaping (Double) -> Void) async -> Result<[Int:[Double]], OpenAIError> {
-        var embeddings = [Int:[Double]]()
+    func getEmbeddings(input chunks: [String], progressHandler: @escaping (Double) -> Void) async throws -> [Int: [Double]] {
+        var embeddings = [Int: [Double]]()
         for (i, chunk) in chunks.enumerated() {
-            if Task.isCancelled {
-                return .failure(.cancelled)
-            }
-            let result = await getEmbeddings(input: chunk)
-            switch result {
-            case .success(let response):
-                progressHandler(Double(i) / Double(chunks.count))
-                
-                if let embedding = response.embedding {
-                    embeddings[i] = embedding
-                }
-            case .failure(let error):
-                return .failure(error)
+            // FIXME: use Task Groups to optimize this to get embeddings for multiple chunks simultaneously
+            let response = try await getEmbeddings(input: chunk)
+            progressHandler(Double(i) / Double(chunks.count))
+            if let embedding = response.embedding {
+                embeddings[i] = embedding
             }
         }
-        return .success(embeddings)
+        return embeddings
     }
 }
 

@@ -27,8 +27,10 @@ struct DocumentList: View {
                             Label("Delete", systemImage: "trash.fill")
                         }
                     }
+                    .listRowSeparator(.hidden)
                 }
             }
+            .listStyle(.plain)
         }
     }
     
