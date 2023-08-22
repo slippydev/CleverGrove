@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B3C07F82A954472009DEA7F /* DocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */; };
 		5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */; };
 		5B58510D2A8C1B7200A01AAA /* View-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */; };
 		5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */; };
@@ -22,7 +23,6 @@
 		5B58A1AE2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AA2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift */; };
 		5B58A1AF2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AB2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift */; };
 		5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */; };
-		5B58A1B32A86793D0008C270 /* TextChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1B22A86793D0008C270 /* TextChunk.swift */; };
 		5B58A1BE2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1BC2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift */; };
 		5B58A1BF2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1BD2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift */; };
 		5B5993112A8680A5009FC4CB /* TextChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993102A8680A5009FC4CB /* TextChunkTests.swift */; };
@@ -76,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCoordinator.swift; sourceTree = "<group>"; };
 		5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extensions.swift"; sourceTree = "<group>"; };
 		5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPicker.swift; sourceTree = "<group>"; };
@@ -92,7 +93,6 @@
 		5B58A1AA2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDocument+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5B58A1AB2A85E6FD0008C270 /* CDExpert+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5B58A1B22A86793D0008C270 /* TextChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChunk.swift; sourceTree = "<group>"; };
 		5B58A1BC2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTextChunk+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5B58A1BD2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTextChunk+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5B5993102A8680A5009FC4CB /* TextChunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChunkTests.swift; sourceTree = "<group>"; };
@@ -177,12 +177,12 @@
 		5B58A1B12A86791E0008C270 /* Document */ = {
 			isa = PBXGroup;
 			children = (
+				5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */,
 				5B5993122A86D34D009FC4CB /* DocumentParser.swift */,
 				5B5993162A89B158009FC4CB /* DocumentDecoder.swift */,
 				5B58A14D2A84386A0008C270 /* FileType.swift */,
 				5B5993142A86F7D9009FC4CB /* DocumentList.swift */,
 				5B58A13F2A8402940008C270 /* DocumentCapsule.swift */,
-				5B58A1B22A86793D0008C270 /* TextChunk.swift */,
 				5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */,
 			);
 			path = Document;
@@ -456,7 +456,6 @@
 				5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */,
 				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
-				5B58A1B32A86793D0008C270 /* TextChunk.swift in Sources */,
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
 				5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
@@ -483,6 +482,7 @@
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,
 				5B58A1402A8402940008C270 /* DocumentCapsule.swift in Sources */,
+				5B3C07F82A954472009DEA7F /* DocumentCoordinator.swift in Sources */,
 				5B58A1AE2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift in Sources */,
 				5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */,
 				5B58A1AD2A85E6FD0008C270 /* CDDocument+CoreDataClass.swift in Sources */,

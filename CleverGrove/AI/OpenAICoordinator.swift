@@ -22,35 +22,23 @@ class OpenAICoordinator {
                            organization: KeyStore.key(from: .openAI).org_key)
     }
     
-    func getEmbeddings(for text: String) async -> EmbeddingsResponse? {
-        let result = await openAIEmbedding.getEmbeddings(input: text)
-        switch result {
-        case .success(let embeddings):
-            return embeddings
-        case .failure(let error):
-            print(error.localizedDescription)
-            return nil
-        }
+    func getEmbeddings(for text: String) async throws -> EmbeddingsResponse? {
+        return try await openAIEmbedding.getEmbeddings(input: text)
     }
     
-    func getEmbeddings(for chunks: [String], progressHandler: @escaping (Double) -> Void) async -> Result<[[Double]], OpenAIError> {
-        let result = await openAIEmbedding.getEmbeddings(input: chunks, progressHandler: progressHandler)
+    func getEmbeddings(for chunks: [String], progressHandler: @escaping (Double) -> Void) async throws -> [[Double]] {
+        let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks, progressHandler: progressHandler)
         var embeddings = [[Double]]()
-        switch result {
-        case .success(let dictOfEmbeddings):
-            for i in 0..<dictOfEmbeddings.count {
-                guard let embedding = dictOfEmbeddings[i] else { return .failure(.jsonDecodingError) }
-                embeddings.append(embedding)
-            }
-            return .success(embeddings)
-        case .failure(let error):
-            return .failure(error)
+        for i in 0..<result.count {
+            guard let embedding = result[i] else { throw OpenAIError.jsonDecodingError }
+            embeddings.append(embedding)
         }
+        return embeddings
     }
     
-    func ask(question: String, expert: CDExpert) async -> (String, [CDTextChunk]) {
+    func ask(question: String, expert: CDExpert) async throws -> (String, [CDTextChunk]) {
         // Find the most relevant text chunks from documents attached to this expert
-        let relevantChunks = await nearest(query: question, expert: expert)
+        let relevantChunks = try await nearest(query: question, expert: expert)
         
         // Build up the context for the GPT to refer to including relevant text chunks and
         // past conversation.
@@ -101,16 +89,16 @@ class OpenAICoordinator {
         return introduction
     }
     
-    private func nearest(query: String, expert: CDExpert, max: Int = 3, usePastQueries: Bool = false) async -> [CDTextChunk] {
+    private func nearest(query: String, expert: CDExpert, max: Int = 3, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
         let textChunks = expert.textChunksAsArray
         var queryEmbedding: [Double]
         if usePastQueries {
             let pastQueries = expert.pastQueries(in: 0..<5) // include the most recent queries in the query embedding to provide more context
             Logger().info("Calculating Query Embeddings for: \(pastQueries)\n\(query)\n")
-            queryEmbedding = await getEmbeddings(for: "\(pastQueries)\n\(query)")?.embedding ?? [Double]()
+            queryEmbedding = try await getEmbeddings(for: "\(pastQueries)\n\(query)")?.embedding ?? [Double]()
         } else {
             Logger().info("Calculating Query Embedding for: \(query)\n")
-            queryEmbedding = await getEmbeddings(for: "\(query)")?.embedding ?? [Double]()
+            queryEmbedding = try await getEmbeddings(for: "\(query)")?.embedding ?? [Double]()
         }
         let (strings, _) = await stringsRankedByRelatedness(queryEmbedding: queryEmbedding, textChunks: textChunks)
         let shortList = Array(strings.prefix(max))

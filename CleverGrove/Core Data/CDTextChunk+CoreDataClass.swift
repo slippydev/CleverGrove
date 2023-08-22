@@ -12,28 +12,22 @@ import CoreData
 @objc(CDTextChunk)
 public class CDTextChunk: NSManagedObject {
     
+    static func textChunk(context: NSManagedObjectContext, text: String, embedding: [Double]) -> CDTextChunk {
+        let textChunk = CDTextChunk(context: context)
+        textChunk.id = UUID()
+        textChunk.text = text
+        textChunk.embedding = embeddingStringFrom(embeddingArray: embedding)
+        return textChunk
+    }
+    
     var embeddingAsArray: [Double] {
         (embedding ?? "")
             .split(separator: ",")
             .compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
     }
     
-    func embeddingStringFrom(embeddingArray: [Double]) -> String {
+    static func embeddingStringFrom(embeddingArray: [Double]) -> String {
         return embeddingArray.map { String($0) }.joined(separator: ", ")
-    }
-    
-    static func managedTextChunk(from textChunk: TextChunk, context: NSManagedObjectContext) -> CDTextChunk {
-        let managedTextChunk = CDTextChunk(context: context)
-        managedTextChunk.id = textChunk.id
-        managedTextChunk.text = textChunk.text
-        managedTextChunk.embedding = textChunk.embeddingAsString
-        return managedTextChunk
-    }
-    
-    func textChunk() -> TextChunk {
-        return TextChunk(id: id ?? UUID(),
-                         text: text ?? "",
-                         embedding: TextChunk.embedding(from: embedding ?? ""))
     }
     
     static func embeddingsArrayFrom(textChunks: [CDTextChunk]) -> [String: [Double]] {

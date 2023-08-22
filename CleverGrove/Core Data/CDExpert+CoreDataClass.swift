@@ -22,7 +22,9 @@ public class CDExpert: NSManagedObject {
     
     var documentsAsArray : [CDDocument] {
         let set = documents as? Set<CDDocument> ?? []
-        return set.map { $0 }
+        let array = set.map { $0 }
+        let sortedArray = array.sorted { $0.fileName ?? "" < $1.fileName ?? "" }
+        return sortedArray
     }
     
     var textChunksAsArray: [CDTextChunk] {

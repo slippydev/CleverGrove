@@ -67,9 +67,6 @@ struct ChatView: View {
             }
             .onAppear() {
                 scroller.scrollTo(exchangeCount, anchor: .bottom)
-                Task {
-                   await introduction()
-                }
             }
             .onChange(of: isWaitingForAnswer, perform: { _ in
                 scroller.scrollTo(exchangeCount, anchor: .bottom)
@@ -79,6 +76,9 @@ struct ChatView: View {
             ToolbarItem(placement: .principal) {
                 ChatViewHeader(expert: expert)
             }
+        }
+        .task {
+            await introduction()
         }
     }
 
@@ -95,7 +95,11 @@ struct ChatView: View {
 
     func ask(query: String) async {
         isWaitingForAnswer = true
-        await (response, relevantChunks) = OpenAICoordinator.shared.ask(question: query, expert: expert)
+        do {
+            (response, relevantChunks) = try await OpenAICoordinator.shared.ask(question: query, expert: expert)
+        } catch {
+            print(error.localizedDescription)
+        }
         saveExchange(query: query, tokenUsage: 0)
         isWaitingForAnswer = false
     }
