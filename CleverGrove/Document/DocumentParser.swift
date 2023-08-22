@@ -33,11 +33,9 @@ struct DocumentParser {
         // Create an array of CDTextChunk objects out of the document
         guard textChunks.count == embeddings.count else { throw OpenAIError.jsonDecodingError }
         for (i, chunk) in textChunks.enumerated() {
-            let embedding = embeddings[i]
-            // FIXME: There's no real need for TextChunk other than in this method call. Fix it
-            let managedTextChunk = CDTextChunk.managedTextChunk(from: TextChunk(text: chunk, embedding:embedding), context: moc)
-            expert.addToTextChunks(managedTextChunk)
-            document.addToTextChunks(managedTextChunk)
+            let textChunk = CDTextChunk.textChunk(context: moc, text: chunk, embedding: embeddings[i])
+            expert.addToTextChunks(textChunk)
+            document.addToTextChunks(textChunk)
         }
         
     }
