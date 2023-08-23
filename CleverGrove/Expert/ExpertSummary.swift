@@ -43,9 +43,9 @@ struct ExpertSummary: View {
 }
 
 
-//struct ExpertSummary_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let expert = ExpertProfile(image: "SampleProfile1", name: "Bobby", description: "Dungeons & Dragons expert")
-//        ExpertSummary(expert: expert, expertIDToEdit: .constant(nil), isShowingEditExpertSheet: .constant(false))
-//    }
-//}
+struct ExpertSummary_Previews: PreviewProvider {
+    static var previews: some View {
+        let expert = PreviewSamples.expert
+        ExpertSummary(expert: expert)
+    }
+}

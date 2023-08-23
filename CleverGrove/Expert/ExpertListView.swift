@@ -21,6 +21,8 @@ struct ExpertListView: View {
     @State var isShowingDeleteExpertConfirmation = false
     @StateObject var expertToDelete = ExpertToDelete()
     @StateObject var expertToEdit = ExpertToEdit()
+    @Binding var externalFileURL: URL?
+    @State var isShowingExternalURL = false
     
     var body: some View {
         NavigationView {
@@ -72,6 +74,12 @@ struct ExpertListView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .onChange(of: externalFileURL?.absoluteString.count, perform: { newValue in
+            isShowingExternalURL = true
+        })
+        .sheet(isPresented: $isShowingExternalURL) {
+            FileImportView(url: externalFileURL)
+        }
         .sheet(isPresented: $isShowingEditSheet) {
             EditExpertView(expert: expertToEdit.expert ?? CDExpert(context: DataController.shared.managedObjectContext))
         }
@@ -99,8 +107,8 @@ struct ExpertListView: View {
     }
 }
 
-struct ExpertListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExpertListView()
-    }
-}
+//struct ExpertListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExpertListView()
+//    }
+//}
