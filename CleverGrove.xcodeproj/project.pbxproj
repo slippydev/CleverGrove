@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B3C07F82A954472009DEA7F /* DocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */; };
+		5B3C07FA2A958D57009DEA7F /* FileImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F92A958D57009DEA7F /* FileImportView.swift */; };
+		5B3C07FD2A96671E009DEA7F /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07FC2A96671E009DEA7F /* FileReader.swift */; };
 		5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */; };
 		5B58510D2A8C1B7200A01AAA /* View-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */; };
 		5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */; };
@@ -77,6 +79,8 @@
 
 /* Begin PBXFileReference section */
 		5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCoordinator.swift; sourceTree = "<group>"; };
+		5B3C07F92A958D57009DEA7F /* FileImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileImportView.swift; sourceTree = "<group>"; };
+		5B3C07FC2A96671E009DEA7F /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extensions.swift"; sourceTree = "<group>"; };
 		5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPicker.swift; sourceTree = "<group>"; };
@@ -157,6 +161,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B3C07FB2A966702009DEA7F /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
+				5B3C07FC2A96671E009DEA7F /* FileReader.swift */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
 		5B58A1472A8437380008C270 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,7 +226,7 @@
 			children = (
 				5B58A16D2A853B240008C270 /* Info.plist */,
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
-				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
+				5B3C07FB2A966702009DEA7F /* Files */,
 				5BA8F13A2A83FE9800C093C8 /* Expert */,
 				5B58A1B12A86791E0008C270 /* Document */,
 				5BA8F11D2A817F8D00C093C8 /* Chat */,
@@ -306,6 +319,7 @@
 				5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */,
 				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
 				5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */,
+				5B3C07F92A958D57009DEA7F /* FileImportView.swift */,
 			);
 			path = Expert;
 			sourceTree = "<group>";
@@ -456,6 +470,7 @@
 				5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */,
 				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
+				5B3C07FD2A96671E009DEA7F /* FileReader.swift in Sources */,
 				5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */,
 				5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
@@ -478,6 +493,7 @@
 				5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
 				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
+				5B3C07FA2A958D57009DEA7F /* FileImportView.swift in Sources */,
 				5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,
 				5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */,

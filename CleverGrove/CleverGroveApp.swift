@@ -11,11 +11,16 @@ import SwiftUI
 
 @main
 struct CleverGroveApp: App {
-
+    @State private var url: URL?
+    
     var body: some Scene {
         WindowGroup {
-            ExpertListView()
+            ExpertListView(externalFileURL: $url)
                 .environment(\.managedObjectContext, DataController.shared.container.viewContext)
+                .onOpenURL { openedURL in
+                    url = openedURL
+                }
         }
+        
     }
 }
