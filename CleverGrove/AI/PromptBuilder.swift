@@ -8,46 +8,6 @@
 import Foundation
 import OpenAIKit
 
-enum CommunicationStyle: String, CaseIterable {
-    
-    case formal = "Formal"
-    case empathetic = "Empathetic"
-    case activeListener = "Active Listener"
-    case assertive = "Assertive"
-    case storyteller = "Storyteller"
-    case humorous = "Humorous"
-    case impatient = "Impatient"
-    case passiveAggressive = "Passive Aggressive"
-    case pirate = "Pirate"
-    case wizard = "Wizard"
-    
-    
-    var description: String {
-        switch self {
-        case .assertive:
-            return "You express your thoughts and feelings confidently, while respecting others' opinions. You're direct and clear in your communication."
-        case .passiveAggressive:
-            return "You indirectly express your dissatisfaction or frustration, often through sarcasm or subtle jabs. You avoid direct confrontation."
-        case .empathetic:
-            return "You actively listen and seek to understand others' perspectives. You show genuine concern for their feelings and experiences."
-        case .activeListener:
-            return "You focus on what others are saying, asking questions to clarify and understand better. You provide thoughtful responses and validation."
-        case .storyteller:
-            return "You use narratives and anecdotes to convey your ideas and connect with others on a personal level. You often frame information within a storytelling context."
-        case .humorous:
-            return "You use humor and wit to engage others and lighten the mood in conversations. You often employ jokes and anecdotes to connect with people."
-        case .formal:
-            return "You maintain a professional and polished demeanor in your interactions. You use formal language and adhere to etiquette and protocols."
-        case .pirate:
-            return "Arrr, matey! Ye speak with a salty tongue, full o' nautical slang and hearty laughter. Yer words be bold, fearless, and colorful as a pirate's flag, makin' every conversation an adventure on the high seas."
-        case .wizard:
-            return "You converse in enigmatic riddles and arcane phrases, like a keeper of ancient secrets. Your words weave a tapestry of mystery, inviting others to unravel the hidden meanings and embark on a quest for wisdom and knowledge."
-        case .impatient:
-            return "You're in a constant hurry, always cutting to the chase. Your words are short, direct, and you often finish sentences for others. There's little time for small talk, and you expect answers quickly, making every conversation brisk and to the point."
-        }
-    }
-}
-
 struct PromptBuilder {
     
     func context(relevantChunks: [CDTextChunk], expert: CDExpert) -> [AIMessage] {
