@@ -56,7 +56,7 @@ class OpenAICoordinator {
         let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: question),
                                                      previousMessages: context,
                                                      model: .gptV3_5(.gptTurbo),
-                                                     maxTokens: 512,
+                                                     maxTokens: 256,
                                                      temperature: 1.0)
         switch result {
         case .success(let aiResult):
@@ -64,6 +64,11 @@ class OpenAICoordinator {
         case .failure(let error):
             // FIXME: This prints the error into the chat response. Not sure if this makes sense. Better to have a more natural response.
             answer = error.localizedDescription
+            let errorInfo = (error as NSError).userInfo["error"]! as! [String:Any]
+            if let code = errorInfo["code"], let message = errorInfo["message"] {
+                print(code)
+                print(message)
+            }
         }
         return (answer, relevantChunks)
     }
@@ -72,7 +77,10 @@ class OpenAICoordinator {
         guard let exchanges = expert.chatExchanges, exchanges.count == 0 else { return nil }
         
         let trainingTitles = expert.trainingDocumentTitles
-        let instructions = promptBuilder.introduction(name: expert.name ?? "", expertise: expert.desc ?? "", training: trainingTitles)
+        let instructions = promptBuilder.introduction(name: expert.name ?? "",
+                                                      expertise: expert.desc ?? "",
+                                                      style: expert.communicationStyle,
+                                                      training: trainingTitles)
         Logger().info("Introduction Instructions: \(instructions)\n")
         
         let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: instructions),
@@ -89,7 +97,29 @@ class OpenAICoordinator {
         return introduction
     }
     
-    private func nearest(query: String, expert: CDExpert, max: Int = 3, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
+//    func establishTone(of expert: CDExpert, from textChunks: [String]) async -> String? {
+//        var text: String = ""
+//        let range = 0..<min(5, textChunks.count)
+//        for i in range {
+//            text.append(textChunks[i])
+//        }
+//        let message = promptBuilder.documentTone(text: text)
+//        let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: message),
+//                                                     previousMessages: [],
+//                                                     model: .gptV3_5(.gptTurbo),
+//                                                     maxTokens: 512,
+//                                                     temperature: 1.0)
+//        var expertTone: String?
+//        switch result {
+//        case .success(let aiResult):
+//            expertTone = aiResult.choices.first?.message?.content ?? ""
+//        case .failure(let error):
+//            print("establishTone Error: \(error.localizedDescription)")
+//        }
+//        return expertTone
+//    }
+    
+    private func nearest(query: String, expert: CDExpert, max: Int = 4, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
         let textChunks = expert.textChunksAsArray
         var queryEmbedding: [Double]
         if usePastQueries {

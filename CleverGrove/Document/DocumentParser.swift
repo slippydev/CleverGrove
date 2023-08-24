@@ -21,7 +21,7 @@ struct ParseResult {
 
 @MainActor
 final class Parser: ObservableObject {
-    private let batchSize = 1024  // can submit up to 2048 embedding inputs per request
+    private let batchSize = 2048  // can submit up to 2048 embedding inputs per request
     private let ai = OpenAICoordinator.shared
 
     func parse(document: CDDocument, data: Data, dataType: UTType, progressHandler: @escaping (Double) -> Void) async throws -> ParseResult {

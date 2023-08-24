@@ -44,6 +44,10 @@ public class CDExpert: NSManagedObject {
         return titles
     }
     
+    var communicationStyle: CommunicationStyle {
+        CommunicationStyle(rawValue: personality ?? "") ?? .formal
+    }
+    
     func chatExchanges(in range: Range<Int> = 0..<20) -> [CDChatExchange] {
         let set = chatExchanges as? Set<CDChatExchange> ?? []
         let sortedArray = set.sorted { $0.timestamp ?? Date.now < $1.timestamp ?? Date.now }

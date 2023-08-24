@@ -18,6 +18,7 @@ struct EditExpertView: View {
     @ObservedObject var expert: CDExpert
     @State private var name: String = ""
     @State private var description: String = ""
+    @State private var communicationStyle = CommunicationStyle.formal
     @State private var fileData: Data?
     @State private var fileURL: URL?
     @State private var documentType: UTType?
@@ -35,7 +36,7 @@ struct EditExpertView: View {
         NavigationView {
             VStack {
                 VStack(alignment: .center) {
-                    ZStack {
+                    HStack(alignment: .bottom) {
                         CharacterImage(image: expert.image ?? "Person", isSelected: .constant(false))
                             .frame(minHeight: 120)
                             .overlay(alignment: .bottomTrailing) {
@@ -48,31 +49,52 @@ struct EditExpertView: View {
                             .onTapGesture {
                                 isShowingImagePicker = true
                             }
+                            .padding(.trailing, 20)
+                        VStack {
+                            HStack {
+                                Text("Name")
+                                    .frame(alignment: .bottomLeading)
+                                Spacer()
+                            }
+                            TextField(expert.name ?? "", text: $name)
+                                .focused($nameInFocus)
+                                .font(.headline.bold())
+                                .padding(5)
+                                .background(Color("TextFieldBG"))
+                                .cornerRadius(4)
+                                .shadow(radius: 1.0)
+                            HStack {
+                                Text("Personality")
+                                Spacer()
+                            }
+                            HStack {
+                                Picker("Communication Style", selection: $communicationStyle) {
+                                    ForEach(CommunicationStyle.allCases, id:\.self) { option in
+                                        Text(option.rawValue)
+                                    }
+                                }
+                                .background(Color("TextFieldBG"))
+                                .tint(.primary)
+                                .cornerRadius(4)
+                                .shadow(radius: 1.0)
+                                Spacer()
+                            }
+                        }
+                        .padding(.bottom, 10)
                     }
-                    
-                    TextField(expert.name ?? "", text: $name)
-                        .focused($nameInFocus)
-                        .font(.title.bold())
-                        .padding(5)
-                        .multilineTextAlignment(.center)
-                        .background(Color("TextFieldBG"))
-                        .cornerRadius(10)
-                        .shadow(radius: 1.0)
-                    
-                    Text("\(name) is an expert at:")
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .lineLimit(2)
-                        .padding(.top, 10)
-                        
+                    HStack {
+                        Text("\(name) is an expert at:")
+                            .font(.body)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 5)
+                        Spacer()
+                    }
                     TextEditor(text: $description)
                         .focused($descriptionInFocus)
-                        .multilineTextAlignment(.center)
                         .scrollContentBackground(.hidden)
                         .background(Color("TextFieldBG"))
-                        .frame(minHeight: 75, maxHeight: 75)
-                        .cornerRadius(10)
+                        .frame(minHeight: 50, maxHeight: 50)
+                        .cornerRadius(4)
                         .shadow(radius: 1.0)
                 }
                 .frame(minHeight: 250)
@@ -94,7 +116,6 @@ struct EditExpertView: View {
                             .frame(width: 25, height: 25)
                             .padding(10)
                     }
-//                    .disabled(parsingTask != nil) // only show the button to add documents if we're not already parsing one.
                 }
                 DocumentList(expert: expert)
                     .padding(.bottom)
@@ -141,6 +162,7 @@ struct EditExpertView: View {
                 }
                 description = expert.desc ?? ""
                 name = expert.name ?? ""
+                communicationStyle = CommunicationStyle(rawValue: expert.personality ?? "") ?? .formal
             }
             .onDisappear {
                 DataController.shared.undoChanges()
@@ -161,6 +183,7 @@ struct EditExpertView: View {
     func saveChanges() {
         expert.name = name
         expert.desc = description
+        expert.personality = communicationStyle.rawValue
         if !selectedProfileImage.isEmpty {
             expert.image = selectedProfileImage
         }
