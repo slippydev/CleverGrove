@@ -40,9 +40,16 @@ class OpenAICoordinator {
         // Find the most relevant text chunks from documents attached to this expert
         let relevantChunks = try await nearest(query: question, expert: expert)
         
+        // If the expert has been updated since the last chat exchange, don't include the chat history because it will
+        // interfere in the application of the changes to the expert.
+        var includeHistory = true
+        if let lastexchange = expert.mostRecentChatExchange(), let timestamp = lastexchange.timestamp {
+            includeHistory = (expert.updatedSince(date: timestamp) == false)
+        }
+        
         // Build up the context for the GPT to refer to including relevant text chunks and
         // past conversation.
-        let context = promptBuilder.context(relevantChunks: relevantChunks, expert: expert)
+        let context = promptBuilder.context(relevantChunks: relevantChunks, expert: expert, includeChatHistory: includeHistory)
         var answer = ""
         
         // Logging for debugging prompts
@@ -56,8 +63,10 @@ class OpenAICoordinator {
         let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: question),
                                                      previousMessages: context,
                                                      model: .gptV3_5(.gptTurbo),
-                                                     maxTokens: 256,
-                                                     temperature: 1.0)
+                                                     maxTokens: 400,
+                                                     temperature: 1.0,
+                                                     frequencyPenalty: 2.0,
+                                                     presencePenalty: 2.0)
         switch result {
         case .success(let aiResult):
             answer = aiResult.choices.first?.message?.content ?? ""

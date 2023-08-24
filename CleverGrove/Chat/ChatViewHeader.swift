@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatViewHeader: View {
     @ObservedObject var expert: CDExpert
+    @State private var isShowingEditExpert = false
     
     var body: some View {
         HStack(alignment: .top) {
@@ -30,6 +31,12 @@ struct ChatViewHeader: View {
             }
         }
         .frame(height:60)
+        .onTapGesture {
+            isShowingEditExpert = true
+        }
+        .sheet(isPresented: $isShowingEditExpert) {
+            EditExpertView(expert: expert)
+        }
     }
 }
 

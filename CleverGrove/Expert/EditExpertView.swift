@@ -15,22 +15,37 @@ class ExpertToEdit: ObservableObject {
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
     
+    // Expert Properties
     @ObservedObject var expert: CDExpert
     @State private var name: String = ""
     @State private var description: String = ""
     @State private var communicationStyle = CommunicationStyle.formal
+    @State private var selectedProfileImage: String = ""
+    
+    // Document Properties
     @State private var fileData: Data?
     @State private var fileURL: URL?
     @State private var documentType: UTType?
-    @State private var documents = [CDDocument]()
-    @State private var selectedProfileImage: String = ""
     
+    // Flags for showing sheets and alerts
     @State private var isShowingFilePicker = false
     @State private var isShowingParsingError = false
     @State private var isShowingImagePicker = false
     
+    // Focus States
     @FocusState private var nameInFocus: Bool
     @FocusState private var descriptionInFocus: Bool
+    
+    // Change Tracking
+//    @State private var documentsHaveBeenUpdated = false
+    
+//    var hasChanges: Bool {
+//        expert.name != name ||
+//        expert.desc != description ||
+//        expert.personality != communicationStyle.rawValue ||
+//        expert.image != selectedProfileImage ||
+//        documentsHaveBeenUpdated
+//    }
     
     var body: some View {
         NavigationView {
@@ -137,6 +152,7 @@ struct EditExpertView: View {
                     } label: {
                         Text("Save")
                     }
+//                    .opacity(hasChanges ? 1.0 : 0.0)
                 }
             }
             .sheet(isPresented: $isShowingFilePicker) {
@@ -151,6 +167,7 @@ struct EditExpertView: View {
             .onChange(of: fileData) { newValue in
                 if let data = fileData, let url = fileURL, let dataType = documentType {
                     addDocument(data: data, url: url, dataType: dataType)
+//                    documentsHaveBeenUpdated = true
                 }
             }
             .onChange(of: selectedProfileImage, perform: { _ in
@@ -187,8 +204,10 @@ struct EditExpertView: View {
         if !selectedProfileImage.isEmpty {
             expert.image = selectedProfileImage
         }
+        expert.lastUpdated = Date.now
         DataController.shared.save()
     }
+    
     
 }
 

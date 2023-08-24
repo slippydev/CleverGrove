@@ -2,7 +2,7 @@
 //  CDExpert+CoreDataProperties.swift
 //  CleverGrove
 //
-//  Created by Derek Gour on 2023-08-23.
+//  Created by Derek Gour on 2023-08-24.
 //
 //
 
@@ -21,6 +21,7 @@ extension CDExpert {
     @NSManaged public var image: String?
     @NSManaged public var name: String?
     @NSManaged public var personality: String?
+    @NSManaged public var lastUpdated: Date?
     @NSManaged public var chatExchanges: NSSet?
     @NSManaged public var documents: NSSet?
     @NSManaged public var textChunks: NSSet?

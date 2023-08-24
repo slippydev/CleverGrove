@@ -32,6 +32,7 @@
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="personality" optional="YES" attributeType="String"/>
         <relationship name="chatExchanges" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDChatExchange" inverseName="expert" inverseEntity="CDChatExchange"/>

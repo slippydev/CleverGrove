@@ -48,6 +48,13 @@ public class CDExpert: NSManagedObject {
         CommunicationStyle(rawValue: personality ?? "") ?? .formal
     }
     
+    func mostRecentChatExchange() -> CDChatExchange? {
+        // The sorted list ends with the most recent first. So if we need the last entry to get the most recent
+        let set = chatExchanges as? Set<CDChatExchange> ?? []
+        let sortedArray = set.sorted { $0.timestamp ?? Date.now < $1.timestamp ?? Date.now }
+        return sortedArray.last
+    }
+    
     func chatExchanges(in range: Range<Int> = 0..<20) -> [CDChatExchange] {
         let set = chatExchanges as? Set<CDChatExchange> ?? []
         let sortedArray = set.sorted { $0.timestamp ?? Date.now < $1.timestamp ?? Date.now }
@@ -85,6 +92,11 @@ public class CDExpert: NSManagedObject {
             return texts.contains((chunk as! CDTextChunk).text ?? "")
         }
         return matchingChunks as! [CDTextChunk]
+    }
+    
+    func updatedSince(date: Date) -> Bool {
+        guard let updatedDate = lastUpdated else { return false }
+        return updatedDate > date
     }
     
 }
