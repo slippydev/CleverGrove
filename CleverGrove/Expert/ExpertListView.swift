@@ -74,7 +74,7 @@ struct ExpertListView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .onChange(of: externalFileURL?.absoluteString.count, perform: { newValue in
+        .onChange(of: externalFileURL, perform: { newValue in
             isShowingExternalURL = true
         })
         .sheet(isPresented: $isShowingExternalURL) {

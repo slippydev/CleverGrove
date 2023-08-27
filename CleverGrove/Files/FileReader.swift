@@ -24,8 +24,13 @@ struct FileReader {
     
     func openFile(at url: URL) -> (Data?, UTType?) {
         // Start accessing a security-scoped resource.
-        guard url.startAccessingSecurityScopedResource() else { return (nil, nil) }
-
+        // Sometimes this is necessary and sometimes it isn't.
+        // Opening files from icloud storage seems to need it, but opening files
+        // shared from messages doesn't seem to need it, so the call fails, but
+        // accessing the data works fine. So we call this but don't care about
+        // the outcome.
+        let _ = url.startAccessingSecurityScopedResource()
+        
         // Make sure you release the security-scoped resource when you finish.
         defer { url.stopAccessingSecurityScopedResource() }
         
