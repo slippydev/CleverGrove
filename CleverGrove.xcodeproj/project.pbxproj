@@ -33,6 +33,7 @@
 		5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993142A86F7D9009FC4CB /* DocumentList.swift */; };
 		5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993162A89B158009FC4CB /* DocumentDecoder.swift */; };
 		5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */; };
+		5B837FD22A9BE1FC00780AE5 /* NameList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B837FD12A9BE1FC00780AE5 /* NameList.swift */; };
 		5B84DBC72A8E7C23004464EE /* ChatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B84DBC62A8E7C23004464EE /* ChatTextField.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
@@ -106,6 +107,7 @@
 		5B5993142A86F7D9009FC4CB /* DocumentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentList.swift; sourceTree = "<group>"; };
 		5B5993162A89B158009FC4CB /* DocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDecoder.swift; sourceTree = "<group>"; };
 		5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewHeader.swift; sourceTree = "<group>"; };
+		5B837FD12A9BE1FC00780AE5 /* NameList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameList.swift; sourceTree = "<group>"; };
 		5B84DBC62A8E7C23004464EE /* ChatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextField.swift; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */,
 				5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */,
 				5B3C07F92A958D57009DEA7F /* FileImportView.swift */,
+				5B837FD12A9BE1FC00780AE5 /* NameList.swift */,
 			);
 			path = Expert;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
 				5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */,
 				5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */,
+				5B837FD22A9BE1FC00780AE5 /* NameList.swift in Sources */,
 				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
 				5B58A14C2A84379E0008C270 /* CleverGrove.xcdatamodeld in Sources */,
 				5B58A14E2A84386A0008C270 /* FileType.swift in Sources */,

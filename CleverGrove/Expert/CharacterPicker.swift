@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let imageNames = ["Alien", "CyberHacker", "Elf", "Elf2", "Hacker", "Knight", "Lawyer", "Monk", "Owl", "Panda", "Professor", "RoboKnight", "Robot1", "Robot2", "Viking", "Wizard"]
-
 struct CharacterImage: View {
     let image: String
     @Binding var isSelected: Bool
@@ -31,7 +29,7 @@ struct CharacterPicker: View {
     @Binding var selectedImage: String
     
     init(selectedImage: Binding<String>) {
-        _images = State(initialValue: imageNames.reduce(into: [:]) { dict, image in
+        _images = State(initialValue: randomNames.reduce(into: [:]) { dict, image in
             dict[image] = false
         })
         _selectedImage = selectedImage

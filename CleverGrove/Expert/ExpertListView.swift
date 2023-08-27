@@ -36,7 +36,9 @@ struct ExpertListView: View {
                 
                 Button {
                     // Create a new expert to edit
-                    expertToEdit.expert = CDExpert.expert(context: DataController.shared.managedObjectContext, name: "My New Expert", description: "...details about the area of expertise.")
+                    expertToEdit.expert = CDExpert.expert(context: DataController.shared.managedObjectContext,
+                                                          name: CDExpert.randomName(),
+                                                          description: "...details about the area of expertise.")
                     isShowingEditSheet = true
                 } label: {
                     Text("Train a new expert")

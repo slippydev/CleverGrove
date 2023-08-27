@@ -16,6 +16,7 @@ public class CDExpert: NSManagedObject {
         let expert = CDExpert(context: context)
         expert.id = UUID()
         expert.name = name
+        expert.image = name
         expert.desc = description
         return expert
     }
@@ -97,6 +98,11 @@ public class CDExpert: NSManagedObject {
     func updatedSince(date: Date) -> Bool {
         guard let updatedDate = lastUpdated else { return false }
         return updatedDate > date
+    }
+    
+    static func randomName() -> String {
+        let index = Int.random(in: 0..<randomNames.count)
+        return randomNames[index]
     }
     
 }
