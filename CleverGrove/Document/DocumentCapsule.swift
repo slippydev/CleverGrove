@@ -27,18 +27,22 @@ struct DocumentCapsule: View {
                         .strokeBorder(.white, lineWidth: 1)
                     )
             VStack(alignment: .leading) {
-                Text(document.fileName ?? "")
+                Text(document.title ?? "")
                     .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .training) ? Color.red : Color.primary)
                     .font(.headline)
+                Text(document.fileName ?? "")
+                    .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .training) ? Color.red : Color.primary)
+                    .font(.body)
                 
                 if DocumentStatus(rawValue:document.status ?? "") == .training {
                     ProgressView("Training…  \(Int(progress * 100))%", value: progress, total: 1.0)
                         .foregroundColor(Color.blue)
-                } else {
-                    Text(document.status ?? "")
-                        .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .training) ? Color.red : Color.primary)
-                        .opacity((DocumentStatus(rawValue: document.status ?? "") == .untrained) ? 0 : 1.0) // hide if untrained
                 }
+//                else {
+//                    Text(document.status ?? "")
+//                        .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .training) ? Color.red : Color.primary)
+//                        .opacity((DocumentStatus(rawValue: document.status ?? "") == .untrained) ? 0 : 1.0) // hide if untrained
+//                }
             }
         }
         .padding(.horizontal)

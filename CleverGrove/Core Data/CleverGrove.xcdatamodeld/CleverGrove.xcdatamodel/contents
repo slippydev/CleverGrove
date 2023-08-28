@@ -20,6 +20,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="path" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="expert" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDExpert" inverseName="documents" inverseEntity="CDExpert"/>
         <relationship name="textChunks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDTextChunk" inverseName="document" inverseEntity="CDTextChunk"/>
         <uniquenessConstraints>
@@ -30,6 +31,7 @@
     </entity>
     <entity name="CDExpert" representedClassName="CDExpert" syncable="YES">
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="expertise" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

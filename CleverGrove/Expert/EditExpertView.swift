@@ -14,7 +14,7 @@ struct EditExpertView: View {
     // Expert Properties
     @ObservedObject var expert: CDExpert
     @State private var name: String = ""
-    @State private var description: String = ""
+    @State private var expertise: String = ""
     @State private var communicationStyle = CommunicationStyle.formal
     @State private var selectedProfileImage: String = ""
     
@@ -89,13 +89,18 @@ struct EditExpertView: View {
                             .padding(.top, 5)
                         Spacer()
                     }
-                    TextEditor(text: $description)
-                        .focused($descriptionInFocus)
-                        .scrollContentBackground(.hidden)
-                        .background(Color("TextFieldBG"))
-                        .frame(minHeight: 50, maxHeight: 50)
-                        .cornerRadius(4)
-                        .shadow(radius: 1.0)
+                    Text(expertise)
+                        .font(.headline)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal, 20)
+//                    TextEditor(text: $expertise)
+//                        .focused($descriptionInFocus)
+//                        .scrollContentBackground(.hidden)
+//                        .background(Color("TextFieldBG"))
+//                        .frame(minHeight: 50, maxHeight: 50)
+//                        .cornerRadius(4)
+//                        .shadow(radius: 1.0)
                 }
                 .frame(minHeight: 250)
                 .padding()
@@ -161,7 +166,7 @@ struct EditExpertView: View {
                 if (expert.image ?? "").isEmpty {
                     nameInFocus = true
                 }
-                description = expert.desc ?? ""
+                expertise = expert.expertise ?? ""
                 name = expert.name ?? ""
                 communicationStyle = CommunicationStyle(rawValue: expert.personality ?? "") ?? .formal
             }
@@ -175,6 +180,7 @@ struct EditExpertView: View {
         Task {
             do {
                 try await DocumentCoordinator.shared.addDocument(at: url, with: data, to: expert, dataType: dataType)
+                fileData = nil // reset
             } catch {
                 isShowingParsingError = true
             }
@@ -183,7 +189,7 @@ struct EditExpertView: View {
     
     func saveChanges() {
         expert.name = name
-        expert.desc = description
+//        expert.desc = description
         expert.personality = communicationStyle.rawValue
         if !selectedProfileImage.isEmpty {
             expert.image = selectedProfileImage

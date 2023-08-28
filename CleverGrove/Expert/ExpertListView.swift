@@ -82,7 +82,9 @@ struct ExpertListView: View {
             }
         }
         .onChange(of: externalFileURL, perform: { newValue in
-            isShowingExternalURL = true
+            if externalFileURL != nil {
+                isShowingExternalURL = true
+            }
         })
         .sheet(isPresented: $isShowingExternalURL) {
             FileImportView(url: externalFileURL, expertToTrain: expertToTrain)
@@ -92,6 +94,7 @@ struct ExpertListView: View {
                     if let _ = expertToTrain.expert {
                         isAutoShowingExpertChat = true
                     }
+                    externalFileURL = nil
                 }
         }
         .sheet(isPresented: $isShowingEditSheet) {

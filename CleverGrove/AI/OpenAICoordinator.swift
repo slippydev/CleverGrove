@@ -87,7 +87,7 @@ class OpenAICoordinator {
         
         let trainingTitles = expert.trainingDocumentTitles
         let instructions = promptBuilder.introduction(name: expert.name ?? "",
-                                                      expertise: expert.desc ?? "",
+                                                      expertise: expert.expertise ?? "",
                                                       style: expert.communicationStyle,
                                                       training: trainingTitles)
         Logger().info("Introduction Instructions: \(instructions)\n")
@@ -104,6 +104,35 @@ class OpenAICoordinator {
         case .failure(_): break // Do nothing if the introduction fails.
         }
         return introduction
+    }
+    
+    func extractExpertise(from textChunks: [CDTextChunk]) async throws -> (String, String) {
+        struct ExpertiseJSON: Codable {
+            public let title: String
+            public let expertise: String
+        }
+        
+        var text: String = ""
+        let range = 0..<min(5, textChunks.count)
+        for i in range {
+            if let string = textChunks[i].text {
+                text.append(string)
+            }
+        }
+        let message = promptBuilder.documentExpertiseArea(referenceText: text)
+        let result = await openAI.sendChatCompletion(newMessage: message,
+                                                     previousMessages: [],
+                                                     model: .gptV3_5(.gptTurbo),
+                                                     maxTokens: 512,
+                                                     temperature: 1.0)
+        switch result {
+        case .success(let aiResult):
+            let json = aiResult.choices.first?.message?.content ?? ""
+            let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
+            return (jsonObject.title, jsonObject.expertise)
+        case .failure(let error):
+            throw error
+        }
     }
     
 //    func establishTone(of expert: CDExpert, from textChunks: [String]) async -> String? {

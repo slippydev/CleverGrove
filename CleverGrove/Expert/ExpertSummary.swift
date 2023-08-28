@@ -30,7 +30,7 @@ struct ExpertSummary: View {
                         .fontWeight(.semibold)
                         .padding(.top, 3)
                     
-                    Text(expert.desc ?? "")
+                    Text(expert.expertise ?? "")
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.leading)
                         .lineLimit(nil) // Allow unlimited lines for description

@@ -43,6 +43,9 @@ final class DocumentCoordinator: ObservableObject {
         
         do {
             try await parseDocument(document, data: data, dataType: dataType)
+            try await parser.getExpertise(for: expert, from: document)
+            DataController.shared.save()
+            document.status = DocumentStatus.trained.rawValue
         } catch {
             expert.removeFromDocuments(document)
             dataController.save()
@@ -59,7 +62,6 @@ final class DocumentCoordinator: ObservableObject {
         }
         
         let result = try await parser.parse(document: document, data: data, dataType: dataType, progressHandler: progressHandler)
-        document.status = DocumentStatus.trained.rawValue
         dataController.store(embeddings: result.embeddings, textChunks: result.textChunks, in: document)
     }
     

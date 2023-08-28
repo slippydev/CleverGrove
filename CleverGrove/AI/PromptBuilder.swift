@@ -36,7 +36,7 @@ struct PromptBuilder {
     
     private func instructions(expert: CDExpert, relevantChunks: [CDTextChunk]) -> AIMessage {
         
-        let description = "Your name is \(expert.name ?? "") and you are an expert on the following topic(s): \(expert.desc ?? "Use the information provided below").\n"
+        let description = "Your name is \(expert.name ?? "") and you are an expert in this topic: \(expert.expertise ?? "Use the information provided below").\n"
         let introduction = "\nOnly answer questions relevant to your area of expertise, and keep the answers to 100 words or less if possible. If you don't know the answer, write \"I could not find an answer.\"\n"
         let style = "Your Communication Style: " + "\(expert.communicationStyle.description) \n"
         var relevantText = ""
@@ -61,6 +61,23 @@ struct PromptBuilder {
             }
         }
         return messages
+    }
+    
+    func documentExpertiseArea(referenceText: String) -> AIMessage {
+        let instructions =
+        """
+        I want two pieces of information about this document, outputed into JSON.
+            1. Title
+            2. The area of expertise relevant to this document
+        JSON Format
+        {
+            "title": "The title of the document",
+            "expertise": "The area of expertise relevant to this document"
+        }
+        """
+
+        let message = instructions + referenceText
+        return AIMessage(role: .system, content:message)
     }
     
 //    func documentTone(text: String) -> String {
