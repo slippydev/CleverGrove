@@ -8,10 +8,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-class ExpertToEdit: ObservableObject {
-    @Published var expert: CDExpert?
-}
-
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -35,17 +31,6 @@ struct EditExpertView: View {
     // Focus States
     @FocusState private var nameInFocus: Bool
     @FocusState private var descriptionInFocus: Bool
-    
-    // Change Tracking
-//    @State private var documentsHaveBeenUpdated = false
-    
-//    var hasChanges: Bool {
-//        expert.name != name ||
-//        expert.desc != description ||
-//        expert.personality != communicationStyle.rawValue ||
-//        expert.image != selectedProfileImage ||
-//        documentsHaveBeenUpdated
-//    }
     
     var body: some View {
         NavigationView {
@@ -167,7 +152,6 @@ struct EditExpertView: View {
             .onChange(of: fileData) { newValue in
                 if let data = fileData, let url = fileURL, let dataType = documentType {
                     addDocument(data: data, url: url, dataType: dataType)
-//                    documentsHaveBeenUpdated = true
                 }
             }
             .onChange(of: selectedProfileImage, perform: { _ in

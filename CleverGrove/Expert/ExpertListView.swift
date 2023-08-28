@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ExpertToDelete: ObservableObject {
+class Expert: ObservableObject {
     @Published var expert: CDExpert?
 }
 
@@ -19,10 +19,12 @@ struct ExpertListView: View {
     
     @State var isShowingEditSheet = false
     @State var isShowingDeleteExpertConfirmation = false
-    @StateObject var expertToDelete = ExpertToDelete()
-    @StateObject var expertToEdit = ExpertToEdit()
+    @StateObject var expertToDelete = Expert()
+    @StateObject var expertToEdit = Expert()
+    @StateObject var expertToTrain = Expert()
     @Binding var externalFileURL: URL?
     @State var isShowingExternalURL = false
+    @State var isAutoShowingExpertChat = false
     
     var body: some View {
         NavigationView {
@@ -74,13 +76,23 @@ struct ExpertListView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+                if let expert = expertToTrain.expert {
+                    NavigationLink(destination: ChatView(expert: expert), isActive: $isAutoShowingExpertChat) { EmptyView() }
+                }
             }
         }
         .onChange(of: externalFileURL, perform: { newValue in
             isShowingExternalURL = true
         })
         .sheet(isPresented: $isShowingExternalURL) {
-            FileImportView(url: externalFileURL)
+            FileImportView(url: externalFileURL, expertToTrain: expertToTrain)
+                .onDisappear() {
+                    // when the file import view is dismissed, check if we have an expert that has been trained.
+                    // if so, then auto launch the chat
+                    if let _ = expertToTrain.expert {
+                        isAutoShowingExpertChat = true
+                    }
+                }
         }
         .sheet(isPresented: $isShowingEditSheet) {
             EditExpertView(expert: expertToEdit.expert ?? CDExpert(context: DataController.shared.managedObjectContext))

@@ -14,11 +14,7 @@ struct DocumentList: View {
         VStack(alignment: .leading) {
             List {
                 ForEach(expert.documentsAsArray) { document in
-                    NavigationLink {
-                        // Link to document
-                    } label: {
-                        DocumentCapsule(document: document)
-                    }
+                    DocumentCapsule(document: document)
                     .swipeActions() {
                         Button(role: .destructive) {
                             remove(document: document, from: expert)

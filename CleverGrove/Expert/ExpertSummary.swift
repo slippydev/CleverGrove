@@ -14,7 +14,7 @@ struct ExpertSummary: View {
     var body: some View {
         ZStack {
             HStack(alignment: .top) {
-                Image(expert.image ?? "")
+                Image(expert.image ?? "Person")
                     .resizable()
                     .frame(width: 75, height: 75, alignment: .topLeading)
                     .clipShape(Circle())
