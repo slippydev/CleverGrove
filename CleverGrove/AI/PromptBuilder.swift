@@ -23,7 +23,7 @@ struct PromptBuilder {
         var intro: String
         let hasTraining = training.count > 0
         if hasTraining {
-            intro = "Your name is \(name), and you are an expert at \(expertise). Introduce yourself and offer to answer any questions about your area of expertise. Your introduction should be 100 words or less. List some of these files you've been trained but don't include the file extensions:\n"
+            intro = "Your name is \(name), and you can answer questions about \(expertise). Introduce yourself and offer to answer any questions about your area of expertise. Your introduction should be 100 words or less. List some of these files you've been trained but don't include the file extensions:\n"
             for document in training {
                 intro += "\(document)\n"
             }
@@ -68,9 +68,9 @@ struct PromptBuilder {
         """
         I want two pieces of information about this document, outputed into JSON.
             1. Title
-            2. A consise one sentence summary of what this document contents, with a maximum of 20 words.
+            2. A consise one sentence summary of what this document contains, with a maximum of 20 words.
         
-        Exmaple 1
+        Example 1
         1. Chess Game Rules
         2. The rules of Chess
         
