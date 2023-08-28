@@ -2,7 +2,7 @@
 //  CDTextChunk+CoreDataProperties.swift
 //  CleverGrove
 //
-//  Created by Derek Gour on 2023-08-16.
+//  Created by Derek Gour on 2023-08-28.
 //
 //
 
@@ -19,9 +19,10 @@ extension CDTextChunk {
     @NSManaged public var embedding: String?
     @NSManaged public var id: UUID?
     @NSManaged public var text: String?
+    @NSManaged public var index: Int16
+    @NSManaged public var chatExchanges: NSSet?
     @NSManaged public var document: CDDocument?
     @NSManaged public var expert: CDExpert?
-    @NSManaged public var chatExchanges: NSSet?
 
 }
 

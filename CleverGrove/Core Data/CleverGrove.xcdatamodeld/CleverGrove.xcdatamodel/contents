@@ -49,6 +49,7 @@
     <entity name="CDTextChunk" representedClassName="CDTextChunk" syncable="YES">
         <attribute name="embedding" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="chatExchanges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDChatExchange" inverseName="textchunks" inverseEntity="CDChatExchange"/>
         <relationship name="document" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDDocument" inverseName="textChunks" inverseEntity="CDDocument"/>

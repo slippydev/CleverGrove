@@ -29,7 +29,7 @@ struct PromptBuilder {
             }
             intro += "Your Communication Style: " + "\(style.description) \n"
         } else {
-            intro = "Your name is \(name), and you are an expert at \(expertise). You haven't been trained yet, so introduce yourself and suggest the user add some training documents to you before you can actually help them by answering questions. Your response should be 100 words or less. Explain that to add training documents they need to swipe on your entry in the Expert List and tap 'Edit' and then add documents. You currently support PDF and Text files."
+            intro = "Your name is \(name), and you are an expert at \(expertise). You haven't been trained yet, so introduce yourself and suggest the user add some training documents to you before you can actually help them by answering questions. Your response should be 100 words or less. Explain that you support PDF, Docx and Text files, and they need to tap on your name above the chat and then add a document for you to be trained on."
         }
         return intro
     }
@@ -68,11 +68,20 @@ struct PromptBuilder {
         """
         I want two pieces of information about this document, outputed into JSON.
             1. Title
-            2. The area of expertise relevant to this document
+            2. A consise one sentence summary of what this document contents, with a maximum of 20 words.
+        
+        Exmaple 1
+        1. Chess Game Rules
+        2. The rules of Chess
+        
+        Example 2
+        1. An investigation into the nature of dark matter
+        2. A research paper investigating the physics of dark matter
+        
         JSON Format
         {
             "title": "The title of the document",
-            "expertise": "The area of expertise relevant to this document"
+            "expertise": "summary of document"
         }
         """
 

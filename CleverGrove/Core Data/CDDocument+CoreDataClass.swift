@@ -22,4 +22,9 @@ public class CDDocument: NSManagedObject {
         return document
     }
     
+    func orderedTextChunks() -> [CDTextChunk]? {
+        guard let textChunks = textChunks?.allObjects as? [CDTextChunk] else { return nil }
+        let sortedArray = textChunks.sorted { $0.index < $1.index }
+        return sortedArray
+    }
 }

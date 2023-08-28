@@ -34,7 +34,7 @@ final class Parser: ObservableObject {
     }
     
     func getExpertise(for expert: CDExpert, from document: CDDocument) async throws {
-        guard let textChunks = document.textChunks?.allObjects as? [CDTextChunk] else { throw ParserError.parsingError }
+        guard let textChunks = document.orderedTextChunks() else { throw ParserError.parsingError }
         let (title, expertise) = try await ai.extractExpertise(from: textChunks)
         if expert.expertise == nil {
             // don't change the expertise from the originally established if user is adding more documents
