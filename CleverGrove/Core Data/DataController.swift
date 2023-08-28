@@ -51,7 +51,7 @@ class DataController: ObservableObject {
     
     func store(embeddings: [[Double]], textChunks: [String], in document: CDDocument) {
         for (i, chunk) in textChunks.enumerated() {
-            let textChunk = CDTextChunk.textChunk(context: managedObjectContext, text: chunk, embedding: embeddings[i])
+            let textChunk = CDTextChunk.textChunk(context: managedObjectContext, text: chunk, index: i, embedding: embeddings[i])
             document.addToTextChunks(textChunk)
             document.expert?.addToTextChunks(textChunk)
             

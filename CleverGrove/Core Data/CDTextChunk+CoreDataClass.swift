@@ -12,9 +12,10 @@ import CoreData
 @objc(CDTextChunk)
 public class CDTextChunk: NSManagedObject {
     
-    static func textChunk(context: NSManagedObjectContext, text: String, embedding: [Double]) -> CDTextChunk {
+    static func textChunk(context: NSManagedObjectContext, text: String, index: Int, embedding: [Double]) -> CDTextChunk {
         let textChunk = CDTextChunk(context: context)
         textChunk.id = UUID()
+        textChunk.index = Int16(index)
         textChunk.text = text
         textChunk.embedding = embeddingStringFrom(embeddingArray: embedding)
         return textChunk

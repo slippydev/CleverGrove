@@ -2,7 +2,7 @@
 //  CDDocument+CoreDataProperties.swift
 //  CleverGrove
 //
-//  Created by Derek Gour on 2023-08-11.
+//  Created by Derek Gour on 2023-08-28.
 //
 //
 
@@ -16,11 +16,12 @@ extension CDDocument {
         return NSFetchRequest<CDDocument>(entityName: "CDDocument")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var filetype: String?
     @NSManaged public var fileName: String?
+    @NSManaged public var filetype: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var path: String?
     @NSManaged public var status: String?
+    @NSManaged public var title: String?
     @NSManaged public var expert: CDExpert?
     @NSManaged public var textChunks: NSSet?
 

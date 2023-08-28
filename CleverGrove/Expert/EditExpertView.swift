@@ -8,17 +8,13 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-class ExpertToEdit: ObservableObject {
-    @Published var expert: CDExpert?
-}
-
 struct EditExpertView: View {
     @Environment(\.dismiss) var dismiss
     
     // Expert Properties
     @ObservedObject var expert: CDExpert
     @State private var name: String = ""
-    @State private var description: String = ""
+    @State private var expertise: String = ""
     @State private var communicationStyle = CommunicationStyle.formal
     @State private var selectedProfileImage: String = ""
     
@@ -36,24 +32,21 @@ struct EditExpertView: View {
     @FocusState private var nameInFocus: Bool
     @FocusState private var descriptionInFocus: Bool
     
-    // Change Tracking
-//    @State private var documentsHaveBeenUpdated = false
-    
-//    var hasChanges: Bool {
-//        expert.name != name ||
-//        expert.desc != description ||
-//        expert.personality != communicationStyle.rawValue ||
-//        expert.image != selectedProfileImage ||
-//        documentsHaveBeenUpdated
-//    }
-    
     var body: some View {
-        NavigationView {
             VStack {
+                HStack {
+                    Spacer()
+                    Button("Done", role: .cancel) {
+                        saveChanges()
+                        dismiss()
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                
                 VStack(alignment: .center) {
-                    HStack(alignment: .bottom) {
+                    HStack(alignment: .top) {
                         CharacterImage(image: expert.image ?? "Person", isSelected: .constant(false))
-                            .frame(minHeight: 120)
                             .overlay(alignment: .bottomTrailing) {
                                 Image(systemName: "square.and.pencil")
                                     .resizable()
@@ -104,13 +97,21 @@ struct EditExpertView: View {
                             .padding(.top, 5)
                         Spacer()
                     }
-                    TextEditor(text: $description)
-                        .focused($descriptionInFocus)
-                        .scrollContentBackground(.hidden)
-                        .background(Color("TextFieldBG"))
-                        .frame(minHeight: 50, maxHeight: 50)
-                        .cornerRadius(4)
-                        .shadow(radius: 1.0)
+                    HStack {
+                        Text(expertise)
+                            .font(.headline)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                            .padding(.horizontal, 10)
+                        Spacer()
+                    }
+//                    TextEditor(text: $expertise)
+//                        .focused($descriptionInFocus)
+//                        .scrollContentBackground(.hidden)
+//                        .background(Color("TextFieldBG"))
+//                        .frame(minHeight: 50, maxHeight: 50)
+//                        .cornerRadius(4)
+//                        .shadow(radius: 1.0)
                 }
                 .frame(minHeight: 250)
                 .padding()
@@ -135,26 +136,6 @@ struct EditExpertView: View {
                 DocumentList(expert: expert)
                     .padding(.bottom)
             }
-            .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                    Button(role: .cancel) {
-                        DataController.shared.undoChanges()
-                        dismiss()
-                    } label: {
-                        Text("Cancel")
-                    }
-                }
-                
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button() {
-                        saveChanges()
-                        dismiss()
-                    } label: {
-                        Text("Save")
-                    }
-//                    .opacity(hasChanges ? 1.0 : 0.0)
-                }
-            }
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
             }
@@ -167,7 +148,6 @@ struct EditExpertView: View {
             .onChange(of: fileData) { newValue in
                 if let data = fileData, let url = fileURL, let dataType = documentType {
                     addDocument(data: data, url: url, dataType: dataType)
-//                    documentsHaveBeenUpdated = true
                 }
             }
             .onChange(of: selectedProfileImage, perform: { _ in
@@ -177,21 +157,23 @@ struct EditExpertView: View {
                 if (expert.image ?? "").isEmpty {
                     nameInFocus = true
                 }
-                description = expert.desc ?? ""
+                expertise = expert.expertise ?? ""
                 name = expert.name ?? ""
                 communicationStyle = CommunicationStyle(rawValue: expert.personality ?? "") ?? .formal
             }
             .onDisappear {
                 DataController.shared.undoChanges()
             }
-        }
     }
     
     func addDocument(data: Data, url: URL, dataType: UTType) {
         Task {
             do {
                 try await DocumentCoordinator.shared.addDocument(at: url, with: data, to: expert, dataType: dataType)
+                fileData = nil // reset
+                expertise = expert.expertise ?? ""
             } catch {
+                fileData = nil // reset
                 isShowingParsingError = true
             }
         }
@@ -199,7 +181,6 @@ struct EditExpertView: View {
     
     func saveChanges() {
         expert.name = name
-        expert.desc = description
         expert.personality = communicationStyle.rawValue
         if !selectedProfileImage.isEmpty {
             expert.image = selectedProfileImage

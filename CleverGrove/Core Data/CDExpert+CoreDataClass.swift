@@ -37,8 +37,8 @@ public class CDExpert: NSManagedObject {
         var titles = [String]()
         if let documents = documents {
             for document in documents {
-                if let fileName = (document as AnyObject).fileName ?? "" {
-                    titles.append(fileName)
+                if let title = (document as AnyObject).title ?? "" {
+                    titles.append(title)
                 }
             }
         }

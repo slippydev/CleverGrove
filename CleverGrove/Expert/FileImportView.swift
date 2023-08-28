@@ -8,10 +8,11 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+class Document: ObservableObject {
+    @Published var document: CDDocument?
+}
+
 struct FileImportView: View {
-    class SelectedExpert: ObservableObject {
-        @Published var expert: CDExpert?
-    }
     
     @FetchRequest(sortDescriptors: [
         SortDescriptor(\.name)
@@ -21,7 +22,8 @@ struct FileImportView: View {
     
     let url: URL?
     private let fileReader = FileReader()
-    @StateObject var selectedExpert = SelectedExpert()
+    @ObservedObject var expertToTrain : Expert
+    @StateObject var documentToTrain = Document()
     @State private var fileData: Data?
     @State private var fileType: UTType?
     @State private var isTraining = false
@@ -29,7 +31,7 @@ struct FileImportView: View {
     @State private var errorMessage = ""
     
     func shouldHide(_ expert: CDExpert) -> Bool {
-        isTraining && expert != selectedExpert.expert
+        isTraining && expert != expertToTrain.expert
     }
     
     var body: some View {
@@ -40,30 +42,44 @@ struct FileImportView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
-            if let url = url {
-                Text("Choose an expert to train on \(url.lastPathComponent)?")
-                    .font(.headline)
-                    .padding(.horizontal, 35)
+            
+            if let document = documentToTrain.document {
+                DocumentCapsule(document: document)
+                    .padding(.vertical, 30)
             }
+            
+            Button {
+                Task { await startTraining() }
+            } label: {
+                Text("Train a new expert")
+                    .foregroundColor(.blue)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+            .padding(.vertical, 20)
+            .frame(width: 350, height: 70)
+            .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.gray, lineWidth: 1)
+                )
+            .opacity(isTraining ? 0 : 1.0)
+            
+            Text("Or add document to an existing expert:")
+                .font(.headline)
+                .opacity(isTraining ? 0 : 1.0)
+                .padding()
+            
             List {
                 ForEach(experts, id: \.self) { expert in
                     ExpertSummary(expert: expert)
                         .onTapGesture {
-                            if isTraining == false {
-                                selectedExpert.expert = expert
-                                withAnimation(.easeOut(duration: 0.5)) {
-                                    isTraining = true
-                                }
-                                Task { await trainExpert() }
-                            }
+                            Task { await startTraining(expert) }
                         }
-                        .opacity(shouldHide(expert) ? 0.1 : 1.0)
-                    if expert == selectedExpert.expert, let url = url, let document = selectedExpertHasDocument(named: url.lastPathComponent) {
-                        DocumentCapsule(document: document)
-                    }
                 }
             }
+            .listStyle(.plain)
             .scrollIndicators(.hidden)
+            .opacity(isTraining ? 0 : 1.0)
         }
         .task {
             await openFile()
@@ -76,7 +92,7 @@ struct FileImportView: View {
     }
     
     func selectedExpertHasDocument(named name: String) -> CDDocument? {
-        let document: CDDocument? = selectedExpert.expert?.documents?.first(where: { document in
+        let document: CDDocument? = expertToTrain.expert?.documents?.first(where: { document in
             (document as? CDDocument)?.fileName == name
         }) as? CDDocument
         return document
@@ -84,32 +100,57 @@ struct FileImportView: View {
     
     func openFile() async {
         guard let url = url else {
-            errorMessage = "Error reading the file URL"
-            isShowingError = true
+            showError("Error reading the file URL")
             return
         }
-        let (data, type) = fileReader.openFile(at: url)
+        guard let (data, type) = fileReader.openFile(at: url) as? (Data, UTType) else {
+            showError("Could not read file contents")
+            return
+        }
         fileData = data
         fileType = type
+        documentToTrain.document = DocumentCoordinator.shared.newDocument(at: url, dataType: type)
+    }
+    
+    func startTraining(_ expert: CDExpert? = nil) async {
+        if isTraining == false {
+            if let expert = expert {
+                expertToTrain.expert = expert
+            } else {
+                // Create a new expert to edit
+                expertToTrain.expert = CDExpert.expert(context: DataController.shared.managedObjectContext,
+                                                      name: CDExpert.randomName(),
+                                                      description: "...details about the area of expertise.")
+            }
+            withAnimation(.easeOut(duration: 0.5)) {
+                isTraining = true
+            }
+            Task { await trainExpert() }
+        }
     }
     
     func trainExpert() async {
         Task {
             do {
-                guard let url = url, let data = fileData, let type = fileType, let expert = selectedExpert.expert else { return }
-                try await DocumentCoordinator.shared.addDocument(at: url, with: data, to: expert, dataType: type)
+                guard let document = documentToTrain.document, let data = fileData, let type = fileType, let expert = expertToTrain.expert else { return }
+                document.status = DocumentStatus.training.rawValue
+                try await DocumentCoordinator.shared.addDocument(document, to: expert, data: data, dataType: type)
                 dismiss()
             } catch {
-                errorMessage = error.localizedDescription
-                isShowingError = true
+                showError(error.localizedDescription)
             }
         }
+    }
+    
+    func showError(_ text: String) {
+        errorMessage = text
+        isShowingError = true
     }
 
 }
 
 struct FileImportView_Previews: PreviewProvider {
     static var previews: some View {
-        FileImportView(url: URL(string: "http://text.com/myfile.pdf"))
+        FileImportView(url: URL(string: "http://text.com/myfile.pdf"), expertToTrain: Expert())
     }
 }

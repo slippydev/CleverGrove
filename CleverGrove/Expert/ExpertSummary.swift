@@ -14,7 +14,7 @@ struct ExpertSummary: View {
     var body: some View {
         ZStack {
             HStack(alignment: .top) {
-                Image(expert.image ?? "")
+                Image(expert.image ?? "Person")
                     .resizable()
                     .frame(width: 75, height: 75, alignment: .topLeading)
                     .clipShape(Circle())
@@ -30,7 +30,7 @@ struct ExpertSummary: View {
                         .fontWeight(.semibold)
                         .padding(.top, 3)
                     
-                    Text(expert.desc ?? "")
+                    Text(expert.expertise ?? "")
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.leading)
                         .lineLimit(nil) // Allow unlimited lines for description
