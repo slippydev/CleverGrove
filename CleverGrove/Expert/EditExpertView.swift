@@ -173,6 +173,7 @@ struct EditExpertView: View {
                 fileData = nil // reset
                 expertise = expert.expertise ?? ""
             } catch {
+                fileData = nil // reset
                 isShowingParsingError = true
             }
         }
