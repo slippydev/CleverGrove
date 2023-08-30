@@ -29,7 +29,11 @@ public class CDExpert: NSManagedObject {
         expert.lastUpdated = json.lastUpdated
         expert.personality = json.personality
         for documentJSON in json.documents {
-            expert.addToDocuments(CDDocument.document(from: documentJSON, context: context))
+            let document = CDDocument.document(from: documentJSON, for: expert, context: context)
+            expert.addToDocuments(document)
+            for textChunk in document.textChunksAsArray() {
+                expert.addToTextChunks(textChunk)
+            }
         }
         return expert
     }

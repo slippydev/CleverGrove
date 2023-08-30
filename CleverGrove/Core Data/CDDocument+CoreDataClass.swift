@@ -22,7 +22,7 @@ public class CDDocument: NSManagedObject {
         return document
     }
     
-    static func document(from json: DocumentJSON, context: NSManagedObjectContext) -> CDDocument {
+    static func document(from json: DocumentJSON, for expert: CDExpert, context: NSManagedObjectContext) -> CDDocument {
         let document = CDDocument(context: context)
         document.id = json.id
         document.path = json.path
@@ -40,5 +40,9 @@ public class CDDocument: NSManagedObject {
         guard let textChunks = textChunks?.allObjects as? [CDTextChunk] else { return nil }
         let sortedArray = textChunks.sorted { $0.index < $1.index }
         return sortedArray
+    }
+    
+    func textChunksAsArray() -> [CDTextChunk] {
+        textChunks?.allObjects as? [CDTextChunk] ?? []
     }
 }

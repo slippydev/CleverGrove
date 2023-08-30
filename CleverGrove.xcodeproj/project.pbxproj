@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B04F0022A9FF2EA00A469D8 /* ExpertImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */; };
 		5B3C07F82A954472009DEA7F /* DocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */; };
 		5B3C07FA2A958D57009DEA7F /* FileImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F92A958D57009DEA7F /* FileImportView.swift */; };
 		5B3C07FD2A96671E009DEA7F /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07FC2A96671E009DEA7F /* FileReader.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertImporter.swift; sourceTree = "<group>"; };
 		5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCoordinator.swift; sourceTree = "<group>"; };
 		5B3C07F92A958D57009DEA7F /* FileImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileImportView.swift; sourceTree = "<group>"; };
 		5B3C07FC2A96671E009DEA7F /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
 				5B3C07FC2A96671E009DEA7F /* FileReader.swift */,
 				5B837FD32A9E69D900780AE5 /* ExpertExporter.swift */,
+				5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */,
 				5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */,
 				5B837FD72A9EC49700780AE5 /* URL-Extensions.swift */,
 				5B4997392A9FAD8E00BD30A2 /* UTType-Extensions.swift */,
@@ -530,6 +533,7 @@
 				5B58A1492A8437520008C270 /* DataController.swift in Sources */,
 				5B58A16C2A8533D30008C270 /* FilePicker.swift in Sources */,
 				5B58510D2A8C1B7200A01AAA /* View-Extensions.swift in Sources */,
+				5B04F0022A9FF2EA00A469D8 /* ExpertImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
