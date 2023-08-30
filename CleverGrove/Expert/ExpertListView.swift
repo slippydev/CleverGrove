@@ -22,6 +22,7 @@ struct ExpertListView: View {
     @StateObject var expertToDelete = Expert()
     @StateObject var expertToEdit = Expert()
     @StateObject var expertToTrain = Expert()
+    @StateObject var expertToImport = Expert()
     @Binding var externalFileURL: URL?
     @State var isShowingExternalURL = false
     @State var isAutoShowingExpertChat = false
@@ -39,8 +40,7 @@ struct ExpertListView: View {
                 Button {
                     // Create a new expert to edit
                     expertToEdit.expert = CDExpert.expert(context: DataController.shared.managedObjectContext,
-                                                          name: CDExpert.randomName(),
-                                                          description: "...details about the area of expertise.")
+                                                          name: CDExpert.randomName())
                     isShowingEditSheet = true
                 } label: {
                     Text("Train a new expert")
@@ -79,11 +79,18 @@ struct ExpertListView: View {
                 if let expert = expertToTrain.expert {
                     NavigationLink(destination: ChatView(expert: expert), isActive: $isAutoShowingExpertChat) { EmptyView() }
                 }
+                if let expert = expertToImport.expert {
+                    NavigationLink(destination: ChatView(expert: expert), isActive: $isAutoShowingExpertChat) { EmptyView() }
+                }
             }
         }
         .onChange(of: externalFileURL, perform: { newValue in
-            if externalFileURL != nil {
-                isShowingExternalURL = true
+            if let url = externalFileURL {
+                if url.pathExtension == "expert" {
+                    importExpert(from: url)
+                } else {
+                    isShowingExternalURL = true
+                }
             }
         })
         .sheet(isPresented: $isShowingExternalURL) {
@@ -115,12 +122,32 @@ struct ExpertListView: View {
                 Text("Don't Delete")
             }
         }
+        .onDisappear() {
+            // This doesn't work as expected because navigation stack pushes don't 'disappear'
+            // this view
+            expertToImport.expert = nil
+            expertToEdit.expert = nil
+            expertToTrain.expert = nil
+            expertToDelete.expert = nil
+        }
     }
     
     func remove(expert: CDExpert) {
         print("Deleted")
         DataController.shared.managedObjectContext.delete(expert)
         DataController.shared.save()
+    }
+    
+    func importExpert(from url: URL) {
+        do {
+            let json = try ExpertImporter().read(url: url)
+            let expert = CDExpert.expert(from: json, context: DataController.shared.managedObjectContext)
+            DataController.shared.save()
+            expertToImport.expert = expert
+            isAutoShowingExpertChat = true
+        } catch {
+//        FIXME: show error
+        }
     }
 }
 

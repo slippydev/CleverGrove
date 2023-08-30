@@ -21,6 +21,15 @@ public class CDTextChunk: NSManagedObject {
         return textChunk
     }
     
+    static func textChunk(from json: TextChunkJSON, context: NSManagedObjectContext) -> CDTextChunk {
+        let textChunk = CDTextChunk(context: context)
+        textChunk.id = json.id
+        textChunk.index = json.index
+        textChunk.text = json.text
+        textChunk.embedding = json.embedding
+        return textChunk
+    }
+    
     var embeddingAsArray: [Double] {
         (embedding ?? "")
             .split(separator: ",")

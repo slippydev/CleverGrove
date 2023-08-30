@@ -37,7 +37,7 @@ struct PreviewSamples {
         let expert = CDExpert(context: DataController.shared.managedObjectContext)
         expert.id = UUID()
         expert.name = "Bobby Bo Body"
-        expert.desc = "Bobby knows all"
+        expert.expertise = "Bobby knows all"
         expert.image = "SampleProfile3"
         expert.addToDocuments(PreviewSamples.documentTrained)
         expert.addToDocuments(PreviewSamples.documentTraining)

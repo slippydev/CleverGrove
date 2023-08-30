@@ -15,11 +15,13 @@ extension UTType {
     static let docx = UTType(filenameExtension: "docx")!
 }
 
-struct FileReader {
+class FileReader {
     private let docxSubpath = "word/document.xml"
+    private var urlToCleanup: URL?
     
     init() {
         Zip.addCustomFileExtension("docx") // so we can unzip docx files
+        Zip.addCustomFileExtension("expert") // sw we can zip and unzip our .expert files
     }
     
     func openFile(at url: URL) -> (Data?, UTType?) {
@@ -40,6 +42,11 @@ struct FileReader {
         
         NSFileCoordinator().coordinate(readingItemAt: url, error: &error) { url in
             data = readData(from: url, fileType: type)
+            if let urlToCleanup = urlToCleanup {
+                do {
+                    try FileManager.default.removeItem(at: urlToCleanup)
+                } catch {}
+            }
         }
         if let error = error {
             print("Error \(error.localizedDescription)")
@@ -48,7 +55,10 @@ struct FileReader {
     }
     
     private func readData(from url: URL, fileType: UTType) -> Data? {
-        if fileType.conforms(to: .docx) {
+        if fileType.conforms(to: .expertFileFormat) {
+            guard let url = unzip(url: url, subpath: ExpertExporter.expertJSONSubpath) else { return nil }
+            return try? Data(contentsOf: url)
+        } else if fileType.conforms(to: .docx) {
             guard let url = unzip(url: url, subpath: docxSubpath) else { return nil }
             return try? Data(contentsOf: url)
         } else {
@@ -56,9 +66,10 @@ struct FileReader {
         }
     }
     
-    private func unzip(url: URL, subpath: String?) -> URL? {
+    private func unzip(url: URL, subpath: String? = nil) -> URL? {
         do {
             var path = try Zip.quickUnzipFile(url)
+            urlToCleanup = path
             if let subpath = subpath {
                 path.append(component: subpath)
             }
