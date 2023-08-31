@@ -70,6 +70,7 @@
 			<array>
 				<string>public.data</string>
 				<string>public.content</string>
+				<string>public.text</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Expert</string>
@@ -86,7 +87,7 @@
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>application/gzip</string>
+					<string>text/plain</string>
 				</array>
 			</dict>
 		</dict>

@@ -38,16 +38,21 @@ struct EditExpertView: View {
             VStack {
                 HStack {
                     Button() {
-                        let url = exportExpert()
-                        expertFileURL = url
+                        expertFileURL = exportExpert()
                         isShowingShareSheet = (expertFileURL != nil)
                     } label: {
                         Image(systemName: "square.and.arrow.up")
+                            .resizable()
+                            .frame(width: 20, height: 25, alignment: .bottomTrailing)
+                            .foregroundColor(.blue)
                     }
                     Spacer()
-                    Button("Done", role: .cancel) {
+                    Button() {
                         saveChanges()
                         dismiss()
+                    } label: {
+                        Text("Done")
+                            .font(.headline)
                     }
                 }
                 .padding(.horizontal, 20)
@@ -61,18 +66,20 @@ struct EditExpertView: View {
                                     .resizable()
                                     .frame(width: 25, height: 25, alignment: .bottomTrailing)
                                     .foregroundColor(.blue)
-                                    .offset(CGSize(width: 15, height: -10))
+                                    .offset(CGSize(width: 15, height: 5))
                             }
                             .onTapGesture {
                                 isShowingImagePicker = true
                             }
                             .padding(.trailing, 20)
+                            .offset(CGSize(width: 0, height: 20))
                         VStack {
                             HStack {
                                 Text("Name")
-                                    .frame(alignment: .bottomLeading)
+                                    .font(.headline)
                                 Spacer()
                             }
+                            .offset(CGSize(width: 0, height: 10))
                             TextField(expert.name ?? "", text: $name)
                                 .focused($nameInFocus)
                                 .font(.headline.bold())
@@ -82,8 +89,10 @@ struct EditExpertView: View {
                                 .shadow(radius: 1.0)
                             HStack {
                                 Text("Personality")
+                                    .font(.headline)
                                 Spacer()
                             }
+                            .offset(CGSize(width: 0, height: 10))
                             HStack {
                                 Picker("Communication Style", selection: $communicationStyle) {
                                     ForEach(CommunicationStyle.allCases, id:\.self) { option in
@@ -122,29 +131,33 @@ struct EditExpertView: View {
 //                        .cornerRadius(4)
 //                        .shadow(radius: 1.0)
                 }
-                .frame(minHeight: 250)
+//                .frame(minHeight: 250)
                 .padding()
-                
-                Divider()
-                HStack {
-                    Text("Training Documents")
-                        .font(.title2)
-                        .padding([.top, .leading], 10)
-                    Spacer()
-                    Button() {
-                        nameInFocus = false
-                        descriptionInFocus = false
-                        isShowingFilePicker = true
-                    } label: {
-                        Image(systemName: "plus.square")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .padding(10)
+//                .offset(CGSize(width: 0, height: -10))
+                VStack {
+                    HStack {
+                        Text("Training Documents")
+                            .font(.title2)
+                            .padding([.top, .leading], 10)
+                        Spacer()
+                        Button() {
+                            nameInFocus = false
+                            descriptionInFocus = false
+                            isShowingFilePicker = true
+                        } label: {
+                            Image(systemName: "plus.square")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                                .padding(10)
+                        }
                     }
+                    
+                    DocumentList(expert: expert)
+                        .padding(.bottom)
                 }
-                DocumentList(expert: expert)
-                    .padding(.bottom)
+//                .offset(CGSize(width: 0, height: -50))
             }
+            
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
             }

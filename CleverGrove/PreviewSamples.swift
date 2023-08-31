@@ -38,7 +38,7 @@ struct PreviewSamples {
         expert.id = UUID()
         expert.name = "Bobby Bo Body"
         expert.expertise = "Bobby knows all"
-        expert.image = "SampleProfile3"
+        expert.image = "Quinn"
         expert.addToDocuments(PreviewSamples.documentTrained)
         expert.addToDocuments(PreviewSamples.documentTraining)
         expert.addToChatExchanges(NSSet(array: PreviewSamples.chatExchanges))

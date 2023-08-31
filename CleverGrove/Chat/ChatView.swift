@@ -15,8 +15,11 @@ struct ChatView: View {
     @State private var response = ""
     @State private var relevantChunks = [CDTextChunk]()
     @ObservedObject var expert: CDExpert
-    
+    @State private var expertFileURL: URL?
+    @State private var isShowingShareSheet = false
+
     @FocusState private var inputInFocus: Bool
+    @Environment(\.dismiss) var dismiss
     
     var chatExchanges: [CDChatExchange] {
         expert.chatExchanges() // by default this is limted to 20 exchanges
@@ -91,9 +94,25 @@ struct ChatView: View {
             ToolbarItem(placement: .principal) {
                 ChatViewHeader(expert: expert)
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button() {
+                    expertFileURL = exportExpert()
+                    isShowingShareSheet = (expertFileURL != nil)
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .resizable()
+                        .frame(width: 20, height: 25, alignment: .bottomTrailing)
+                        .foregroundColor(.blue)
+                }
+            }
         }
         .task {
             await introduction()
+        }
+        .sheet(isPresented: $isShowingShareSheet) {
+            if let url = expertFileURL {
+                ShareSheet(activityItems: [url], completion: shareCompletion)
+            }
         }
     }
 
@@ -137,6 +156,33 @@ struct ChatView: View {
         expert.addToChatExchanges(exchange)
         exchange.addToTextchunks(NSSet(array: relevantChunks))
         DataController.shared.save()
+    }
+    
+    func exportExpert() -> URL? {
+        do {
+            let exporter = ExpertExporter(expert: expert)
+            let url = try exporter.export(to: expert.fileName)
+            return url
+        } catch {
+            // FIXME: throw an error
+            return nil
+        }
+    }
+    
+    func shareCompletion(_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) {
+        // delete the expert file from local storage
+        do {
+            if let url = expertFileURL {
+                try FileManager.default.removeItem(at: url)
+            }
+            // auto-dismiss the view if the operation was successful, but not if they canceled
+            if completed {
+                dismiss()
+            }
+        } catch {
+            // FIXME: Not much to be done here. Log the error?
+            print("Removing local expert file after sharing failed.")
+        }
     }
     
 }

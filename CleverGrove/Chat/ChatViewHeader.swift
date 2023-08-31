@@ -21,7 +21,7 @@ struct ChatViewHeader: View {
                     Circle()
                         .stroke(Color.gray, lineWidth: 1)
                 )
-                .padding([.top], 5)
+                .padding([.top, .bottom], 5)
             VStack(alignment: .leading, spacing: 3) {
                 Spacer()
                 Text(expert.name ?? "")
