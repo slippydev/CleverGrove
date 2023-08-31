@@ -30,4 +30,11 @@ struct ExpertImporter {
         let expertJSON = try decoder.decode(ExpertJSON.self, from: data)
         return expertJSON
     }
+    
+    func installEmbeddedExpert() throws {
+        guard let url = Bundle.main.url(forResource: "Clever Cat", withExtension: "expert") else { return }
+        let json = try read(url: url)
+        let expert = CDExpert.expert(from: json, context: DataController.shared.managedObjectContext)
+        DataController.shared.save()
+    }
 }

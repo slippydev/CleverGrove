@@ -137,6 +137,15 @@ struct ExpertListView: View {
         } message: {
             Text(errorMessage)
         }
+        .task {
+            // Check to see if the embedded expert is installed, and install it if it's missing
+            let hasEmbeddedExpert = experts.contains { expert in
+                expert.image == "Clever Cat" // FIXME: I need a better process for editing and identifying the embedded expert
+            }
+            if !hasEmbeddedExpert {
+                try? ExpertImporter().installEmbeddedExpert()
+            }
+        }
     }
     
     func cleanupExpertReferences() {

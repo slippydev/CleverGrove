@@ -21,7 +21,6 @@ let randomNames = [
     "Maverick",
     "Maximus",
     "Nova",
-    "Onyx",
     "Orion",
     "Piper",
     "Quinn",
@@ -33,6 +32,7 @@ let randomNames = [
     "Xander",
     "Zariah",
     
+//    "Onyx",
 //    "Banks",
 //    "Makai",
 //    "Sol",
