@@ -58,13 +58,12 @@
 		5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1202A81841500C093C8 /* ExpertListView.swift */; };
 		5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1242A8190F800C093C8 /* ChatBubble.swift */; };
 		5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F12A2A81939200C093C8 /* ChatView.swift */; };
-		5BA8F12E2A81B04F00C093C8 /* hi_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F12D2A81B04F00C093C8 /* hi_rules.json */; };
 		5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */; };
 		5BA8F1332A82DE6200C093C8 /* AI-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */; };
-		5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1342A82E03300C093C8 /* SampleText.swift */; };
 		5BA8F1372A83095700C093C8 /* EmbeddingResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1362A83095700C093C8 /* EmbeddingResponse.json */; };
 		5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */; };
 		5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */; };
+		5BB651C52AA13B1500CD8957 /* Clever Cat.expert in Resources */ = {isa = PBXBuildFile; fileRef = 5BB651C42AA13B1500CD8957 /* Clever Cat.expert */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,13 +137,12 @@
 		5BA8F1202A81841500C093C8 /* ExpertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertListView.swift; sourceTree = "<group>"; };
 		5BA8F1242A8190F800C093C8 /* ChatBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
 		5BA8F12A2A81939200C093C8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		5BA8F12D2A81B04F00C093C8 /* hi_rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hi_rules.json; sourceTree = "<group>"; };
 		5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEmbeddings.swift; sourceTree = "<group>"; };
 		5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI-Extensions.swift"; sourceTree = "<group>"; };
-		5BA8F1342A82E03300C093C8 /* SampleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleText.swift; sourceTree = "<group>"; };
 		5BA8F1362A83095700C093C8 /* EmbeddingResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EmbeddingResponse.json; sourceTree = "<group>"; };
 		5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAINetwork.swift; sourceTree = "<group>"; };
 		5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpertView.swift; sourceTree = "<group>"; };
+		5BB651C42AA13B1500CD8957 /* Clever Cat.expert */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clever Cat.expert"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,8 +311,7 @@
 		5BA8F12C2A81B02A00C093C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5BA8F12D2A81B04F00C093C8 /* hi_rules.json */,
-				5BA8F1342A82E03300C093C8 /* SampleText.swift */,
+				5BB651C42AA13B1500CD8957 /* Clever Cat.expert */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -459,7 +456,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BA8F12E2A81B04F00C093C8 /* hi_rules.json in Resources */,
+				5BB651C52AA13B1500CD8957 /* Clever Cat.expert in Resources */,
 				5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */,
 				5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */,
 				5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */,
@@ -518,7 +515,6 @@
 				5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */,
 				5B837FD82A9EC49700780AE5 /* URL-Extensions.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
-				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
 				5B3C07FA2A958D57009DEA7F /* FileImportView.swift in Sources */,
 				5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */,
 				5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */,

@@ -63,7 +63,7 @@ struct CharacterPicker: View {
             
             ScrollView(.vertical) {
                 LazyVGrid(columns: columns) {
-                    ForEach(Array(images.keys), id: \.self) { image in
+                    ForEach(Array(images.keys.sorted()), id: \.self) { image in
                         CharacterImage(image: image, isSelected: .constant(selectedImage == image))
                             .onTapGesture {
                                 selectImage(image: image)
