@@ -12,12 +12,29 @@ import CoreData
 @objc(CDExpert)
 public class CDExpert: NSManagedObject {
     
-    static func expert(context: NSManagedObjectContext, name: String, description: String) -> CDExpert {
+    static func expert(context: NSManagedObjectContext, name: String) -> CDExpert {
         let expert = CDExpert(context: context)
         expert.id = UUID()
         expert.name = name
         expert.image = name
-        expert.desc = description
+        return expert
+    }
+    
+    static func expert(from json: ExpertJSON, context: NSManagedObjectContext) -> CDExpert {
+        let expert = CDExpert(context: context)
+        expert.id = json.id
+        expert.name = json.name
+        expert.image = json.image
+        expert.expertise = json.expertise
+        expert.lastUpdated = json.lastUpdated
+        expert.personality = json.personality
+        for documentJSON in json.documents {
+            let document = CDDocument.document(from: documentJSON, for: expert, context: context)
+            expert.addToDocuments(document)
+            for textChunk in document.textChunksAsArray() {
+                expert.addToTextChunks(textChunk)
+            }
+        }
         return expert
     }
     
@@ -47,6 +64,11 @@ public class CDExpert: NSManagedObject {
     
     var communicationStyle: CommunicationStyle {
         CommunicationStyle(rawValue: personality ?? "") ?? .formal
+    }
+    
+    var fileName: String {
+        let expertExtension = ".expert"
+        return "\(name ?? "Expert")\(expertExtension)"
     }
     
     func mostRecentChatExchange() -> CDChatExchange? {

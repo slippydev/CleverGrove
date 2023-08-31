@@ -15,8 +15,13 @@ struct ChatView: View {
     @State private var response = ""
     @State private var relevantChunks = [CDTextChunk]()
     @ObservedObject var expert: CDExpert
+    @State private var expertFileURL: URL?
+    @State private var isShowingShareSheet = false
+    @State private var isShowingError = false
+    @State private var errorMessage = ""
     
     @FocusState private var inputInFocus: Bool
+    @Environment(\.dismiss) var dismiss
     
     var chatExchanges: [CDChatExchange] {
         expert.chatExchanges() // by default this is limted to 20 exchanges
@@ -86,14 +91,36 @@ struct ChatView: View {
             .onChange(of: isWaitingForAnswer, perform: { _ in
                 scroller.scrollTo(exchangeCount, anchor: .bottom)
             })
+            .onChange(of: expertFileURL) { _ in  } // weird quantum shit happening here. Need to observe it for expertFileURL to work properly
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 ChatViewHeader(expert: expert)
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button() {
+                    expertFileURL = exportExpert()
+                    isShowingShareSheet = (expertFileURL != nil)
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .resizable()
+                        .frame(width: 20, height: 25, alignment: .bottomTrailing)
+                        .foregroundColor(.blue)
+                }
+            }
         }
         .task {
             await introduction()
+        }
+        .sheet(isPresented: $isShowingShareSheet) {
+            if let url = expertFileURL {
+                ShareSheet(activityItems: [url], completion: shareCompletion)
+            }
+        }
+        .alert( Text("Error"), isPresented: $isShowingError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
         }
     }
 
@@ -137,6 +164,38 @@ struct ChatView: View {
         expert.addToChatExchanges(exchange)
         exchange.addToTextchunks(NSSet(array: relevantChunks))
         DataController.shared.save()
+    }
+    
+    func exportExpert() -> URL? {
+        do {
+            let exporter = ExpertExporter(expert: expert)
+            let url = try exporter.export(to: expert.fileName)
+            return url
+        } catch {
+            showError("Error exporting expert: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func shareCompletion(_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) {
+        // delete the expert file from local storage
+        do {
+            if let url = expertFileURL {
+                try FileManager.default.removeItem(at: url)
+            }
+            // auto-dismiss the view if the operation was successful, but not if they canceled
+            if completed {
+                dismiss()
+            }
+        } catch {
+            // FIXME: Log this error once analytics are set up
+            print("Removing local expert file after sharing failed.")
+        }
+    }
+    
+    func showError(_ text: String) {
+        errorMessage = text
+        isShowingError = true
     }
     
 }

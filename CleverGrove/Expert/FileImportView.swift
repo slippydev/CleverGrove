@@ -119,8 +119,7 @@ struct FileImportView: View {
             } else {
                 // Create a new expert to edit
                 expertToTrain.expert = CDExpert.expert(context: DataController.shared.managedObjectContext,
-                                                      name: CDExpert.randomName(),
-                                                      description: "...details about the area of expertise.")
+                                                      name: CDExpert.randomName())
             }
             withAnimation(.easeOut(duration: 0.5)) {
                 isTraining = true
@@ -137,7 +136,7 @@ struct FileImportView: View {
                 try await DocumentCoordinator.shared.addDocument(document, to: expert, data: data, dataType: type)
                 dismiss()
             } catch {
-                showError(error.localizedDescription)
+                showError("Error training expert: \(error.localizedDescription)")
             }
         }
     }

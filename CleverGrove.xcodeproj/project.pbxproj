@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B04F0022A9FF2EA00A469D8 /* ExpertImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */; };
 		5B3C07F82A954472009DEA7F /* DocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */; };
 		5B3C07FA2A958D57009DEA7F /* FileImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07F92A958D57009DEA7F /* FileImportView.swift */; };
 		5B3C07FD2A96671E009DEA7F /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07FC2A96671E009DEA7F /* FileReader.swift */; };
 		5B3C07FF2A97CAC0009DEA7F /* CommunicationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C07FE2A97CAC0009DEA7F /* CommunicationStyle.swift */; };
+		5B49973A2A9FAD8E00BD30A2 /* UTType-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4997392A9FAD8E00BD30A2 /* UTType-Extensions.swift */; };
 		5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */; };
 		5B58510D2A8C1B7200A01AAA /* View-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */; };
 		5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */; };
@@ -34,6 +36,9 @@
 		5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993162A89B158009FC4CB /* DocumentDecoder.swift */; };
 		5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */; };
 		5B837FD22A9BE1FC00780AE5 /* NameList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B837FD12A9BE1FC00780AE5 /* NameList.swift */; };
+		5B837FD42A9E69D900780AE5 /* ExpertExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B837FD32A9E69D900780AE5 /* ExpertExporter.swift */; };
+		5B837FD62A9EB4BA00780AE5 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */; };
+		5B837FD82A9EC49700780AE5 /* URL-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B837FD72A9EC49700780AE5 /* URL-Extensions.swift */; };
 		5B84DBC72A8E7C23004464EE /* ChatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B84DBC62A8E7C23004464EE /* ChatTextField.swift */; };
 		5B9451282A8083F000E30E9E /* CleverGroveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451272A8083F000E30E9E /* CleverGroveApp.swift */; };
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
@@ -80,10 +85,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertImporter.swift; sourceTree = "<group>"; };
 		5B3C07F72A954472009DEA7F /* DocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCoordinator.swift; sourceTree = "<group>"; };
 		5B3C07F92A958D57009DEA7F /* FileImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileImportView.swift; sourceTree = "<group>"; };
 		5B3C07FC2A96671E009DEA7F /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		5B3C07FE2A97CAC0009DEA7F /* CommunicationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationStyle.swift; sourceTree = "<group>"; };
+		5B4997392A9FAD8E00BD30A2 /* UTType-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType-Extensions.swift"; sourceTree = "<group>"; };
 		5B58510A2A8C08ED00A01AAA /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		5B58510C2A8C1B7200A01AAA /* View-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extensions.swift"; sourceTree = "<group>"; };
 		5B58510E2A8C47F200A01AAA /* CharacterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPicker.swift; sourceTree = "<group>"; };
@@ -108,6 +115,9 @@
 		5B5993162A89B158009FC4CB /* DocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDecoder.swift; sourceTree = "<group>"; };
 		5B5993182A8A7AD6009FC4CB /* ChatViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewHeader.swift; sourceTree = "<group>"; };
 		5B837FD12A9BE1FC00780AE5 /* NameList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameList.swift; sourceTree = "<group>"; };
+		5B837FD32A9E69D900780AE5 /* ExpertExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertExporter.swift; sourceTree = "<group>"; };
+		5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		5B837FD72A9EC49700780AE5 /* URL-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL-Extensions.swift"; sourceTree = "<group>"; };
 		5B84DBC62A8E7C23004464EE /* ChatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextField.swift; sourceTree = "<group>"; };
 		5B9451242A8083F000E30E9E /* CleverGrove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleverGrove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451272A8083F000E30E9E /* CleverGroveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveApp.swift; sourceTree = "<group>"; };
@@ -170,6 +180,11 @@
 			children = (
 				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
 				5B3C07FC2A96671E009DEA7F /* FileReader.swift */,
+				5B837FD32A9E69D900780AE5 /* ExpertExporter.swift */,
+				5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */,
+				5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */,
+				5B837FD72A9EC49700780AE5 /* URL-Extensions.swift */,
+				5B4997392A9FAD8E00BD30A2 /* UTType-Extensions.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -481,9 +496,11 @@
 				5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */,
 				5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */,
 				5B58510B2A8C08ED00A01AAA /* TypingIndicator.swift in Sources */,
+				5B49973A2A9FAD8E00BD30A2 /* UTType-Extensions.swift in Sources */,
 				5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */,
 				5B837FD22A9BE1FC00780AE5 /* NameList.swift in Sources */,
 				5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */,
+				5B837FD62A9EB4BA00780AE5 /* ShareSheet.swift in Sources */,
 				5B58A14C2A84379E0008C270 /* CleverGrove.xcdatamodeld in Sources */,
 				5B58A14E2A84386A0008C270 /* FileType.swift in Sources */,
 				5B58A1BE2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift in Sources */,
@@ -493,11 +510,13 @@
 				5B84DBC72A8E7C23004464EE /* ChatTextField.swift in Sources */,
 				5B5851122A8D1BDB00A01AAA /* CDChatExchange+CoreDataClass.swift in Sources */,
 				5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */,
+				5B837FD42A9E69D900780AE5 /* ExpertExporter.swift in Sources */,
 				5BA8F1392A831F2F00C093C8 /* OpenAINetwork.swift in Sources */,
 				5BA8F1312A82D40D00C093C8 /* OpenAIEmbeddings.swift in Sources */,
 				5BA8F1212A81841500C093C8 /* ExpertListView.swift in Sources */,
 				5B58A1BF2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift in Sources */,
 				5B58510F2A8C47F200A01AAA /* CharacterPicker.swift in Sources */,
+				5B837FD82A9EC49700780AE5 /* URL-Extensions.swift in Sources */,
 				5BA8F12B2A81939200C093C8 /* ChatView.swift in Sources */,
 				5BA8F1352A82E03300C093C8 /* SampleText.swift in Sources */,
 				5B3C07FA2A958D57009DEA7F /* FileImportView.swift in Sources */,
@@ -514,6 +533,7 @@
 				5B58A1492A8437520008C270 /* DataController.swift in Sources */,
 				5B58A16C2A8533D30008C270 /* FilePicker.swift in Sources */,
 				5B58510D2A8C1B7200A01AAA /* View-Extensions.swift in Sources */,
+				5B04F0022A9FF2EA00A469D8 /* ExpertImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +694,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleverGrove/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -713,6 +734,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleverGrove/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

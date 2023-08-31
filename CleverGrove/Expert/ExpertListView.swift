@@ -17,17 +17,24 @@ struct ExpertListView: View {
         SortDescriptor(\.name)
     ]) var experts: FetchedResults<CDExpert>
     
-    @State var isShowingEditSheet = false
-    @State var isShowingDeleteExpertConfirmation = false
+    @Environment(\.dismiss) var dismiss
+    
+    @State private var isShowingEditSheet = false
+    @State private var isShowingDeleteExpertConfirmation = false
+    @State private var isShowingError = false
+    @State private var isShowingExternalURL = false
+    @State private var errorMessage = ""
+    
     @StateObject var expertToDelete = Expert()
     @StateObject var expertToEdit = Expert()
     @StateObject var expertToTrain = Expert()
+    @StateObject var expertToImport = Expert()
     @Binding var externalFileURL: URL?
-    @State var isShowingExternalURL = false
-    @State var isAutoShowingExpertChat = false
+    
+    @State var path: [CDExpert] = []
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             VStack {
                 HStack {
                     Text("CleverGrove")
@@ -39,8 +46,7 @@ struct ExpertListView: View {
                 Button {
                     // Create a new expert to edit
                     expertToEdit.expert = CDExpert.expert(context: DataController.shared.managedObjectContext,
-                                                          name: CDExpert.randomName(),
-                                                          description: "...details about the area of expertise.")
+                                                          name: CDExpert.randomName())
                     isShowingEditSheet = true
                 } label: {
                     Text("Train a new expert")
@@ -52,9 +58,7 @@ struct ExpertListView: View {
                 
                 List {
                     ForEach(experts, id: \.self) { expert in
-                        NavigationLink {
-                            ChatView(expert: expert)
-                        } label: {
+                        NavigationLink(value: expert) {
                             ExpertSummary(expert: expert)
                         }
                         .swipeActions() {
@@ -66,24 +70,31 @@ struct ExpertListView: View {
                             }
                             .tint(.indigo)
                             
-                            Button(role: .destructive) {
+                            Button(role: .none) {
                                 expertToDelete.expert = expert
                                 isShowingDeleteExpertConfirmation = true
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
+                            .tint(.red)
                         }
                     }
                 }
+                .navigationDestination(for: CDExpert.self, destination: { expert in
+                    ChatView(expert: expert)
+                })
                 .scrollIndicators(.hidden)
-                if let expert = expertToTrain.expert {
-                    NavigationLink(destination: ChatView(expert: expert), isActive: $isAutoShowingExpertChat) { EmptyView() }
-                }
+                .listStyle(.plain)
             }
         }
         .onChange(of: externalFileURL, perform: { newValue in
-            if externalFileURL != nil {
-                isShowingExternalURL = true
+            if let url = externalFileURL {
+                path = .init()
+                if url.pathExtension == "expert" {
+                    importExpert(from: url)
+                } else {
+                    isShowingExternalURL = true
+                }
             }
         })
         .sheet(isPresented: $isShowingExternalURL) {
@@ -91,20 +102,26 @@ struct ExpertListView: View {
                 .onDisappear() {
                     // when the file import view is dismissed, check if we have an expert that has been trained.
                     // if so, then auto launch the chat
-                    if let _ = expertToTrain.expert {
-                        isAutoShowingExpertChat = true
+                    if let expert = expertToTrain.expert {
+                        path.append(expert)
                     }
+                    cleanupExpertReferences()
                     externalFileURL = nil
                 }
         }
         .sheet(isPresented: $isShowingEditSheet) {
             EditExpertView(expert: expertToEdit.expert ?? CDExpert(context: DataController.shared.managedObjectContext))
+                .onDisappear() {
+                    cleanupExpertReferences()
+                }
         }
         .alert("Delete Expert?", isPresented: $isShowingDeleteExpertConfirmation) {
             Button(role: .destructive) {
                 if let expert = expertToDelete.expert {
-                    expertToDelete.expert = nil
-                    remove(expert: expert)
+                    withAnimation {
+                        remove(expert: expert)
+                    }
+                    cleanupExpertReferences()
                 }
             } label: {
                 Text("Delete \(expertToDelete.expert?.name ?? "")")
@@ -115,12 +132,41 @@ struct ExpertListView: View {
                 Text("Don't Delete")
             }
         }
+        .alert( Text("Error"), isPresented: $isShowingError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
+        }
+    }
+    
+    func cleanupExpertReferences() {
+        expertToImport.expert = nil
+        expertToEdit.expert = nil
+        expertToTrain.expert = nil
+        expertToDelete.expert = nil
     }
     
     func remove(expert: CDExpert) {
         print("Deleted")
         DataController.shared.managedObjectContext.delete(expert)
         DataController.shared.save()
+    }
+    
+    func importExpert(from url: URL) {
+        do {
+            let json = try ExpertImporter().read(url: url)
+            let expert = CDExpert.expert(from: json, context: DataController.shared.managedObjectContext)
+            DataController.shared.save()
+            expertToImport.expert = expert
+            path.append(expert)
+        } catch {
+            showError("An error occurred while importing the expert: \(error.localizedDescription)")
+        }
+    }
+    
+    func showError(_ text: String) {
+        errorMessage = text
+        isShowingError = true
     }
 }
 
