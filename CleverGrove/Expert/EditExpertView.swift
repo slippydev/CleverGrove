@@ -26,9 +26,10 @@ struct EditExpertView: View {
     
     // Flags for showing sheets and alerts
     @State private var isShowingFilePicker = false
-    @State private var isShowingParsingError = false
     @State private var isShowingImagePicker = false
     @State private var isShowingShareSheet = false
+    @State private var isShowingError = false
+    @State private var errorMessage = ""
     
     // Focus States
     @FocusState private var nameInFocus: Bool
@@ -169,8 +170,10 @@ struct EditExpertView: View {
                     ShareSheet(activityItems: [url], completion: shareCompletion)
                 }
             }
-            .alert("Parsing failure with this document.", isPresented: $isShowingParsingError) {
-                Button("OK", role: .cancel) { }
+            .alert( Text("Error"), isPresented: $isShowingError) {
+                Button("OK") { }
+            } message: {
+                Text(errorMessage)
             }
             .onChange(of: fileData) { newValue in
                 if let data = fileData, let url = fileURL, let dataType = documentType {
@@ -198,13 +201,14 @@ struct EditExpertView: View {
     
     func addDocument(data: Data, url: URL, dataType: UTType) {
         Task {
+            defer { fileData = nil } // reset
             do {
                 try await DocumentCoordinator.shared.addDocument(at: url, with: data, to: expert, dataType: dataType)
-                fileData = nil // reset
                 expertise = expert.expertise ?? ""
+            } catch let error as URLError {
+                showError("\(error.localizedDescription).\nThere may be a problem with the server. Please try again later.")
             } catch {
-                fileData = nil // reset
-                isShowingParsingError = true
+                showError("Error parsing document: \(error.localizedDescription)")
             }
         }
     }
@@ -225,7 +229,7 @@ struct EditExpertView: View {
             let url = try exporter.export(to: expert.fileName)
             return url
         } catch {
-            // FIXME: throw an error
+            showError("Error exporting expert: \(error.localizedDescription)")
             return nil
         }
     }
@@ -241,9 +245,14 @@ struct EditExpertView: View {
                 dismiss()
             }
         } catch {
-            // FIXME: Not much to be done here. Log the error?
+            // FIXME: Log this error once Analytics are set up
             print("Removing local expert file after sharing failed.")
         }
+    }
+    
+    func showError(_ text: String) {
+        errorMessage = text
+        isShowingError = true
     }
 }
 

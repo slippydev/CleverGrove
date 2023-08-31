@@ -17,7 +17,9 @@ struct ChatView: View {
     @ObservedObject var expert: CDExpert
     @State private var expertFileURL: URL?
     @State private var isShowingShareSheet = false
-
+    @State private var isShowingError = false
+    @State private var errorMessage = ""
+    
     @FocusState private var inputInFocus: Bool
     @Environment(\.dismiss) var dismiss
     
@@ -114,6 +116,11 @@ struct ChatView: View {
                 ShareSheet(activityItems: [url], completion: shareCompletion)
             }
         }
+        .alert( Text("Error"), isPresented: $isShowingError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
+        }
     }
 
     func processChat() {
@@ -164,7 +171,7 @@ struct ChatView: View {
             let url = try exporter.export(to: expert.fileName)
             return url
         } catch {
-            // FIXME: throw an error
+            showError("Error exporting expert: \(error.localizedDescription)")
             return nil
         }
     }
@@ -180,9 +187,14 @@ struct ChatView: View {
                 dismiss()
             }
         } catch {
-            // FIXME: Not much to be done here. Log the error?
+            // FIXME: Log this error once analytics are set up
             print("Removing local expert file after sharing failed.")
         }
+    }
+    
+    func showError(_ text: String) {
+        errorMessage = text
+        isShowingError = true
     }
     
 }

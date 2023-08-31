@@ -136,7 +136,7 @@ struct FileImportView: View {
                 try await DocumentCoordinator.shared.addDocument(document, to: expert, data: data, dataType: type)
                 dismiss()
             } catch {
-                showError(error.localizedDescription)
+                showError("Error training expert: \(error.localizedDescription)")
             }
         }
     }

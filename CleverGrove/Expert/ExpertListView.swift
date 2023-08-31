@@ -17,18 +17,24 @@ struct ExpertListView: View {
         SortDescriptor(\.name)
     ]) var experts: FetchedResults<CDExpert>
     
-    @State var isShowingEditSheet = false
-    @State var isShowingDeleteExpertConfirmation = false
+    @Environment(\.dismiss) var dismiss
+    
+    @State private var isShowingEditSheet = false
+    @State private var isShowingDeleteExpertConfirmation = false
+    @State private var isShowingError = false
+    @State private var isShowingExternalURL = false
+    @State private var errorMessage = ""
+    
     @StateObject var expertToDelete = Expert()
     @StateObject var expertToEdit = Expert()
     @StateObject var expertToTrain = Expert()
     @StateObject var expertToImport = Expert()
     @Binding var externalFileURL: URL?
-    @State var isShowingExternalURL = false
-    @State var isAutoShowingExpertChat = false
+    
+    @State var path: [CDExpert] = []
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             VStack {
                 HStack {
                     Text("CleverGrove")
@@ -52,9 +58,7 @@ struct ExpertListView: View {
                 
                 List {
                     ForEach(experts, id: \.self) { expert in
-                        NavigationLink {
-                            ChatView(expert: expert)
-                        } label: {
+                        NavigationLink(value: expert) {
                             ExpertSummary(expert: expert)
                         }
                         .swipeActions() {
@@ -66,26 +70,26 @@ struct ExpertListView: View {
                             }
                             .tint(.indigo)
                             
-                            Button(role: .destructive) {
+                            Button(role: .none) {
                                 expertToDelete.expert = expert
                                 isShowingDeleteExpertConfirmation = true
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
+                            .tint(.red)
                         }
                     }
                 }
+                .navigationDestination(for: CDExpert.self, destination: { expert in
+                    ChatView(expert: expert)
+                })
                 .scrollIndicators(.hidden)
-                if let expert = expertToTrain.expert {
-                    NavigationLink(destination: ChatView(expert: expert), isActive: $isAutoShowingExpertChat) { EmptyView() }
-                }
-                if let expert = expertToImport.expert {
-                    NavigationLink(destination: ChatView(expert: expert), isActive: $isAutoShowingExpertChat) { EmptyView() }
-                }
+                .listStyle(.plain)
             }
         }
         .onChange(of: externalFileURL, perform: { newValue in
             if let url = externalFileURL {
+                path = .init()
                 if url.pathExtension == "expert" {
                     importExpert(from: url)
                 } else {
@@ -98,20 +102,26 @@ struct ExpertListView: View {
                 .onDisappear() {
                     // when the file import view is dismissed, check if we have an expert that has been trained.
                     // if so, then auto launch the chat
-                    if let _ = expertToTrain.expert {
-                        isAutoShowingExpertChat = true
+                    if let expert = expertToTrain.expert {
+                        path.append(expert)
                     }
+                    cleanupExpertReferences()
                     externalFileURL = nil
                 }
         }
         .sheet(isPresented: $isShowingEditSheet) {
             EditExpertView(expert: expertToEdit.expert ?? CDExpert(context: DataController.shared.managedObjectContext))
+                .onDisappear() {
+                    cleanupExpertReferences()
+                }
         }
         .alert("Delete Expert?", isPresented: $isShowingDeleteExpertConfirmation) {
             Button(role: .destructive) {
                 if let expert = expertToDelete.expert {
-                    expertToDelete.expert = nil
-                    remove(expert: expert)
+                    withAnimation {
+                        remove(expert: expert)
+                    }
+                    cleanupExpertReferences()
                 }
             } label: {
                 Text("Delete \(expertToDelete.expert?.name ?? "")")
@@ -122,14 +132,18 @@ struct ExpertListView: View {
                 Text("Don't Delete")
             }
         }
-        .onDisappear() {
-            // This doesn't work as expected because navigation stack pushes don't 'disappear'
-            // this view
-            expertToImport.expert = nil
-            expertToEdit.expert = nil
-            expertToTrain.expert = nil
-            expertToDelete.expert = nil
+        .alert( Text("Error"), isPresented: $isShowingError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
         }
+    }
+    
+    func cleanupExpertReferences() {
+        expertToImport.expert = nil
+        expertToEdit.expert = nil
+        expertToTrain.expert = nil
+        expertToDelete.expert = nil
     }
     
     func remove(expert: CDExpert) {
@@ -144,10 +158,15 @@ struct ExpertListView: View {
             let expert = CDExpert.expert(from: json, context: DataController.shared.managedObjectContext)
             DataController.shared.save()
             expertToImport.expert = expert
-            isAutoShowingExpertChat = true
+            path.append(expert)
         } catch {
-//        FIXME: show error
+            showError("An error occurred while importing the expert: \(error.localizedDescription)")
         }
+    }
+    
+    func showError(_ text: String) {
+        errorMessage = text
+        isShowingError = true
     }
 }
 
