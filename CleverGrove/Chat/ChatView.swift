@@ -91,6 +91,7 @@ struct ChatView: View {
             .onChange(of: isWaitingForAnswer, perform: { _ in
                 scroller.scrollTo(exchangeCount, anchor: .bottom)
             })
+            .onChange(of: expertFileURL) { _ in  } // weird quantum shit happening here. Need to observe it for expertFileURL to work properly
         }
         .toolbar {
             ToolbarItem(placement: .principal) {

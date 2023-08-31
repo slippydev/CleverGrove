@@ -183,9 +183,7 @@ struct EditExpertView: View {
             .onChange(of: selectedProfileImage, perform: { _ in
                 expert.image = selectedProfileImage
             })
-            .onChange(of: expertFileURL, perform: { newValue in
-                print("expertFileURL: \(String(describing: newValue))")
-            })
+            .onChange(of: expertFileURL, perform: { _ in }) // weird quantum shit happening here. Need to observe it for expertFileURL to work properly
             .onAppear() {
                 if (expert.image ?? "").isEmpty {
                     nameInFocus = true
