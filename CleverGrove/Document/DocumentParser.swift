@@ -27,7 +27,18 @@ final class Parser: ObservableObject {
     func parse(document: CDDocument, data: Data, dataType: UTType, progressHandler: @escaping (Double) -> Void) async throws -> ParseResult {
         let result = try await withThrowingTaskGroup(of: ParseResult.self) { group -> ParseResult in
             let textChunks = try DocumentDecode.decode(data: data, type: dataType, chunkSize: batchSize)
-            let embeddings = try await ai.getEmbeddings(for: textChunks, progressHandler:progressHandler)
+
+            let batchSize = 40
+            let totalChunks = textChunks.count // so our progress calculations are correct
+            var embeddings: [[Double]] = []
+            for startIndex in stride(from: 0, to: textChunks.count, by: batchSize) {
+                let endIndex = Swift.min(startIndex + batchSize, textChunks.count)
+                let batchOfTextChunks = Array(textChunks[startIndex..<endIndex])
+                // Now you have a batch of batchSize (or less) elements to work with
+                let embeddingsBatch = try await ai.getEmbeddings(for: batchOfTextChunks) //, totalChunks: totalChunks, progressHandler:progressHandler)
+                progressHandler(Double(endIndex) / Double(totalChunks))
+                embeddings.append(contentsOf: embeddingsBatch)
+            }
             return ParseResult(embeddings: embeddings, textChunks: textChunks)
         }
         return result
@@ -35,11 +46,15 @@ final class Parser: ObservableObject {
     
     func getExpertise(for expert: CDExpert, from document: CDDocument) async throws {
         guard let textChunks = document.orderedTextChunks() else { throw ParserError.parsingError }
-        let (title, expertise) = try await ai.extractExpertise(from: textChunks)
-        if expert.expertise == nil {
-            // don't change the expertise from the originally established if user is adding more documents
-            expert.expertise = expertise
+        if case let (title?, expertise?) = try await ai.extractExpertise(from: textChunks) {
+            if expert.expertise == nil {
+                // don't change the expertise from the originally established if user is adding more documents
+                expert.expertise = expertise
+            }
+            document.title = title
+        } else {
+            // We failed to derive an expertise, just let the title be empty
+            document.title = document.fileName // If we failed to extract a document title, just fall back to the filename
         }
-        document.title = title
     }
 }
