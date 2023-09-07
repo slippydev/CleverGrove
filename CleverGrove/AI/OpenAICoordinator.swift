@@ -7,7 +7,6 @@
 
 import Foundation
 import OpenAIKit
-import OSLog
 import SwiftUI
 import CoreData
 
@@ -16,6 +15,7 @@ class OpenAICoordinator {
     let openAI: OpenAIKit
     var openAIEmbedding = OpenAI()
     let promptBuilder = PromptBuilder()
+    let aiLogger = AILogger()
     
     private init() {
         openAI = OpenAIKit(apiToken: KeyStore.key(from: .openAI).api_key,
@@ -27,7 +27,6 @@ class OpenAICoordinator {
     }
     
     func getEmbeddings(for chunks: [String]) async throws -> [[Double]] {
-//    func getEmbeddings(for chunks: [String], totalChunks: Int, progressHandler: @escaping (Double) -> Void) async throws -> [[Double]] {
         let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks) //,totalChunks: totalChunks, progressHandler: progressHandler)
         var embeddings = [[Double]]()
         for i in 0..<result.count {
@@ -39,49 +38,64 @@ class OpenAICoordinator {
     
     func ask(question: String, expert: CDExpert) async throws -> (String, [CDTextChunk]) {
         // Find the most relevant text chunks from documents attached to this expert
-        let relevantChunks = try await nearest(query: question, expert: expert)
+        var relevantChunks = try await nearest(query: question, expert: expert)
         
         // If the expert has been updated since the last chat exchange, don't include the chat history because it will
         // interfere in the application of the changes to the expert.
-        var includeHistory = true
+        var chatHistoryCount = 0
         if let lastexchange = expert.mostRecentChatExchange(), let timestamp = lastexchange.timestamp {
-            includeHistory = (expert.updatedSince(date: timestamp) == false)
+            if (expert.updatedSince(date: timestamp) == false) {
+                chatHistoryCount = 3 // include up to 3 previous chat exchanges
+            }
         }
         
-        // Build up the context for the GPT to refer to including relevant text chunks and
-        // past conversation.
-        let context = promptBuilder.context(relevantChunks: relevantChunks, expert: expert, includeChatHistory: includeHistory)
-        var answer = ""
-        
-        // Logging for debugging prompts
-        for section in context {
-            Logger().info("[\(section.role.rawValue)]:")
-            Logger().info("\(section.content)\n")
+        // We need to handle failures of the chat completion gracefully. The main reason it fails is exceeding the token count, so
+        // retry with fewer relevant chunks and text history. If that still fails throw an error.
+        var retryCount = 0
+        let maxRetries = 4
+        while retryCount < maxRetries {
+            do {
+                let response = try await sendChat(question: question, relevantChunks: relevantChunks, expert: expert, chatHistoryCount: chatHistoryCount)
+                return (response, relevantChunks)
+            } catch {
+                retryCount += 1
+                if retryCount < maxRetries {
+                    // retry the chat but with less context
+                    chatHistoryCount = max(0, chatHistoryCount - 1)
+                    relevantChunks.removeLast()
+                } else {
+                    throw error
+                }
+            }
         }
-        Logger().info("Question: \(question)\n")
+        return ("Sorry, I am having a problem answering this question", relevantChunks)
+    }
+    
+    func sendChat(question: String, relevantChunks: [CDTextChunk], expert: CDExpert, chatHistoryCount: Int) async throws -> String {
+        // Build up the context for the GPT to refer to including relevant text chunks and past conversation.
+        let context = promptBuilder.context(relevantChunks: relevantChunks, expert: expert, chatHistoryCount: chatHistoryCount)
+        
+        aiLogger.logChat(context: context, question: question)
         
         // Send the message and context to OpenAI
         let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: question),
                                                      previousMessages: context,
                                                      model: .gptV3_5(.gptTurbo),
-                                                     maxTokens: 400,
+                                                     maxTokens: 1024,
                                                      temperature: 1.0,
                                                      frequencyPenalty: 2.0,
                                                      presencePenalty: 2.0)
+        var answer = ""
         switch result {
         case .success(let aiResult):
             answer = aiResult.choices.first?.message?.content ?? ""
         case .failure(let error):
-            // FIXME: This prints the error into the chat response. Not sure if this makes sense. Better to have a more natural response.
-            answer = error.localizedDescription
-            let errorInfo = (error as NSError).userInfo["error"]! as! [String:Any]
-            if let code = errorInfo["code"], let message = errorInfo["message"] {
-                print(code)
-                print(message)
-            }
+            aiLogger.logError(error as NSError)
+            throw error
         }
-        return (answer, relevantChunks)
+        return answer
     }
+    
     
     func introduction(of expert: CDExpert) async -> String? {
         guard let exchanges = expert.chatExchanges, exchanges.count == 0 else { return nil }
@@ -91,7 +105,7 @@ class OpenAICoordinator {
                                                       expertise: expert.expertise ?? "",
                                                       style: expert.communicationStyle,
                                                       training: trainingTitles)
-        Logger().info("Introduction Instructions: \(instructions)\n")
+        aiLogger.logIntro(instructions: instructions)
         
         let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: instructions),
                                                      previousMessages: [],
@@ -148,10 +162,8 @@ class OpenAICoordinator {
         var queryEmbedding: [Double]
         if usePastQueries {
             let pastQueries = expert.pastQueries(in: 0..<5) // include the most recent queries in the query embedding to provide more context
-            Logger().info("Calculating Query Embeddings for: \(pastQueries)\n\(query)\n")
             queryEmbedding = try await getEmbeddings(for: "\(pastQueries)\n\(query)")?.embedding ?? [Double]()
         } else {
-            Logger().info("Calculating Query Embedding for: \(query)\n")
             queryEmbedding = try await getEmbeddings(for: "\(query)")?.embedding ?? [Double]()
         }
         let (strings, _) = await stringsRankedByRelatedness(queryEmbedding: queryEmbedding, textChunks: textChunks)

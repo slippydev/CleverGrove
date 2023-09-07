@@ -10,11 +10,11 @@ import OpenAIKit
 
 struct PromptBuilder {
     
-    func context(relevantChunks: [CDTextChunk], expert: CDExpert, includeChatHistory: Bool) -> [AIMessage] {
+    func context(relevantChunks: [CDTextChunk], expert: CDExpert, chatHistoryCount: Int) -> [AIMessage] {
         var aiMessages = [AIMessage]()
         aiMessages.append(instructions(expert: expert, relevantChunks: relevantChunks))
-        if includeChatHistory {
-            aiMessages.append(contentsOf: chatHistory(expert: expert))
+        if chatHistoryCount > 0 {
+            aiMessages.append(contentsOf: chatHistory(expert: expert, messageCount: chatHistoryCount))
         }
         return aiMessages
     }
