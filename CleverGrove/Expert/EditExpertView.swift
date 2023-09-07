@@ -204,6 +204,7 @@ struct EditExpertView: View {
                 try await DocumentCoordinator.shared.addDocument(at: url, with: data, to: expert, dataType: dataType)
                 expertise = expert.expertise ?? ""
             } catch let error as URLError {
+                print(error.userInfo)
                 showError("\(error.localizedDescription).\nThere may be a problem with the server. Please try again later.")
             } catch {
                 showError("Error parsing document: \(error.localizedDescription)")

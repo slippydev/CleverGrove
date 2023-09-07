@@ -26,8 +26,9 @@ class OpenAICoordinator {
         return try await openAIEmbedding.getEmbeddings(input: text)
     }
     
-    func getEmbeddings(for chunks: [String], progressHandler: @escaping (Double) -> Void) async throws -> [[Double]] {
-        let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks, progressHandler: progressHandler)
+    func getEmbeddings(for chunks: [String]) async throws -> [[Double]] {
+//    func getEmbeddings(for chunks: [String], totalChunks: Int, progressHandler: @escaping (Double) -> Void) async throws -> [[Double]] {
+        let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks) //,totalChunks: totalChunks, progressHandler: progressHandler)
         var embeddings = [[Double]]()
         for i in 0..<result.count {
             guard let embedding = result[i] else { throw OpenAIError.jsonDecodingError }
@@ -106,7 +107,7 @@ class OpenAICoordinator {
         return introduction
     }
     
-    func extractExpertise(from textChunks: [CDTextChunk]) async throws -> (String, String) {
+    func extractExpertise(from textChunks: [CDTextChunk]) async throws -> (String?, String?) {
         struct ExpertiseJSON: Codable {
             public let title: String
             public let expertise: String
@@ -128,34 +129,19 @@ class OpenAICoordinator {
         switch result {
         case .success(let aiResult):
             let json = aiResult.choices.first?.message?.content ?? ""
-            let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
-            return (jsonObject.title, jsonObject.expertise)
+            do {
+                let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
+                return (jsonObject.title, jsonObject.expertise)
+            } catch {
+                print(error.localizedDescription)
+                return (nil, nil)
+            }
         case .failure(let error):
-            throw error
+            // FIXME: Log the error once we have analytics hooked up
+            print(error.localizedDescription)
+            return (nil, nil)
         }
     }
-    
-//    func establishTone(of expert: CDExpert, from textChunks: [String]) async -> String? {
-//        var text: String = ""
-//        let range = 0..<min(5, textChunks.count)
-//        for i in range {
-//            text.append(textChunks[i])
-//        }
-//        let message = promptBuilder.documentTone(text: text)
-//        let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: message),
-//                                                     previousMessages: [],
-//                                                     model: .gptV3_5(.gptTurbo),
-//                                                     maxTokens: 512,
-//                                                     temperature: 1.0)
-//        var expertTone: String?
-//        switch result {
-//        case .success(let aiResult):
-//            expertTone = aiResult.choices.first?.message?.content ?? ""
-//        case .failure(let error):
-//            print("establishTone Error: \(error.localizedDescription)")
-//        }
-//        return expertTone
-//    }
     
     private func nearest(query: String, expert: CDExpert, max: Int = 4, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
         let textChunks = expert.textChunksAsArray

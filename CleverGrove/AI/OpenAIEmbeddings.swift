@@ -78,7 +78,7 @@ class OpenAI {
         return result
     }
     
-    func getEmbeddings(input chunks: [String], progressHandler: @escaping (Double) -> Void) async throws -> [Int: [Double]] {
+    func getEmbeddings(input chunks: [String]) async throws -> [Int: [Double]] {
         var embeddings = [Int: [Double]]()
         try await withThrowingTaskGroup(of: (Int, [Double]?).self) { group in
             for (i, chunk) in chunks.enumerated() {
@@ -88,11 +88,8 @@ class OpenAI {
                 }
             }
             // Obtain results from the child tasks, sequentially, in order of completion.
-            var progress = 0
             for try await (index, embedding) in group {
                 embeddings[index] = embedding
-                progress += 1
-                progressHandler(Double(progress) / Double(chunks.count))
             }
         }
         return embeddings
