@@ -16,6 +16,7 @@ class OpenAICoordinator {
     var openAIEmbedding = OpenAI()
     let promptBuilder = PromptBuilder()
     let aiLogger = AILogger()
+    let relevancyThreshold = 0.70 // any text chunks with less relevancy than this compared to the query are disqualified
     
     private init() {
         openAI = OpenAIKit(apiToken: KeyStore.key(from: .openAI).api_key,
@@ -27,7 +28,7 @@ class OpenAICoordinator {
     }
     
     func getEmbeddings(for chunks: [String]) async throws -> [[Double]] {
-        let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks) //,totalChunks: totalChunks, progressHandler: progressHandler)
+        let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks)
         var embeddings = [[Double]]()
         for i in 0..<result.count {
             guard let embedding = result[i] else { throw OpenAIError.jsonDecodingError }
@@ -38,7 +39,7 @@ class OpenAICoordinator {
     
     func ask(question: String, expert: CDExpert) async throws -> (String, [CDTextChunk]) {
         // Find the most relevant text chunks from documents attached to this expert
-        var relevantChunks = try await nearest(query: question, expert: expert)
+        var relevantChunks = try await nearest(query: question, expert: expert, relevancyThreshold: relevancyThreshold)
         
         // If the expert has been updated since the last chat exchange, don't include the chat history because it will
         // interfere in the application of the changes to the expert.
@@ -157,7 +158,7 @@ class OpenAICoordinator {
         }
     }
     
-    private func nearest(query: String, expert: CDExpert, max: Int = 4, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
+    private func nearest(query: String, expert: CDExpert, max: Int = 4, relevancyThreshold: Double, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
         let textChunks = expert.textChunksAsArray
         var queryEmbedding: [Double]
         if usePastQueries {
@@ -166,24 +167,29 @@ class OpenAICoordinator {
         } else {
             queryEmbedding = try await getEmbeddings(for: "\(query)")?.embedding ?? [Double]()
         }
-        let (strings, _) = await stringsRankedByRelatedness(queryEmbedding: queryEmbedding, textChunks: textChunks)
-        let shortList = Array(strings.prefix(max))
-        let relevantChunks = expert.findTextChunks(with: shortList)
+        let result = await textChunksRankedByRelatedness(queryEmbedding: queryEmbedding, textChunks: textChunks)
+        let relevantChunks = filterRelevantTextChunks(textChunkTuples: result, max: max, relevancyThreshold: relevancyThreshold)
         return relevantChunks
     }
     
-    private func stringsRankedByRelatedness(queryEmbedding: [Double], textChunks: [CDTextChunk]) async -> (strings: [String], relatednesses: [Double]) {
-        let embeddings = CDTextChunk.embeddingsArrayFrom(textChunks: textChunks)
-        var result: [(String, Double)] = []
-        for (_, row) in embeddings.enumerated() {
-            let relatedness = cosineSimilarity(queryEmbedding, row.value)
-            result.append((row.key, relatedness))
+    private func filterRelevantTextChunks(textChunkTuples: [(CDTextChunk, Double)], max: Int, relevancyThreshold: Double) -> [CDTextChunk] {
+        let result = textChunkTuples
+            .filter { $0.1 >= relevancyThreshold }
+            .map { $0.0 }
+            .prefix(max)
+        return Array(result)
+    }
+    
+    private func textChunksRankedByRelatedness(queryEmbedding: [Double], textChunks: [CDTextChunk]) async -> [(CDTextChunk, Double)] {
+        var result: [(CDTextChunk, Double)] = []
+        for chunk in textChunks {
+            let relatedness = cosineSimilarity(queryEmbedding, chunk.embeddingAsArray)
+            result.append((chunk, relatedness))
         }
-        
         result.sort { $0.1 > $1.1 }
-        let strings = result.map { $0.0 }
-        let relatednesses = result.map { $0.1 }
-        return (strings, relatednesses)
+        
+        aiLogger.logRelatedness(relatedness: result.map { $0.1 })
+        return result
     }
     
     private func cosineSimilarity(_ vector1: [Double], _ vector2: [Double]) -> Double {

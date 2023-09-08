@@ -29,4 +29,11 @@ struct AILogger {
             Logger().error("\(code) - \(message)")
         }
     }
+    
+    func logRelatedness(relatedness: [Double]) {
+        Logger().info("Logging Relatedness values")
+        for value in relatedness {
+            Logger().info("Relatedness Value: \(value)")
+        }
+    }
 }

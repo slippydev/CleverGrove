@@ -88,16 +88,4 @@ struct PromptBuilder {
         let message = instructions + referenceText
         return AIMessage(role: .system, content:message)
     }
-    
-//    func documentTone(text: String) -> String {
-////        let instruction = "Analyze the following piece of text. Give advice to someone else about how to reproduce the tone and voice of the author of that text, in 100 words or less?\n\n"
-//        let instruction =
-//"""
-//Analyze the following piece of text. Give advice to yourself in the second person to reproduce the personality of the author of that text, in 50 words or less?
-//
-//"""
-//        let content = instruction + text
-//        return content
-//    }
-    
 }
