@@ -148,12 +148,13 @@ class OpenAICoordinator {
                 let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
                 return (jsonObject.title, jsonObject.expertise)
             } catch {
+                AILogger().logError(error)
                 print(error.localizedDescription)
                 return (nil, nil)
             }
         case .failure(let error):
-            // FIXME: Log the error once we have analytics hooked up
             print(error.localizedDescription)
+            AILogger().logError(error)
             return (nil, nil)
         }
     }

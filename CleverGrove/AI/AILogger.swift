@@ -8,6 +8,12 @@
 import Foundation
 import OSLog
 import OpenAIKit
+import Firebase
+
+enum AnalyticsEvent: String {
+    case showNewExpert = "show_new_expert"
+    case openURL = "open_url"
+}
 
 struct AILogger {
     
@@ -23,10 +29,11 @@ struct AILogger {
         Logger().info("Introduction Instructions: \(instructions)\n")
     }
     
-    func logError(_ error: NSError) {
+    func logError(_ error: Error) {
         let errorInfo = (error as NSError).userInfo["error"]! as! [String:Any]
         if let code = errorInfo["code"] as? String, let message = errorInfo["message"] as? String {
             Logger().error("\(code) - \(message)")
+            Analytics.logEvent("error", parameters: ["code": code, "message": message])
         }
     }
     
@@ -36,4 +43,9 @@ struct AILogger {
             Logger().info("Relatedness Value: \(value)")
         }
     }
+    
+    func log(_ event: AnalyticsEvent) {
+        Analytics.logEvent(event.rawValue, parameters: nil)
+    }
+    
 }

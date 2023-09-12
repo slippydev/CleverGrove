@@ -29,6 +29,7 @@ class DataController: ObservableObject {
         do {
             try managedObjectContext.save()
         } catch {
+            AILogger().logError(error)
             print("Error saving to Core data")
         }
     }
