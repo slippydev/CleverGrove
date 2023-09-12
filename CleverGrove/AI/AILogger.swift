@@ -13,6 +13,14 @@ import Firebase
 enum AnalyticsEvent: String {
     case showNewExpert = "show_new_expert"
     case openURL = "open_url"
+    case trainExpert = "train_expert"
+    case chatExchange = "chat_exchange"
+}
+
+enum AnalyticsParams: String {
+    case code = "code"
+    case message = "message"
+    case tokenCount = "token_count"
 }
 
 struct AILogger {
@@ -33,7 +41,8 @@ struct AILogger {
         let errorInfo = (error as NSError).userInfo["error"]! as! [String:Any]
         if let code = errorInfo["code"] as? String, let message = errorInfo["message"] as? String {
             Logger().error("\(code) - \(message)")
-            Analytics.logEvent("error", parameters: ["code": code, "message": message])
+            Analytics.logEvent("error", parameters: [AnalyticsParams.code.rawValue: code,
+                                                     AnalyticsParams.message.rawValue: message])
         }
     }
     
@@ -44,8 +53,8 @@ struct AILogger {
         }
     }
     
-    func log(_ event: AnalyticsEvent) {
-        Analytics.logEvent(event.rawValue, parameters: nil)
+    func log(_ event: AnalyticsEvent, params: [String: Any]? = nil) {
+        Analytics.logEvent(event.rawValue, parameters: params)
     }
     
 }

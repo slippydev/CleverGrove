@@ -90,6 +90,8 @@ class OpenAICoordinator {
         switch result {
         case .success(let aiResult):
             answer = aiResult.choices.first?.message?.content ?? ""
+            let tokenUsage = aiResult.usage?.totalTokens ?? 0
+            AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         case .failure(let error):
             aiLogger.logError(error as NSError)
             throw error
