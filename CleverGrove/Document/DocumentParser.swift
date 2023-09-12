@@ -35,7 +35,7 @@ final class Parser: ObservableObject {
                 let endIndex = Swift.min(startIndex + batchSize, textChunks.count)
                 let batchOfTextChunks = Array(textChunks[startIndex..<endIndex])
                 // Now you have a batch of batchSize (or less) elements to work with
-                let embeddingsBatch = try await ai.getEmbeddings(for: batchOfTextChunks) //, totalChunks: totalChunks, progressHandler:progressHandler)
+                let embeddingsBatch = try await ai.getEmbeddings(for: batchOfTextChunks)
                 progressHandler(Double(endIndex) / Double(totalChunks))
                 embeddings.append(contentsOf: embeddingsBatch)
             }

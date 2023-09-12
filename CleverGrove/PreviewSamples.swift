@@ -42,7 +42,6 @@ struct PreviewSamples {
         expert.addToDocuments(PreviewSamples.documentTrained)
         expert.addToDocuments(PreviewSamples.documentTraining)
         expert.addToChatExchanges(NSSet(array: PreviewSamples.chatExchanges))
-        // FIXME: Add Text chunks.
         return expert
     }
 }

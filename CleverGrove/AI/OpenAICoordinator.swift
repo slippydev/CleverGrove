@@ -90,6 +90,8 @@ class OpenAICoordinator {
         switch result {
         case .success(let aiResult):
             answer = aiResult.choices.first?.message?.content ?? ""
+            let tokenUsage = aiResult.usage?.totalTokens ?? 0
+            AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         case .failure(let error):
             aiLogger.logError(error as NSError)
             throw error
@@ -148,12 +150,13 @@ class OpenAICoordinator {
                 let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
                 return (jsonObject.title, jsonObject.expertise)
             } catch {
+                AILogger().logError(error)
                 print(error.localizedDescription)
                 return (nil, nil)
             }
         case .failure(let error):
-            // FIXME: Log the error once we have analytics hooked up
             print(error.localizedDescription)
+            AILogger().logError(error)
             return (nil, nil)
         }
     }

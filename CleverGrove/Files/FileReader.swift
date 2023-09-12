@@ -45,7 +45,9 @@ class FileReader {
             if let urlToCleanup = urlToCleanup {
                 do {
                     try FileManager.default.removeItem(at: urlToCleanup)
-                } catch {}
+                } catch {
+                    AILogger().logError(error)
+                }
             }
         }
         if let error = error {
@@ -76,6 +78,7 @@ class FileReader {
             return path
         } catch {
             print(error.localizedDescription)
+            AILogger().logError(error)
             return nil
         }
     }

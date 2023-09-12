@@ -140,6 +140,7 @@ struct ChatView: View {
         do {
             (response, relevantChunks) = try await OpenAICoordinator.shared.ask(question: query, expert: expert)
         } catch {
+            AILogger().logError(error)
             print(error.localizedDescription)
         }
         saveExchange(query: query, tokenUsage: 0)
@@ -172,6 +173,7 @@ struct ChatView: View {
             let url = try exporter.export(to: expert.fileName)
             return url
         } catch {
+            AILogger().logError(error)
             showError("Error exporting expert: \(error.localizedDescription)")
             return nil
         }
@@ -188,7 +190,7 @@ struct ChatView: View {
                 dismiss()
             }
         } catch {
-            // FIXME: Log this error once analytics are set up
+            AILogger().logError(error)
             print("Removing local expert file after sharing failed.")
         }
     }

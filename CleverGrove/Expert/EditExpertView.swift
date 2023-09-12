@@ -244,7 +244,7 @@ struct EditExpertView: View {
                 dismiss()
             }
         } catch {
-            // FIXME: Log this error once Analytics are set up
+            AILogger().logError(error)
             print("Removing local expert file after sharing failed.")
         }
     }

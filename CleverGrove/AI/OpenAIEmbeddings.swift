@@ -80,18 +80,21 @@ class OpenAI {
     
     func getEmbeddings(input chunks: [String]) async throws -> [Int: [Double]] {
         var embeddings = [Int: [Double]]()
-        try await withThrowingTaskGroup(of: (Int, [Double]?).self) { group in
+        var tokenUsage: Int = 0
+        try await withThrowingTaskGroup(of: (Int, [Double]?, Int?).self) { group in
             for (i, chunk) in chunks.enumerated() {
                 group.addTask { [weak self] in
                     let response = try await self?.getEmbeddings(input: chunk)
-                    return (i, response?.embedding)
+                    return (i, response?.embedding, response?.usage.totalTokens)
                 }
             }
             // Obtain results from the child tasks, sequentially, in order of completion.
-            for try await (index, embedding) in group {
+            for try await (index, embedding, tokens) in group {
                 embeddings[index] = embedding
+                tokenUsage += tokens ?? 0
             }
         }
+        AILogger().log(.trainExpert, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         return embeddings
     }
 }
