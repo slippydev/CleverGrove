@@ -32,10 +32,9 @@ struct TypingIndicator: View {
                 TypingBall(color: $colors[index], height: $heights[index])
                     .animateForever(autoreverses: true,
                                     duration: duration,
-                                    delay: Double(index) * duration/3)
+                                    delay: Double(index) * duration/3.0)
                 {
                     colors[index] = Color.white
-//                    heights[index] = 15
                 }
             }
         }

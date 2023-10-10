@@ -38,7 +38,7 @@ struct AILogger {
     }
     
     func logError(_ error: Error) {
-        let errorInfo = (error as NSError).userInfo["error"]! as! [String:Any]
+        guard let errorInfo = (error as NSError).userInfo["error"] as? [String:Any] else { return }
         if let code = errorInfo["code"] as? String, let message = errorInfo["message"] as? String {
             Logger().error("\(code) - \(message)")
             Analytics.logEvent("error", parameters: [AnalyticsParams.code.rawValue: code,
