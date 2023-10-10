@@ -57,7 +57,7 @@ class FileReader {
     }
     
     private func readData(from url: URL, fileType: UTType) -> Data? {
-        if fileType.conforms(to: .expertFileFormat) {
+        if fileType.conforms(to: .expertFileFormat) { // Not importing .expert files anymore. Keeping for possible future use
             guard let url = unzip(url: url, subpath: ExpertExporter.expertJSONSubpath) else { return nil }
             return try? Data(contentsOf: url)
         } else if fileType.conforms(to: .docx) {
