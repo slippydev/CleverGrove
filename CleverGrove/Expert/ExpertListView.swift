@@ -28,7 +28,6 @@ struct ExpertListView: View {
     @StateObject var expertToDelete = Expert()
     @StateObject var expertToEdit = Expert()
     @StateObject var expertToTrain = Expert()
-    @StateObject var expertToImport = Expert()
     @Binding var externalFileURL: URL?
     
     @State var path: [CDExpert] = []
@@ -91,11 +90,7 @@ struct ExpertListView: View {
         .onChange(of: externalFileURL, perform: { newValue in
             if let url = externalFileURL {
                 path = .init()
-                if url.pathExtension == "expert" {
-                    importExpert(from: url)
-                } else {
-                    isShowingExternalURL = true
-                }
+                isShowingExternalURL = true
             }
         })
         .sheet(isPresented: $isShowingExternalURL) {
@@ -150,28 +145,14 @@ struct ExpertListView: View {
     }
     
     func cleanupExpertReferences() {
-        expertToImport.expert = nil
         expertToEdit.expert = nil
         expertToTrain.expert = nil
         expertToDelete.expert = nil
     }
     
     func remove(expert: CDExpert) {
-        print("Deleted")
         DataController.shared.managedObjectContext.delete(expert)
         DataController.shared.save()
-    }
-    
-    func importExpert(from url: URL) {
-        do {
-            let json = try ExpertImporter().read(url: url)
-            let expert = CDExpert.expert(from: json, context: DataController.shared.managedObjectContext)
-            DataController.shared.save()
-            expertToImport.expert = expert
-            path.append(expert)
-        } catch {
-            showError("An error occurred while importing the expert: \(error.localizedDescription)")
-        }
     }
     
     func showError(_ text: String) {

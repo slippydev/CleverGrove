@@ -9,5 +9,6 @@ import Foundation
 import UniformTypeIdentifiers
 
 extension UTType {
+    // Not importing .expert files anymore. Keeping for possible future use
     public static let expertFileFormat = UTType(exportedAs: "app.CleverGrove.expert")
 }

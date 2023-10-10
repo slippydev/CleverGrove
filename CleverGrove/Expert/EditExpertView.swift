@@ -17,7 +17,6 @@ struct EditExpertView: View {
     @State private var expertise: String = ""
     @State private var communicationStyle = CommunicationStyle.formal
     @State private var selectedProfileImage: String = ""
-    @State private var expertFileURL: URL?
     
     // Document Properties
     @State private var fileData: Data?
@@ -27,7 +26,6 @@ struct EditExpertView: View {
     // Flags for showing sheets and alerts
     @State private var isShowingFilePicker = false
     @State private var isShowingImagePicker = false
-    @State private var isShowingShareSheet = false
     @State private var isShowingError = false
     @State private var errorMessage = ""
     
@@ -38,15 +36,6 @@ struct EditExpertView: View {
     var body: some View {
             VStack {
                 HStack {
-                    Button() {
-                        expertFileURL = exportExpert()
-                        isShowingShareSheet = (expertFileURL != nil)
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
-                            .resizable()
-                            .frame(width: 20, height: 25, alignment: .bottomTrailing)
-                            .foregroundColor(.blue)
-                    }
                     Spacer()
                     Button() {
                         saveChanges()
@@ -124,17 +113,9 @@ struct EditExpertView: View {
                             .padding(.horizontal, 10)
                         Spacer()
                     }
-//                    TextEditor(text: $expertise)
-//                        .focused($descriptionInFocus)
-//                        .scrollContentBackground(.hidden)
-//                        .background(Color("TextFieldBG"))
-//                        .frame(minHeight: 50, maxHeight: 50)
-//                        .cornerRadius(4)
-//                        .shadow(radius: 1.0)
+
                 }
-//                .frame(minHeight: 250)
                 .padding()
-//                .offset(CGSize(width: 0, height: -10))
                 VStack {
                     HStack {
                         Text("Training Documents")
@@ -156,19 +137,12 @@ struct EditExpertView: View {
                     DocumentList(expert: expert)
                         .padding(.bottom)
                 }
-//                .offset(CGSize(width: 0, height: -50))
             }
-            
             .sheet(isPresented: $isShowingFilePicker) {
                 FilePicker(fileData: $fileData, fileURL: $fileURL, documentType: $documentType)
             }
             .sheet(isPresented: $isShowingImagePicker) {
                 CharacterPicker(selectedImage: $selectedProfileImage)
-            }
-            .sheet(isPresented: $isShowingShareSheet) {
-                if let url = expertFileURL {
-                    ShareSheet(activityItems: [url], completion: shareCompletion)
-                }
             }
             .alert( Text("Error"), isPresented: $isShowingError) {
                 Button("OK") { }
@@ -183,7 +157,6 @@ struct EditExpertView: View {
             .onChange(of: selectedProfileImage, perform: { _ in
                 expert.image = selectedProfileImage
             })
-            .onChange(of: expertFileURL, perform: { _ in }) // weird quantum shit happening here. Need to observe it for expertFileURL to work properly
             .onAppear() {
                 if (expert.image ?? "").isEmpty {
                     nameInFocus = true
@@ -220,33 +193,6 @@ struct EditExpertView: View {
         }
         expert.lastUpdated = Date.now
         DataController.shared.save()
-    }
-    
-    func exportExpert() -> URL? {
-        do {
-            let exporter = ExpertExporter(expert: expert)
-            let url = try exporter.export(to: expert.fileName)
-            return url
-        } catch {
-            showError("Error exporting expert: \(error.localizedDescription)")
-            return nil
-        }
-    }
-    
-    func shareCompletion(_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) {
-        // delete the expert file from local storage
-        do {
-            if let url = expertFileURL {
-                try FileManager.default.removeItem(at: url)
-            }
-            // auto-dismiss the view if the operation was successful, but not if they canceled
-            if completed {
-                dismiss()
-            }
-        } catch {
-            AILogger().logError(error)
-            print("Removing local expert file after sharing failed.")
-        }
     }
     
     func showError(_ text: String) {

@@ -31,18 +31,5 @@ let randomNames = [
     "Wilder",
     "Xander",
     "Zariah",
-    
-//    "Onyx",
-//    "Banks",
-//    "Makai",
-//    "Sol",
-//    "Cleo",
-//    "Brynn",
-//    "Lyra",
-//    "Ozzy",
-//    "Sky",
-//    "Cillian",
-//    "Zara",
-//    "Gwen"
 ]
 

@@ -184,11 +184,7 @@
 			children = (
 				5B58A16B2A8533D30008C270 /* FilePicker.swift */,
 				5B3C07FC2A96671E009DEA7F /* FileReader.swift */,
-				5B837FD32A9E69D900780AE5 /* ExpertExporter.swift */,
-				5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */,
-				5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */,
 				5B837FD72A9EC49700780AE5 /* URL-Extensions.swift */,
-				5B4997392A9FAD8E00BD30A2 /* UTType-Extensions.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -247,6 +243,7 @@
 		5B9451262A8083F000E30E9E /* CleverGrove */ = {
 			isa = PBXGroup;
 			children = (
+				5BA671D62AD6025E00872C84 /* Deprecated Files */,
 				5B58A16D2A853B240008C270 /* Info.plist */,
 				5BEB69172AAFC7A30031AB7C /* GoogleService-Info.plist */,
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
@@ -291,6 +288,17 @@
 				5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */,
 			);
 			path = CleverGroveUITests;
+			sourceTree = "<group>";
+		};
+		5BA671D62AD6025E00872C84 /* Deprecated Files */ = {
+			isa = PBXGroup;
+			children = (
+				5B4997392A9FAD8E00BD30A2 /* UTType-Extensions.swift */,
+				5B04F0012A9FF2EA00A469D8 /* ExpertImporter.swift */,
+				5B837FD32A9E69D900780AE5 /* ExpertExporter.swift */,
+				5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */,
+			);
+			path = "Deprecated Files";
 			sourceTree = "<group>";
 		};
 		5BA8F11B2A817BA800C093C8 /* keys */ = {

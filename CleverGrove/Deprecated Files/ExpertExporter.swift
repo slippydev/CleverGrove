@@ -9,6 +9,9 @@ import Foundation
 import Zip
 import UniformTypeIdentifiers
 
+// THIS CODE IS NO LONGER BEING USED SINCE REMOVING EXPERT SHARING CODE.
+// LEAVING IT HERE FOR FUTURE REFERENCE
+
 struct TextChunkJSON: Codable {
     let id: UUID
     let embedding: String?
