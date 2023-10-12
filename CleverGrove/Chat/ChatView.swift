@@ -129,10 +129,16 @@ struct ChatView: View {
     
     func introduction() async {
         isWaitingForAnswer = true
-        if let intro = await OpenAICoordinator.shared.introduction(of: expert) {
-            response = intro
-            saveExchange(query: nil, tokenUsage: 0)
+        do {
+            if let intro = try await OpenAICoordinator.shared.introduction(of: expert) {
+                response = intro
+                saveExchange(query: nil, tokenUsage: 0)
+            }
+        } catch {
+            AILogger().logError(error)
+            print(error.localizedDescription)
         }
+        
         isWaitingForAnswer = false
     }
     

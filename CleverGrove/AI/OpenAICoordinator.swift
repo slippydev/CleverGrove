@@ -12,23 +12,21 @@ import CoreData
 
 class OpenAICoordinator {
     static let shared = OpenAICoordinator()
-    let openAI: OpenAIKit
-    var openAIEmbedding = OpenAI()
+    var openAI: OpenAI
     let promptBuilder = PromptBuilder()
     let aiLogger = AILogger()
     let relevancyThreshold = 0.70 // any text chunks with less relevancy than this compared to the query are disqualified
     
     private init() {
-        openAI = OpenAIKit(apiToken: KeyStore.key(from: .openAI).api_key,
-                           organization: KeyStore.key(from: .openAI).org_key)
+        openAI = OpenAI(openAIKey: KeyStore.key(from: .openAI).api_key)
     }
     
     func getEmbeddings(for text: String) async throws -> EmbeddingsResponse? {
-        return try await openAIEmbedding.getEmbeddings(input: text)
+        return try await openAI.getEmbeddings(input: text)
     }
     
     func getEmbeddings(for chunks: [String]) async throws -> [[Double]] {
-        let result: [Int: [Double]] = try await openAIEmbedding.getEmbeddings(input: chunks)
+        let result: [Int: [Double]] = try await openAI.getEmbeddings(input: chunks)
         var embeddings = [[Double]]()
         for i in 0..<result.count {
             guard let embedding = result[i] else { throw OpenAIError.jsonDecodingError }
@@ -79,28 +77,30 @@ class OpenAICoordinator {
         aiLogger.logChat(context: context, question: question)
         
         // Send the message and context to OpenAI
-        let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: question),
+        let result = try await openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: question),
                                                      previousMessages: context,
-                                                     model: .gptV3_5(.gptTurbo),
                                                      maxTokens: 1024,
                                                      temperature: 1.0,
                                                      frequencyPenalty: 2.0,
                                                      presencePenalty: 2.0)
-        var answer = ""
-        switch result {
-        case .success(let aiResult):
-            answer = aiResult.choices.first?.message?.content ?? ""
-            let tokenUsage = aiResult.usage?.totalTokens ?? 0
-            AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
-        case .failure(let error):
-            aiLogger.logError(error as NSError)
-            throw error
-        }
+        let answer = result.choices.first?.text ?? ""
+        let tokenUsage = result.usage?.totalTokens ?? 0
+        AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
+        
+//        switch result {
+//        case .success(let aiResult):
+//            answer = aiResult.choices.first?.message?.content ?? ""
+//            let tokenUsage = aiResult.usage?.totalTokens ?? 0
+//            AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
+//        case .failure(let error):
+//            aiLogger.logError(error as NSError)
+//            throw error
+//        }
         return answer
     }
     
     
-    func introduction(of expert: CDExpert) async -> String? {
+    func introduction(of expert: CDExpert) async throws -> String? {
         guard let exchanges = expert.chatExchanges, exchanges.count == 0 else { return nil }
         
         let trainingTitles = expert.trainingDocumentTitles
@@ -110,17 +110,11 @@ class OpenAICoordinator {
                                                       training: trainingTitles)
         aiLogger.logIntro(instructions: instructions)
         
-        let result = await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: instructions),
+        let result = try await openAI.sendChatCompletion(newMessage: AIMessage(role: .system, content: instructions),
                                                      previousMessages: [],
-                                                     model: .gptV3_5(.gptTurbo),
                                                      maxTokens: 512,
                                                      temperature: 1.0)
-        var introduction = ""
-        switch result {
-        case .success(let aiResult):
-            introduction = aiResult.choices.first?.message?.content ?? ""
-        case .failure(_): break // Do nothing if the introduction fails.
-        }
+        let introduction = result.choices.first?.text ?? ""
         return introduction
     }
     
@@ -138,27 +132,30 @@ class OpenAICoordinator {
             }
         }
         let message = promptBuilder.documentExpertiseArea(referenceText: text)
-        let result = await openAI.sendChatCompletion(newMessage: message,
+        let result = try await openAI.sendChatCompletion(newMessage: message,
                                                      previousMessages: [],
-                                                     model: .gptV3_5(.gptTurbo),
                                                      maxTokens: 512,
                                                      temperature: 1.0)
-        switch result {
-        case .success(let aiResult):
-            let json = aiResult.choices.first?.message?.content ?? ""
-            do {
-                let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
-                return (jsonObject.title, jsonObject.expertise)
-            } catch {
-                AILogger().logError(error)
-                print(error.localizedDescription)
-                return (nil, nil)
-            }
-        case .failure(let error):
-            print(error.localizedDescription)
-            AILogger().logError(error)
-            return (nil, nil)
-        }
+        let json = result.choices.first?.text ?? ""
+        let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
+        return (jsonObject.title, jsonObject.expertise)
+        
+//        switch result {
+//        case .success(let aiResult):
+//            let json = aiResult.choices.first?.message?.content ?? ""
+//            do {
+//                let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
+//                return (jsonObject.title, jsonObject.expertise)
+//            } catch {
+//                AILogger().logError(error)
+//                print(error.localizedDescription)
+//                return (nil, nil)
+//            }
+//        case .failure(let error):
+//            print(error.localizedDescription)
+//            AILogger().logError(error)
+//            return (nil, nil)
+//        }
     }
     
     private func nearest(query: String, expert: CDExpert, max: Int = 4, relevancyThreshold: Double, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
