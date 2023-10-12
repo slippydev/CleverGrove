@@ -25,10 +25,11 @@ public struct AIMessage: Codable {
 
 struct ChatCompletionResponse: Codable, DecodableResponse {
     public struct Choice: Codable {
-        public var text: String? = nil
+        public var text: String?
+        public var message: AIMessage?
         public let index: Int
-        public var logprobs: Int? = nil
-        public var finishReason: String? = nil
+        public var logprobs: Int?
+        public var finishReason: String?
     }
 
     struct Usage: Codable {
@@ -51,6 +52,7 @@ struct ChatCompletionResponse: Codable, DecodableResponse {
     let choices: [Choice]
     var usage: Usage?
     var logprobs: Logprobs?
+    var message: AIMessage? { choices.first?.message }
     
     static func decode(data: Data) -> Codable? {
         let decoder = JSONDecoder.openAIDecoder
@@ -121,7 +123,7 @@ extension OpenAI {
         let requestData = try jsonEncoder.encode(requestBody)
         let network = OpenAINetwork()
         let result: ChatCompletionResponse = try await network.request(info.method, 
-                                                                       url: info.embeddingsPath,
+                                                                       url: info.chatCompletionsPath,
                                                                        body: requestData,
                                                                        headers: baseHeaders)
         return result

@@ -83,19 +83,10 @@ class OpenAICoordinator {
                                                      temperature: 1.0,
                                                      frequencyPenalty: 2.0,
                                                      presencePenalty: 2.0)
-        let answer = result.choices.first?.text ?? ""
+        let answer = result.message?.content ?? ""
         let tokenUsage = result.usage?.totalTokens ?? 0
         AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         
-//        switch result {
-//        case .success(let aiResult):
-//            answer = aiResult.choices.first?.message?.content ?? ""
-//            let tokenUsage = aiResult.usage?.totalTokens ?? 0
-//            AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
-//        case .failure(let error):
-//            aiLogger.logError(error as NSError)
-//            throw error
-//        }
         return answer
     }
     
@@ -114,7 +105,7 @@ class OpenAICoordinator {
                                                      previousMessages: [],
                                                      maxTokens: 512,
                                                      temperature: 1.0)
-        let introduction = result.choices.first?.text ?? ""
+        let introduction = result.message?.content ?? ""
         return introduction
     }
     
@@ -136,26 +127,9 @@ class OpenAICoordinator {
                                                      previousMessages: [],
                                                      maxTokens: 512,
                                                      temperature: 1.0)
-        let json = result.choices.first?.text ?? ""
+        let json = result.message?.content ?? ""
         let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
         return (jsonObject.title, jsonObject.expertise)
-        
-//        switch result {
-//        case .success(let aiResult):
-//            let json = aiResult.choices.first?.message?.content ?? ""
-//            do {
-//                let jsonObject = try JSONDecoder().decode(ExpertiseJSON.self, from: Data(json.utf8)) as ExpertiseJSON
-//                return (jsonObject.title, jsonObject.expertise)
-//            } catch {
-//                AILogger().logError(error)
-//                print(error.localizedDescription)
-//                return (nil, nil)
-//            }
-//        case .failure(let error):
-//            print(error.localizedDescription)
-//            AILogger().logError(error)
-//            return (nil, nil)
-//        }
     }
     
     private func nearest(query: String, expert: CDExpert, max: Int = 4, relevancyThreshold: Double, usePastQueries: Bool = false) async throws -> [CDTextChunk] {

@@ -9,6 +9,7 @@ import Foundation
 
 struct OpenAIInfo {
     let embeddingsPath = "https://api.openai.com/v1/embeddings"
+    let chatCompletionsPath = "https://api.openai.com/v1/chat/completions"
     let method = HTTPMethod.post
     let embeddingsModel = "text-embedding-ada-002"
     let chatModel = "gpt-3.5-turbo"
