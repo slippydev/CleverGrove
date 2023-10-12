@@ -12,7 +12,6 @@ struct OpenAIInfo {
     let method = HTTPMethod.post
     let embeddingsModel = "text-embedding-ada-002"
     let chatModel = "gpt-3.5-turbo"
-    let openAIKey = KeyStore.key(from: .openAI)
 }
 
 
@@ -26,7 +25,7 @@ class OpenAI {
     
     var baseHeaders: [String: String] {
         var headers: [String: String] = [:]
-        headers["Authorization"] = "Bearer \(info.openAIKey.api_key)"
+        headers["Authorization"] = "Bearer \(openAIKey)"
         headers["content-type"] = "application/json"
         return headers
     }

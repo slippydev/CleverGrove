@@ -88,7 +88,7 @@ struct ExpertListView: View {
             }
         }
         .onChange(of: externalFileURL, perform: { newValue in
-            if let url = externalFileURL {
+            if externalFileURL != nil {
                 path = .init()
                 isShowingExternalURL = true
             }
