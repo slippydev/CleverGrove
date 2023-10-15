@@ -13,11 +13,12 @@ class OpenAICoordinator {
     static let shared = OpenAICoordinator()
     var openAI: OpenAI
     let promptBuilder = PromptBuilder()
-    let aiLogger = AILogger()
+    let aiLogger = CGLogger()
+    let network = HTTPNetwork()
     let relevancyThreshold = 0.70 // any text chunks with less relevancy than this compared to the query are disqualified
     
     private init() {
-        openAI = OpenAI(openAIKey: KeyStore.key(from: .openAI).api_key)
+        openAI = OpenAI(openAIKey: KeyStore.key(from: .openAI).api_key, network: network, logger: aiLogger)
     }
     
     func getEmbeddings(for text: String) async throws -> EmbeddingsResponse? {
@@ -28,7 +29,7 @@ class OpenAICoordinator {
         let result: [Int: [Double]] = try await openAI.getEmbeddings(input: chunks)
         var embeddings = [[Double]]()
         for i in 0..<result.count {
-            guard let embedding = result[i] else { throw OpenAIError.jsonDecodingError }
+            guard let embedding = result[i] else { throw HTTPError.jsonDecodingError }
             embeddings.append(embedding)
         }
         return embeddings
@@ -84,7 +85,7 @@ class OpenAICoordinator {
                                                      presencePenalty: 2.0)
         let answer = result.message?.content ?? ""
         let tokenUsage = result.usage?.totalTokens ?? 0
-        AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
+        CGLogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         
         return answer
     }

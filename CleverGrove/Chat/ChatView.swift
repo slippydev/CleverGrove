@@ -120,7 +120,7 @@ struct ChatView: View {
         do {
             (response, relevantChunks) = try await OpenAICoordinator.shared.ask(question: query, expert: expert)
         } catch {
-            AILogger().logError(error)
+            CGLogger().logError(error)
             print(error.localizedDescription)
         }
         saveExchange(query: query, tokenUsage: 0)
@@ -135,7 +135,7 @@ struct ChatView: View {
                 saveExchange(query: nil, tokenUsage: 0)
             }
         } catch {
-            AILogger().logError(error)
+            CGLogger().logError(error)
             print(error.localizedDescription)
         }
         

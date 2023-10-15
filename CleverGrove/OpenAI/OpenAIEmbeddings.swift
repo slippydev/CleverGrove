@@ -13,10 +13,6 @@ struct EmbeddingsRequest: Codable {
     public let input: String
 }
 
-protocol DecodableResponse {
-    static func decode(data: Data) -> Codable?
-}
-
 struct EmbeddingsResponse: Codable, DecodableResponse {
     struct EmbeddingsData: Codable {
         public let object: String
@@ -56,8 +52,10 @@ extension OpenAI {
         let jsonEncoder = JSONEncoder.openAIEncoder
         let requestBody = EmbeddingsRequest(model: info.embeddingsModel, input: input)
         let requestData = try jsonEncoder.encode(requestBody)
-        let network = OpenAINetwork()
-        let result: EmbeddingsResponse = try await network.request(info.method, url: info.embeddingsPath, body: requestData, headers: baseHeaders)
+        let result: EmbeddingsResponse = try await network.request(HTTPMethod.post,
+                                                                   url: info.embeddingsPath,
+                                                                   body: requestData,
+                                                                   headers: baseHeaders)
         return result
     }
     
@@ -77,7 +75,7 @@ extension OpenAI {
                 tokenUsage += tokens ?? 0
             }
         }
-        AILogger().log(.trainExpert, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
+        logger?.log(LoggableAIEvent.trainExpert.rawValue, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         return embeddings
     }
 }

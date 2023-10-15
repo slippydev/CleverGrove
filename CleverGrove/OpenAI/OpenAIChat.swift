@@ -121,8 +121,7 @@ extension OpenAI {
                                                  user: user)
         let jsonEncoder = JSONEncoder.openAIEncoder
         let requestData = try jsonEncoder.encode(requestBody)
-        let network = OpenAINetwork()
-        let result: ChatCompletionResponse = try await network.request(info.method, 
+        let result: ChatCompletionResponse = try await network.request(HTTPMethod.post,
                                                                        url: info.chatCompletionsPath,
                                                                        body: requestData,
                                                                        headers: baseHeaders)

@@ -47,7 +47,7 @@ final class DocumentCoordinator: ObservableObject {
             DataController.shared.save()
             document.status = DocumentStatus.trained.rawValue
         } catch {
-            AILogger().logError(error)
+            CGLogger().logError(error)
             expert.removeFromDocuments(document)
             dataController.save()
             throw error

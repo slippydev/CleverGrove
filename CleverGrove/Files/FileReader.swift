@@ -46,7 +46,7 @@ class FileReader {
                 do {
                     try FileManager.default.removeItem(at: urlToCleanup)
                 } catch {
-                    AILogger().logError(error)
+                    CGLogger().logError(error)
                 }
             }
         }
@@ -78,7 +78,7 @@ class FileReader {
             return path
         } catch {
             print(error.localizedDescription)
-            AILogger().logError(error)
+            CGLogger().logError(error)
             return nil
         }
     }
