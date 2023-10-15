@@ -30,7 +30,6 @@
 		5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */; };
 		5B58A1BE2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1BC2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift */; };
 		5B58A1BF2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B58A1BD2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift */; };
-		5B5993112A8680A5009FC4CB /* TextChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993102A8680A5009FC4CB /* TextChunkTests.swift */; };
 		5B5993132A86D34D009FC4CB /* DocumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993122A86D34D009FC4CB /* DocumentParser.swift */; };
 		5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993142A86F7D9009FC4CB /* DocumentList.swift */; };
 		5B5993172A89B158009FC4CB /* DocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5993162A89B158009FC4CB /* DocumentDecoder.swift */; };
@@ -48,11 +47,14 @@
 		5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */; };
 		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
-		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
 		5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */; };
 		5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 5B9BD54E2A93A0B70098C1B2 /* Zip */; };
 		5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */; };
 		5B9BD5542A93B5720098C1B2 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 5B9BD5532A93B5720098C1B2 /* XMLCoder */; };
+		5BA671D92AD617E400872C84 /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA671D82AD617E400872C84 /* OpenAI.swift */; };
+		5BA671DB2AD6184D00872C84 /* OpenAIChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA671DA2AD6184D00872C84 /* OpenAIChat.swift */; };
+		5BA671DD2AD6D47100872C84 /* ChatCompletionResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BA671DC2AD6D47100872C84 /* ChatCompletionResponse.json */; };
+		5BA671E02AD6D78500872C84 /* ChatCompletionResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA671DF2AD6D78500872C84 /* ChatCompletionResponseTests.swift */; };
 		5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */; };
 		5BA8F11A2A81744A00C093C8 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1192A81744A00C093C8 /* KeyStore.swift */; };
 		5BA8F11F2A817FAB00C093C8 /* ExpertSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */; };
@@ -111,7 +113,6 @@
 		5B58A1AC2A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDExpert+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5B58A1BC2A867BEC0008C270 /* CDTextChunk+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTextChunk+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5B58A1BD2A867BEC0008C270 /* CDTextChunk+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTextChunk+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5B5993102A8680A5009FC4CB /* TextChunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChunkTests.swift; sourceTree = "<group>"; };
 		5B5993122A86D34D009FC4CB /* DocumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentParser.swift; sourceTree = "<group>"; };
 		5B5993142A86F7D9009FC4CB /* DocumentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentList.swift; sourceTree = "<group>"; };
 		5B5993162A89B158009FC4CB /* DocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDecoder.swift; sourceTree = "<group>"; };
@@ -135,6 +136,11 @@
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
 		5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
 		5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocxDecoder.swift; sourceTree = "<group>"; };
+		5BA671D82AD617E400872C84 /* OpenAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
+		5BA671DA2AD6184D00872C84 /* OpenAIChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChat.swift; sourceTree = "<group>"; };
+		5BA671DC2AD6D47100872C84 /* ChatCompletionResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ChatCompletionResponse.json; sourceTree = "<group>"; };
+		5BA671DE2AD6D56600872C84 /* CleverGrove.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CleverGrove.xctestplan; sourceTree = "<group>"; };
+		5BA671DF2AD6D78500872C84 /* ChatCompletionResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCompletionResponseTests.swift; sourceTree = "<group>"; };
 		5BA8F1172A81714500C093C8 /* OpenAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAI-Info.plist"; sourceTree = "<group>"; };
 		5BA8F1192A81744A00C093C8 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
 		5BA8F11E2A817FAB00C093C8 /* ExpertSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertSummary.swift; sourceTree = "<group>"; };
@@ -158,7 +164,6 @@
 				5BEB691B2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift in Frameworks */,
 				5B9BD5542A93B5720098C1B2 /* XMLCoder in Frameworks */,
 				5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */,
-				5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +257,7 @@
 				5B58A1B12A86791E0008C270 /* Document */,
 				5BA8F11D2A817F8D00C093C8 /* Chat */,
 				5BA8F12F2A81B40800C093C8 /* AI */,
+				5BA671D72AD60E3200872C84 /* OpenAIAPI */,
 				5B58A1472A8437380008C270 /* Core Data */,
 				5B94512E2A8083F100E30E9E /* Preview Content */,
 				5B58A1452A8424150008C270 /* PreviewSamples.swift */,
@@ -274,9 +280,11 @@
 		5B9451382A8083F100E30E9E /* CleverGroveTests */ = {
 			isa = PBXGroup;
 			children = (
+				5BA671DE2AD6D56600872C84 /* CleverGrove.xctestplan */,
 				5B9451392A8083F100E30E9E /* EmbeddingTests.swift */,
-				5B5993102A8680A5009FC4CB /* TextChunkTests.swift */,
+				5BA671DF2AD6D78500872C84 /* ChatCompletionResponseTests.swift */,
 				5BA8F1362A83095700C093C8 /* EmbeddingResponse.json */,
+				5BA671DC2AD6D47100872C84 /* ChatCompletionResponse.json */,
 			);
 			path = CleverGroveTests;
 			sourceTree = "<group>";
@@ -299,6 +307,18 @@
 				5B837FD52A9EB4BA00780AE5 /* ShareSheet.swift */,
 			);
 			path = "Deprecated Files";
+			sourceTree = "<group>";
+		};
+		5BA671D72AD60E3200872C84 /* OpenAIAPI */ = {
+			isa = PBXGroup;
+			children = (
+				5BA671D82AD617E400872C84 /* OpenAI.swift */,
+				5BA671DA2AD6184D00872C84 /* OpenAIChat.swift */,
+				5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */,
+				5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */,
+				5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */,
+			);
+			path = OpenAIAPI;
 			sourceTree = "<group>";
 		};
 		5BA8F11B2A817BA800C093C8 /* keys */ = {
@@ -335,11 +355,8 @@
 			isa = PBXGroup;
 			children = (
 				5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */,
-				5BA8F1302A82D40D00C093C8 /* OpenAIEmbeddings.swift */,
-				5BA8F1382A831F2F00C093C8 /* OpenAINetwork.swift */,
 				5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */,
 				5B3C07FE2A97CAC0009DEA7F /* CommunicationStyle.swift */,
-				5BA8F1322A82DE6200C093C8 /* AI-Extensions.swift */,
 				5B6DBFD82AAA1CA5001451EB /* AILogger.swift */,
 			);
 			path = AI;
@@ -375,7 +392,6 @@
 			);
 			name = CleverGrove;
 			packageProductDependencies = (
-				5B94515D2A80852800E30E9E /* OpenAIKit */,
 				5B9BD54E2A93A0B70098C1B2 /* Zip */,
 				5B9BD5532A93B5720098C1B2 /* XMLCoder */,
 				5BEB691A2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift */,
@@ -453,7 +469,6 @@
 			);
 			mainGroup = 5B94511B2A8083F000E30E9E;
 			packageReferences = (
-				5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */,
 				5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */,
 				5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */,
 				5BEB69192AAFCA5C0031AB7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -486,6 +501,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA671DD2AD6D47100872C84 /* ChatCompletionResponse.json in Resources */,
 				5BA8F1372A83095700C093C8 /* EmbeddingResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,6 +520,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA671D92AD617E400872C84 /* OpenAI.swift in Sources */,
 				5B5993192A8A7AD6009FC4CB /* ChatViewHeader.swift in Sources */,
 				5B58A1B02A85E6FD0008C270 /* CDExpert+CoreDataProperties.swift in Sources */,
 				5B5993152A86F7D9009FC4CB /* DocumentList.swift in Sources */,
@@ -542,6 +559,7 @@
 				5B58A1402A8402940008C270 /* DocumentCapsule.swift in Sources */,
 				5B3C07F82A954472009DEA7F /* DocumentCoordinator.swift in Sources */,
 				5B58A1AE2A85E6FD0008C270 /* CDDocument+CoreDataProperties.swift in Sources */,
+				5BA671DB2AD6184D00872C84 /* OpenAIChat.swift in Sources */,
 				5BA8F1252A8190F800C093C8 /* ChatBubble.swift in Sources */,
 				5B3C07FF2A97CAC0009DEA7F /* CommunicationStyle.swift in Sources */,
 				5B58A1AD2A85E6FD0008C270 /* CDDocument+CoreDataClass.swift in Sources */,
@@ -557,7 +575,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B5993112A8680A5009FC4CB /* TextChunkTests.swift in Sources */,
+				5BA671E02AD6D78500872C84 /* ChatCompletionResponseTests.swift in Sources */,
 				5B94513A2A8083F100E30E9E /* EmbeddingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -912,14 +930,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/FuturraGroup/OpenAI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marmelroy/Zip";
@@ -947,11 +957,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5B94515D2A80852800E30E9E /* OpenAIKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */;
-			productName = OpenAIKit;
-		};
 		5B9BD54E2A93A0B70098C1B2 /* Zip */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */;

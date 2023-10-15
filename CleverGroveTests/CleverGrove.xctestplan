@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "49858EAB-E79C-4BD7-B896-7A1A239CAB1F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-FIRAnalyticsDebugEnabled",
+        "enabled" : false
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CleverGrove.xcodeproj",
+      "identifier" : "5B9451232A8083F000E30E9E",
+      "name" : "CleverGrove"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CleverGrove.xcodeproj",
+        "identifier" : "5B9451342A8083F100E30E9E",
+        "name" : "CleverGroveTests"
+      }
+    }
+  ],
+  "version" : 1
+}
