@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import OpenAIKit
 import SwiftUI
 import CoreData
 

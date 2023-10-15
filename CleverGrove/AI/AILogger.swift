@@ -7,7 +7,6 @@
 
 import Foundation
 import OSLog
-import OpenAIKit
 import Firebase
 
 enum AnalyticsEvent: String {

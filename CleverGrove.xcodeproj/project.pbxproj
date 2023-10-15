@@ -47,7 +47,6 @@
 		5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */; };
 		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
-		5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B94515D2A80852800E30E9E /* OpenAIKit */; };
 		5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */; };
 		5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 5B9BD54E2A93A0B70098C1B2 /* Zip */; };
 		5B9BD5512A93B5260098C1B2 /* DocxDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */; };
@@ -165,7 +164,6 @@
 				5BEB691B2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift in Frameworks */,
 				5B9BD5542A93B5720098C1B2 /* XMLCoder in Frameworks */,
 				5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */,
-				5B94515E2A80852800E30E9E /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +392,6 @@
 			);
 			name = CleverGrove;
 			packageProductDependencies = (
-				5B94515D2A80852800E30E9E /* OpenAIKit */,
 				5B9BD54E2A93A0B70098C1B2 /* Zip */,
 				5B9BD5532A93B5720098C1B2 /* XMLCoder */,
 				5BEB691A2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift */,
@@ -472,7 +469,6 @@
 			);
 			mainGroup = 5B94511B2A8083F000E30E9E;
 			packageReferences = (
-				5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */,
 				5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */,
 				5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */,
 				5BEB69192AAFCA5C0031AB7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -934,14 +930,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/FuturraGroup/OpenAI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marmelroy/Zip";
@@ -969,11 +957,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5B94515D2A80852800E30E9E /* OpenAIKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5B94515C2A80852800E30E9E /* XCRemoteSwiftPackageReference "OpenAI" */;
-			productName = OpenAIKit;
-		};
 		5B9BD54E2A93A0B70098C1B2 /* Zip */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */;

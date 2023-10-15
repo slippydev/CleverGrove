@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import OpenAIKit
 import SwiftUI
 
 struct EmbeddingsRequest: Codable {
