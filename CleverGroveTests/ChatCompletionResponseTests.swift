@@ -8,31 +8,10 @@
 import XCTest
 @testable import CleverGrove
 
-/*
-{
-    "choices": [
-        {
-            "finish_reason": "length",
-            "index": 0,
-            "logprobs": null,
-            "text": "Let Your Sweet Tooth Run Wild at Our Creamy Ice Cream Shack"
-        }
-    ],
-    "created": 1683130927,
-    "id": "cmpl-7C9Wxi9Du4j1lQjdjhxBlO22M61LD",
-    "model": "gpt-3.5-turbo-instruct",
-    "object": "text_completion",
-    "usage": {
-        "completion_tokens": 16,
-        "prompt_tokens": 10,
-        "total_tokens": 26
-    }
-}
-*/
 final class ChatCompletionResponseTests: XCTestCase {
 
     func testDecodeChatCompletionResponse() throws {
-        // Read in a json file represeting Chat Completions API response from https://platform.openai.com/docs/guides/gpt/completions-api
+        // Read in a json file represeting Chat Completions API response from https://platform.openai.com/docs/guides/gpt/chat-completions-api
         // Decode the json into a valid ChatCompletionResponse object
         
         let url = Bundle(for: Self.self).url(forResource: "ChatCompletionResponse", withExtension: "json")
@@ -41,17 +20,16 @@ final class ChatCompletionResponseTests: XCTestCase {
             XCTAssertFalse(false)
             return
         }
-        XCTAssertEqual(response.model, "gpt-3.5-turbo-instruct")
-        XCTAssertEqual(response.created, 1683130927)
-        XCTAssertEqual(response.id, "cmpl-7C9Wxi9Du4j1lQjdjhxBlO22M61LD")
-        XCTAssertEqual(response.object, "text_completion")
-        XCTAssertEqual(response.usage?.completionTokens, 16)
-        XCTAssertEqual(response.usage?.promptTokens, 10)
-        XCTAssertEqual(response.usage?.totalTokens, 26)
-        XCTAssertEqual(response.choices.first?.finishReason, "length")
+        XCTAssertEqual(response.model, "gpt-3.5-turbo-0613")
+        XCTAssertEqual(response.created, 1677664795)
+        XCTAssertEqual(response.id, "chatcmpl-7QyqpwdfhqwajicIEznoc6Q47XAyW")
+        XCTAssertEqual(response.object, "chat.completion")
+        XCTAssertEqual(response.usage?.completionTokens, 17)
+        XCTAssertEqual(response.usage?.promptTokens, 57)
+        XCTAssertEqual(response.usage?.totalTokens, 74)
+        XCTAssertEqual(response.choices.first?.finishReason, "stop")
         XCTAssertEqual(response.choices.first?.index, 0)
-        XCTAssertEqual(response.choices.first?.logprobs, nil)
-        XCTAssertEqual(response.choices.first?.text, "Let Your Sweet Tooth Run Wild at Our Creamy Ice Cream Shack")
+        XCTAssertEqual(response.message?.content, "The 2020 World Series was played in Texas at Globe Life Field in Arlington.")
     }
 
 }
