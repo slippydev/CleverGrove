@@ -9,31 +9,80 @@ import Foundation
 import SwiftUI
 import CoreData
 
+/**
+ The coordinator for handling interactions with the OpenAI Language Model (LLM).
+ */
 class OpenAICoordinator {
+    /// The shared instance of the OpenAICoordinator.
     static let shared = OpenAICoordinator()
+    
+    /// The OpenAI instance responsible for making API calls.
     var openAI: OpenAI
+    
+    /// The builder for creating prompts for chat completions.
     let promptBuilder = PromptBuilder()
-    let aiLogger = AILogger()
+    
+    /// The logger for capturing AI-related logs.
+    let aiLogger = CGLogger()
+    
+    /// The network manager for handling HTTP requests.
+    let network = HTTPNetwork()
+    
+    /// The threshold for text relevancy used in filtering text chunks.
     let relevancyThreshold = 0.70 // any text chunks with less relevancy than this compared to the query are disqualified
     
+    /**
+     Initializes the OpenAICoordinator and its dependencies.
+     */
     private init() {
-        openAI = OpenAI(openAIKey: KeyStore.key(from: .openAI).api_key)
+        openAI = OpenAI(openAIKey: KeyStore.key(from: .openAI).api_key, network: network, logger: aiLogger)
     }
     
+    /**
+     Retrieves text embeddings for a given text asynchronously.
+     
+     - Parameters:
+     - text: The input text.
+     
+     - Throws: An error if there is an issue with the API request.
+     
+     - Returns: The response containing text embeddings.
+     */
     func getEmbeddings(for text: String) async throws -> EmbeddingsResponse? {
         return try await openAI.getEmbeddings(input: text)
     }
     
+    /**
+     Retrieves text embeddings for an array of text chunks asynchronously.
+     
+     - Parameters:
+     - chunks: An array of text chunks.
+     
+     - Throws: An error if there is an issue with the API request.
+     
+     - Returns: An array of text embeddings.
+     */
     func getEmbeddings(for chunks: [String]) async throws -> [[Double]] {
         let result: [Int: [Double]] = try await openAI.getEmbeddings(input: chunks)
         var embeddings = [[Double]]()
         for i in 0..<result.count {
-            guard let embedding = result[i] else { throw OpenAIError.jsonDecodingError }
+            guard let embedding = result[i] else { throw HTTPError.jsonDecodingError }
             embeddings.append(embedding)
         }
         return embeddings
     }
     
+    /**
+     Asks a question to the language model with context and chat history.
+     
+     - Parameters:
+     - question: The user's question.
+     - expert: The expert to whom the question is directed.
+     
+     - Throws: An error if there is an issue with the chat completion.
+     
+     - Returns: A tuple containing the response and relevant text chunks.
+     */
     func ask(question: String, expert: CDExpert) async throws -> (String, [CDTextChunk]) {
         // Find the most relevant text chunks from documents attached to this expert
         var relevantChunks = try await nearest(query: question, expert: expert, relevancyThreshold: relevancyThreshold)
@@ -69,6 +118,19 @@ class OpenAICoordinator {
         return ("Sorry, I am having a problem answering this question", relevantChunks)
     }
     
+    /**
+     Sends a chat message and context to OpenAI for chat completion.
+     
+     - Parameters:
+     - question: The user's question.
+     - relevantChunks: The relevant text chunks.
+     - expert: The expert to whom the question is directed.
+     - chatHistoryCount: The count of chat history to include.
+     
+     - Throws: An error if there is an issue with the chat completion.
+     
+     - Returns: The response from OpenAI.
+     */
     func sendChat(question: String, relevantChunks: [CDTextChunk], expert: CDExpert, chatHistoryCount: Int) async throws -> String {
         // Build up the context for the GPT to refer to including relevant text chunks and past conversation.
         let context = promptBuilder.context(relevantChunks: relevantChunks, expert: expert, chatHistoryCount: chatHistoryCount)
@@ -84,12 +146,21 @@ class OpenAICoordinator {
                                                      presencePenalty: 2.0)
         let answer = result.message?.content ?? ""
         let tokenUsage = result.usage?.totalTokens ?? 0
-        AILogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
+        CGLogger().log(.chatExchange, params: [AnalyticsParams.tokenCount.rawValue: tokenUsage])
         
         return answer
     }
     
-    
+    /**
+     Generates an introduction for the expert if they have no chat history.
+     
+     - Parameters:
+     - expert: The expert for whom to generate the introduction.
+     
+     - Throws: An error if there is an issue with the chat completion.
+     
+     - Returns: The introduction message.
+     */
     func introduction(of expert: CDExpert) async throws -> String? {
         guard let exchanges = expert.chatExchanges, exchanges.count == 0 else { return nil }
         
@@ -108,6 +179,16 @@ class OpenAICoordinator {
         return introduction
     }
     
+    /**
+     Extracts document expertise from text chunks.
+     
+     - Parameters:
+     - textChunks: The text chunks from which to extract expertise.
+     
+     - Throws: An error if there is an issue with the chat completion.
+     
+     - Returns: A tuple containing the document title and expertise.
+     */
     func extractExpertise(from textChunks: [CDTextChunk]) async throws -> (String?, String?) {
         struct ExpertiseJSON: Codable {
             public let title: String
@@ -131,6 +212,20 @@ class OpenAICoordinator {
         return (jsonObject.title, jsonObject.expertise)
     }
     
+    /**
+     Returns a list of relevant text chunks based on their relatedness to a query.
+     
+     - Parameters:
+     - query: The query for finding relevant text chunks.
+     - expert: The expert containing text chunks to search.
+     - max: The maximum number of relevant text chunks to return.
+     - relevancyThreshold: The relevancy threshold for filtering text chunks.
+     - usePastQueries: A flag indicating whether to use past queries in the query embedding.
+     
+     - Throws: An error if there is an issue with processing the request.
+     
+     - Returns: An array of relevant CDTextChunk objects.
+     */
     private func nearest(query: String, expert: CDExpert, max: Int = 4, relevancyThreshold: Double, usePastQueries: Bool = false) async throws -> [CDTextChunk] {
         let textChunks = expert.textChunksAsArray
         var queryEmbedding: [Double]
@@ -145,6 +240,16 @@ class OpenAICoordinator {
         return relevantChunks
     }
     
+    /**
+     Filters and selects the most relevant text chunks based on a relevancy threshold.
+     
+     - Parameters:
+     - textChunkTuples: An array of tuples containing text chunks and their relevancy scores.
+     - max: The maximum number of relevant text chunks to return.
+     - relevancyThreshold: The relevancy threshold for filtering text chunks.
+     
+     - Returns: An array of the most relevant CDTextChunk objects.
+     */
     private func filterRelevantTextChunks(textChunkTuples: [(CDTextChunk, Double)], max: Int, relevancyThreshold: Double) -> [CDTextChunk] {
         let result = textChunkTuples
             .filter { $0.1 >= relevancyThreshold }
@@ -153,6 +258,15 @@ class OpenAICoordinator {
         return Array(result)
     }
     
+    /**
+     Ranks text chunks based on their relatedness to a query.
+     
+     - Parameters:
+     - queryEmbedding: The embedding of the query.
+     - textChunks: An array of text chunks.
+     
+     - Returns: An array of tuples containing text chunks and their relatedness scores.
+     */
     private func textChunksRankedByRelatedness(queryEmbedding: [Double], textChunks: [CDTextChunk]) async -> [(CDTextChunk, Double)] {
         var result: [(CDTextChunk, Double)] = []
         for chunk in textChunks {
@@ -165,6 +279,15 @@ class OpenAICoordinator {
         return result
     }
     
+    /**
+     Computes the cosine similarity between two vectors.
+     
+     - Parameters:
+     - vector1: The first vector.
+     - vector2: The second vector.
+     
+     - Returns: The cosine similarity between the two vectors.
+     */
     private func cosineSimilarity(_ vector1: [Double], _ vector2: [Double]) -> Double {
         assert(vector1.count == vector2.count, "Vectors must have the same length.")
         

@@ -9,7 +9,9 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Zip
 
-
+/**
+ A SwiftUI wrapper for UIDocumentPickerViewController.
+ */
 struct FilePicker: UIViewControllerRepresentable {
     
     @Binding var fileData: Data?
@@ -19,6 +21,14 @@ struct FilePicker: UIViewControllerRepresentable {
     private let fileReader = FileReader()
     private let contentTypes:[UTType] = [.folder, .text, .pdf, .docx]
     
+    /**
+     Initializes the FilePicker.
+     
+     - Parameters:
+     - fileData: A binding to the Data representing the selected file's content.
+     - fileURL: A binding to the URL of the selected file.
+     - documentType: A binding to the UTType representing the type of the selected document.
+     */
     init(fileData: Binding<Data?>, fileURL: Binding<URL?>, documentType: Binding<UTType?>) {
         _fileData = fileData
         _fileURL = fileURL
@@ -42,14 +52,33 @@ struct FilePicker: UIViewControllerRepresentable {
         }
     }
         
+    /**
+     Creates the UIDocumentPickerViewController.
+     
+     - Parameter context: The context provided by SwiftUI.
+     
+     - Returns: The configured UIDocumentPickerViewController.
+     */
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: contentTypes)
         documentPicker.delegate = context.coordinator
         return documentPicker
     }
     
+    /**
+     Updates the UIDocumentPickerViewController.
+     
+     - Parameters:
+     - uiViewController: The UIDocumentPickerViewController to update.
+     - context: The context provided by SwiftUI.
+     */
     func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
     
+    /**
+     Creates a Coordinator for handling document picker events.
+     
+     - Returns: The created Coordinator.
+     */
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }

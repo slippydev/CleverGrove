@@ -26,7 +26,7 @@ struct CleverGroveApp: App {
             ExpertListView(externalFileURL: $url)
                 .environment(\.managedObjectContext, DataController.shared.container.viewContext)
                 .onOpenURL { openedURL in
-                    AILogger().log(.openURL)
+                    CGLogger().log(.openURL)
                     url = openedURL
                 }
         }

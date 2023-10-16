@@ -9,6 +9,9 @@ import SwiftUI
 
 // NO LONGER BEING USED AS EXPERT SHARING FEATURE HAS BEEN REMOVED. LEAVING IN FOR REFERENCE
 
+/**
+ A SwiftUI wrapper for UIKit UIActivityViewController
+ */
 struct ShareSheet: UIViewControllerRepresentable {
     
     typealias CompletionHandler = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void

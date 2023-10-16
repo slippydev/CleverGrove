@@ -52,6 +52,9 @@ struct DocXTextRun: Codable {
     }
 }
 
+/**
+ A document decoder for PDF documents.
+ */
 struct DocxDecoder: DocumentDecoder {
     func decode(from data: Data, chunkSize: Int) throws -> [String] {
         print(String(data: data, encoding: .utf8) ?? "")

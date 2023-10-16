@@ -38,11 +38,6 @@ struct DocumentCapsule: View {
                     ProgressView("Training…  \(Int(progress * 100))%", value: progress, total: 1.0)
                         .foregroundColor(Color.blue)
                 }
-//                else {
-//                    Text(document.status ?? "")
-//                        .foregroundColor((DocumentStatus(rawValue: document.status ?? "") == .training) ? Color.red : Color.primary)
-//                        .opacity((DocumentStatus(rawValue: document.status ?? "") == .untrained) ? 0 : 1.0) // hide if untrained
-//                }
             }
         }
         .padding(.horizontal)

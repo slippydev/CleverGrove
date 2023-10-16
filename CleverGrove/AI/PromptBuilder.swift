@@ -7,8 +7,19 @@
 
 import Foundation
 
+/// Utility class for building prompts for OpenAI chat completions.
 struct PromptBuilder {
     
+    /**
+     Create a context for chat completions with relevant messages.
+     
+     - Parameters:
+     - relevantChunks: An array of relevant text chunks.
+     - expert: An instance of CDExpert representing the expert.
+     - chatHistoryCount: The number of chat history messages to include.
+     
+     - Returns: An array of AIMessage objects representing the context.
+     */
     func context(relevantChunks: [CDTextChunk], expert: CDExpert, chatHistoryCount: Int) -> [AIMessage] {
         var aiMessages = [AIMessage]()
         aiMessages.append(instructions(expert: expert, relevantChunks: relevantChunks))
@@ -18,6 +29,17 @@ struct PromptBuilder {
         return aiMessages
     }
     
+    /**
+     Create an introduction message.
+     
+     - Parameters:
+        - name: The expert's name.
+        - expertise: The area of expertise.
+        - style: The communication style.
+        - training: An array of training documents.
+     
+     - Returns: An introduction message as a string.
+     */
     func introduction(name: String, expertise: String, style: CommunicationStyle, training: [String]) -> String {
         var intro: String
         let hasTraining = training.count > 0
@@ -32,7 +54,16 @@ struct PromptBuilder {
         }
         return intro
     }
-    
+ 
+    /**
+     Create instructions for the expert.
+     
+     - Parameters:
+     - expert: An instance of CDExpert representing the expert.
+     - relevantChunks: An array of relevant text chunks.
+     
+     - Returns: An AIMessage with instructions for the expert.
+     */
     private func instructions(expert: CDExpert, relevantChunks: [CDTextChunk]) -> AIMessage {
         
         let description = "Your name is \(expert.name ?? "") and you are an expert in this topic: \(expert.expertise ?? "Use the information provided below").\n"
@@ -48,6 +79,15 @@ struct PromptBuilder {
         return AIMessage(role: .system, content:message)
     }
     
+    /**
+     Retrieve chat history messages.
+     
+     - Parameters:
+     - expert: An instance of CDExpert representing the expert.
+     - messageCount: The number of chat history messages to retrieve.
+     
+     - Returns: An array of AIMessage objects representing chat history.
+     */
     private func chatHistory(expert: CDExpert, messageCount: Int = 3) -> [AIMessage] {
         let exchanges = expert.chatExchanges(in: 0..<messageCount)
         var messages = [AIMessage]()
@@ -61,7 +101,14 @@ struct PromptBuilder {
         }
         return messages
     }
-    
+
+    /**
+     Create a message to request expertise information from a document.
+     
+     - Parameter referenceText: The reference text for the request.
+     
+     - Returns: An AIMessage with the expertise request.
+     */
     func documentExpertiseArea(referenceText: String) -> AIMessage {
         let instructions =
         """

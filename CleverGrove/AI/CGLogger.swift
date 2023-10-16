@@ -1,5 +1,5 @@
 //
-//  AILogger.swift
+//  CGLogger.swift
 //  CleverGrove
 //
 //  Created by Derek Gour on 2023-09-07.
@@ -12,7 +12,6 @@ import Firebase
 enum AnalyticsEvent: String {
     case showNewExpert = "show_new_expert"
     case openURL = "open_url"
-    case trainExpert = "train_expert"
     case chatExchange = "chat_exchange"
 }
 
@@ -22,7 +21,11 @@ enum AnalyticsParams: String {
     case tokenCount = "token_count"
 }
 
-struct AILogger {
+protocol Loggable {
+    func log(_ event: String, params: [String: Any]?)
+}
+
+struct CGLogger: Loggable {
     
     func logChat(context: [AIMessage], question: String) {
         for section in context {
@@ -54,6 +57,10 @@ struct AILogger {
     
     func log(_ event: AnalyticsEvent, params: [String: Any]? = nil) {
         Analytics.logEvent(event.rawValue, parameters: params)
+    }
+    
+    func log(_ event: String, params: [String: Any]? = nil) {
+        Analytics.logEvent(event, parameters: params)
     }
     
 }

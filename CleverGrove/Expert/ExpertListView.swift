@@ -47,7 +47,7 @@ struct ExpertListView: View {
                     expertToEdit.expert = CDExpert.expert(context: DataController.shared.managedObjectContext,
                                                           name: CDExpert.randomName())
                     isShowingEditSheet = true
-                    AILogger().log(.showNewExpert)
+                    CGLogger().log(.showNewExpert)
                 } label: {
                     Text("Train a new expert")
                         .foregroundColor(.blue)
