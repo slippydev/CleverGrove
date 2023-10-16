@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import SwiftUI
 
+/// Struct representing a request for text embeddings.
 struct EmbeddingsRequest: Codable {
     public let model: String
     public let input: String
 }
 
+/// Struct representing a response from text embeddings.
 struct EmbeddingsResponse: Codable, DecodableResponse {
     struct EmbeddingsData: Codable {
         public let object: String
@@ -47,6 +48,19 @@ struct EmbeddingsResponse: Codable, DecodableResponse {
 
 extension OpenAI {
     
+    /**
+     Get Text Embeddings for a Single Input
+     Sends a request to OpenAI's API to obtain text embeddings for a single input string.
+     
+     - Parameters:
+     - input: The text input for which embeddings are requested.
+     
+     - Returns: An `EmbeddingsResponse` containing the embedded data.
+     
+     - Throws: An error if the request fails or if the response cannot be decoded.
+     
+     - SeeAlso: `getEmbeddings(input chunks:)` for batch processing.
+     */
     func getEmbeddings(input: String) async throws -> EmbeddingsResponse
     {
         let jsonEncoder = JSONEncoder.openAIEncoder
@@ -59,6 +73,22 @@ extension OpenAI {
         return result
     }
     
+    /**
+     Get Text Embeddings for Multiple Input Chunks
+     
+     Sends a request to OpenAI's API to obtain text embeddings for multiple input chunks and returns a dictionary of embeddings.
+     
+     - Parameters:
+     - chunks: An array of input text chunks for which embeddings are requested.
+     
+     - Returns: A dictionary where the key is the index of the chunk and the value is the corresponding embedding.
+     
+     - Throws: An error if the request for any chunk fails or if the responses cannot be decoded.
+     
+     - Note: This function sends requests in parallel for each chunk to improve efficiency.
+     
+     - SeeAlso: `getEmbeddings(input:)` for a single input.
+     */
     func getEmbeddings(input chunks: [String]) async throws -> [Int: [Double]] {
         var embeddings = [Int: [Double]]()
         var tokenUsage: Int = 0

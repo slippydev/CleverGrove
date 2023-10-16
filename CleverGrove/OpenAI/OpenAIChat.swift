@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Struct representing a message used in chat completions.
 public struct AIMessage: Codable {
     enum AIMessageRole: String, Codable {
         case system
@@ -17,12 +18,17 @@ public struct AIMessage: Codable {
     let role: AIMessageRole
     let content: String
 
+    /// Initializes an AIMessage.
+    /// - Parameters:
+    ///   - role: The role of the message (system, user, or assistant).
+    ///   - content: The content of the message.
     init(role: AIMessageRole, content: String) {
         self.role = role
         self.content = content
     }
 }
 
+/// Struct representing a response from chat completions.
 struct ChatCompletionResponse: Codable, DecodableResponse {
     public struct Choice: Codable {
         public var text: String?
@@ -54,6 +60,7 @@ struct ChatCompletionResponse: Codable, DecodableResponse {
     var logprobs: Logprobs?
     var message: AIMessage? { choices.first?.message }
     
+    /// Decodes response data into a ChatCompletionResponse object.
     static func decode(data: Data) -> Codable? {
         let decoder = JSONDecoder.openAIDecoder
         let response = try? decoder.decode(ChatCompletionResponse.self, from: data)
@@ -61,6 +68,7 @@ struct ChatCompletionResponse: Codable, DecodableResponse {
     }
 }
 
+/// Struct representing a request for chat completions.
 public struct ChatCompletionsRequest: Codable {
     let model: String
     let messages: [AIMessage]
@@ -77,21 +85,23 @@ public struct ChatCompletionsRequest: Codable {
 }
 
 extension OpenAI {
-    /// Creates a completion for the chat message
-    ///
-    /// - Parameters:
-    ///   - newMessage: The main input is the `newMessage` parameter. Where each object has a `role` (either `system`, `user`, or `assistant`) and `content` (the content of the message).
-    ///   - previousMessages: Previous messages, an optional parameter, the assistant will communicate in the context of these messages. Must be an array of `AIMessage` objects.
-    ///   - model: ID of the model to use.
-    ///   - maxTokens: The maximum number of tokens to generate in the completion.
-    ///   - temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `topP` but not both.
-    ///   - n: How many completions to generate for each prompt.
-    ///   - topP: An alternative to sampling with `temperature`, called nucleus sampling, where the model considers the results of the tokens with `topP` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both.
-    ///   - frequencyPenalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
-    ///   - presencePenalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
-    ///   - logprobs: Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs` is 5, the API will return a list of the 5 most likely tokens. The API will always return the `logprob` of the sampled token, so there may be up to `logprobs+1` elements in the response. The maximum value for `logprobs` is 5.
-    ///   - stop: Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
-    ///   - user: A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+
+    /**
+     Sends a chat completion request to the OpenAI API.
+     - Parameters:
+     - newMessage: The new message to be added to the conversation.
+     - previousMessages: An array of previous messages in the conversation.
+     - maxTokens: The maximum number of tokens in the response.
+     - temperature: A value controlling randomness (default is 1).
+     - n: Number of completions to generate.
+     - topP: An alternative to temperature for controlling randomness.
+     - frequencyPenalty: A penalty to discourage overly repetitive responses.
+     - presencePenalty: A penalty to discourage the use of certain tokens.
+     - logprobs: Include log probabilities of each token.
+     - stop: An array of strings at which the response should stop.
+     - user: An optional user identifier.
+     - Returns: A ChatCompletionResponse object.
+     */
     func sendChatCompletion(newMessage: AIMessage,
                             previousMessages: [AIMessage] = [],
                             maxTokens: Int?,
@@ -104,7 +114,6 @@ extension OpenAI {
                             stop: [String]? = nil,
                             user: String? = nil) async throws -> ChatCompletionResponse
     {
-        
         var messages = previousMessages
         messages.append(newMessage)
 

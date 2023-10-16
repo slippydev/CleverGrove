@@ -12,6 +12,20 @@ import UniformTypeIdentifiers
 // THIS CODE IS NO LONGER BEING USED SINCE REMOVING EXPERT SHARING CODE.
 // LEAVING IT HERE FOR FUTURE REFERENCE
 
+
+/**
+ A structure representing a JSON object for text chunks.
+ 
+ - Properties:
+ - id: The unique identifier for the text chunk.
+ - embedding: The embedding data associated with the text chunk.
+ - text: The text content of the chunk.
+ - index: The index of the text chunk.
+ 
+ - Initializer:
+ - Parameters:
+ - textChunk: The `CDTextChunk` object from which to create the JSON representation.
+ */
 struct TextChunkJSON: Codable {
     let id: UUID
     let embedding: String?
@@ -26,6 +40,22 @@ struct TextChunkJSON: Codable {
     }
 }
 
+/**
+ A structure representing a JSON object for a document.
+ 
+ - Properties:
+ - id: The unique identifier for the document.
+ - fileName: The name of the file.
+ - filetype: The file type.
+ - path: The path of the document.
+ - status: The status of the document.
+ - title: The title of the document.
+ - textChunks: An array of `TextChunkJSON` objects representing text chunks.
+ 
+ - Initializer:
+ - Parameters:
+ - document: The `CDDocument` object from which to create the JSON representation.
+ */
 struct DocumentJSON: Codable {
     let id: UUID
     let fileName: String?
@@ -51,6 +81,22 @@ struct DocumentJSON: Codable {
     }
 }
 
+/**
+ A structure representing a JSON object for an expert.
+ 
+ - Properties:
+ - id: The unique identifier for the expert.
+ - image: The image associated with the expert.
+ - lastUpdated: The date when the expert was last updated.
+ - name: The name of the expert.
+ - personality: The personality of the expert.
+ - expertise: The area of expertise of the expert.
+ - documents: An array of `DocumentJSON` objects representing documents associated with the expert.
+ 
+ - Initializer:
+ - Parameters:
+ - expert: The `CDExpert` object from which to create the JSON representation.
+ */
 struct ExpertJSON: Codable {
     let id: UUID
     let image: String?
@@ -74,12 +120,30 @@ struct ExpertJSON: Codable {
     }
 }
 
-
+/**
+ A structure responsible for exporting an expert to a JSON file.
+ 
+ - Properties:
+ - expert: The expert to export.
+ 
+ - Methods:
+ - export(to:): Exports the expert to a JSON file.
+ */
 struct ExpertExporter {
     static let expertJSONSubpath = "expert.json"
     
     let expert: CDExpert
     
+    /**
+     Exports the expert to a JSON file with the given filename.
+     
+     - Parameters:
+     - filename: The filename for the exported JSON file.
+     
+     - Throws: An error if there is an issue with exporting.
+     
+     - Returns: The URL of the exported JSON file.
+     */
     func export(to filename: String) throws -> URL {
         let data = try encodeToJSON()
         let url = try save(data: data, to: filename)

@@ -8,6 +8,7 @@
 import Foundation
 
 extension URL {
+    /** A shortcut extension to URL type to retrieve the URL for the app's documents directory. */
     static var documents: URL {
         return FileManager
             .default

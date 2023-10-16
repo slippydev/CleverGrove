@@ -15,15 +15,29 @@ extension UTType {
     static let docx = UTType(filenameExtension: "docx")!
 }
 
+/**
+ A utility class for reading and returning data from various file types like DocX and PDF.
+ */
 class FileReader {
     private let docxSubpath = "word/document.xml"
     private var urlToCleanup: URL?
     
+    /**
+     Initializes the FileReader and adds custom file extensions for zipping and unzipping.
+     */
     init() {
         Zip.addCustomFileExtension("docx") // so we can unzip docx files
         Zip.addCustomFileExtension("expert") // sw we can zip and unzip our .expert files
     }
     
+    /**
+     Opens and reads a file at the specified URL.
+     
+     - Parameters:
+     - url: The URL of the file to be read.
+     
+     - Returns: A tuple containing the file's data and its UTType.
+     */
     func openFile(at url: URL) -> (Data?, UTType?) {
         // Start accessing a security-scoped resource.
         // Sometimes this is necessary and sometimes it isn't.

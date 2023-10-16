@@ -8,6 +8,9 @@
 import Foundation
 import UniformTypeIdentifiers
 
+/**
+ A coordinator class responsible for managing the addition of documents to the app for training AI experts.
+ */
 @MainActor
 final class DocumentCoordinator: ObservableObject {
     static let shared = DocumentCoordinator()
@@ -18,6 +21,15 @@ final class DocumentCoordinator: ObservableObject {
     private init() {
     }
     
+    /**
+     Creates a new document with the specified URL and UTType.
+     
+     - Parameters:
+     - url: The URL of the document.
+     - dataType: The UTType representing the document's data type.
+     
+     - Returns: A new CDDocument instance.
+     */
     func newDocument(at url: URL,
                      dataType: UTType) -> CDDocument {
         let document = CDDocument.document(context: dataController.managedObjectContext,
@@ -27,6 +39,17 @@ final class DocumentCoordinator: ObservableObject {
         return document
     }
     
+    /**
+     Adds a document to an expert's training data asynchronously.
+     
+     - Parameters:
+     - url: The URL of the document.
+     - data: The document's data.
+     - expert: The CDExpert to whom the document will be added.
+     - dataType: The UTType representing the document's data type.
+     
+     - Throws: An error if there is an issue during the process.
+     */
     func addDocument(at url: URL,
                      with data: Data,
                      to expert: CDExpert,
@@ -36,6 +59,17 @@ final class DocumentCoordinator: ObservableObject {
         try await addDocument(document, to: expert, data: data, dataType: dataType)
     }
     
+    /**
+     Adds a document to an expert's training data asynchronously.
+     
+     - Parameters:
+     - document: The CDDocument to be added.
+     - expert: The CDExpert to whom the document will be added.
+     - data: The document's data.
+     - dataType: The UTType representing the document's data type.
+     
+     - Throws: An error if there is an issue during the process.
+     */
     func addDocument(_ document: CDDocument, to expert: CDExpert, data: Data, dataType: UTType) async throws {
         expert.addToDocuments(document)
         document.status = DocumentStatus.training.rawValue
@@ -54,6 +88,16 @@ final class DocumentCoordinator: ObservableObject {
         }
     }
     
+    /**
+     Parses a document asynchronously and updates its data.
+     
+     - Parameters:
+     - document: The CDDocument to be parsed.
+     - data: The document's data.
+     - dataType: The UTType representing the document's data type.
+     
+     - Throws: An error if there is an issue during the parsing process.
+     */
     private func parseDocument(_ document: CDDocument, data: Data, dataType: UTType) async throws {
         let jobID = document.id!
         let progressHandler: (Double) -> Void = { progress in

@@ -9,7 +9,18 @@ import Foundation
 import PDFKit
 import UniformTypeIdentifiers
 
+/**
+ An extension of the String type providing a method to split the string into chunks of a specified size.
+ */
 extension String {
+    /**
+     Splits the string into chunks of the specified size.
+     
+     - Parameters:
+     - chunkSize: The size of each chunk.
+     
+     - Returns: An array of string chunks.
+     */
     func splitIntoChunks(ofSize chunkSize: Int) -> [String] {
         var startIndex = self.startIndex
         var chunks: [String] = []
@@ -25,16 +36,54 @@ extension String {
     }
 }
 
+/**
+ A protocol for decoding documents into text chunks.
+ */
 protocol DocumentDecoder {
+    /**
+     Decodes a document from data into text chunks of the specified size.
+     
+     - Parameters:
+     - data: The document data.
+     - chunkSize: The size of each text chunk.
+     
+     - Throws: An error if there is an issue during the decoding process.
+     
+     - Returns: An array of text chunks.
+     */
     func decode(from data: Data, chunkSize: Int) throws -> [String]
 }
 
+/**
+ A struct for decoding documents into text chunks based on the document type.
+ */
 struct DocumentDecode {
+    
+    /**
+     Decodes a document into text chunks based on its type.
+     
+     - Parameters:
+     - data: The document data.
+     - type: The UTType representing the document's data type.
+     - chunkSize: The size of each text chunk.
+     
+     - Throws: An error if there is an issue during the decoding process.
+     
+     - Returns: An array of text chunks.
+     */
     static func decode(data: Data, type: UTType, chunkSize: Int) throws -> [String] {
         guard let decoder = decoder(for: type) else { return [] }
         return try decoder.decode(from: data, chunkSize: chunkSize)
     }
     
+    /**
+     Returns a document decoder based on the document type.
+     
+     - Parameters:
+     - type: The UTType representing the document's data type.
+     
+     - Returns: A document decoder for the specified type.
+     */
     static func decoder(for type: UTType) -> DocumentDecoder? {
         if type.conforms(to: .text) {
             return TextDecoder()
@@ -48,6 +97,9 @@ struct DocumentDecode {
     }
 }
 
+/**
+ A document decoder for text-based documents.
+ */
 struct TextDecoder: DocumentDecoder {
     func decode(from data: Data, chunkSize: Int) throws -> [String] {
         let text = String(decoding: data, as: UTF8.self)
@@ -56,6 +108,9 @@ struct TextDecoder: DocumentDecoder {
     }
 }
 
+/**
+ A document decoder for PDF documents.
+ */
 struct PDFDecoder: DocumentDecoder {
     func decode(from data: Data, chunkSize: Int) throws -> [String] {
         guard let pdf = PDFDocument(data: data) else { throw ParserError.fileTypeError }
