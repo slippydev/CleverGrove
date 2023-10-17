@@ -7,7 +7,6 @@
 
 import Foundation
 import OSLog
-import Firebase
 
 enum AnalyticsEvent: String {
     case showNewExpert = "show_new_expert"
@@ -43,8 +42,8 @@ struct CGLogger: Loggable {
         guard let errorInfo = (error as NSError).userInfo["error"] as? [String:Any] else { return }
         if let code = errorInfo["code"] as? String, let message = errorInfo["message"] as? String {
             Logger().error("\(code) - \(message)")
-            Analytics.logEvent("error", parameters: [AnalyticsParams.code.rawValue: code,
-                                                     AnalyticsParams.message.rawValue: message])
+//            Analytics.logEvent("error", parameters: [AnalyticsParams.code.rawValue: code,
+//                                                     AnalyticsParams.message.rawValue: message])
         }
     }
     
@@ -56,11 +55,11 @@ struct CGLogger: Loggable {
     }
     
     func log(_ event: AnalyticsEvent, params: [String: Any]? = nil) {
-        Analytics.logEvent(event.rawValue, parameters: params)
+//        Analytics.logEvent(event.rawValue, parameters: params)
     }
     
     func log(_ event: String, params: [String: Any]? = nil) {
-        Analytics.logEvent(event, parameters: params)
+//        Analytics.logEvent(event, parameters: params)
     }
     
 }

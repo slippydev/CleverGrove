@@ -44,8 +44,6 @@
 		5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512B2A8083F100E30E9E /* Assets.xcassets */; };
 		5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */; };
 		5B94513A2A8083F100E30E9E /* EmbeddingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451392A8083F100E30E9E /* EmbeddingTests.swift */; };
-		5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */; };
-		5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */; };
 		5B9451592A80848D00E30E9E /* OpenAICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */; };
 		5B9BD54C2A8EC4DE0098C1B2 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */; };
 		5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 5B9BD54E2A93A0B70098C1B2 /* Zip */; };
@@ -67,19 +65,10 @@
 		5BA8F1392A831F2F00C093C8 /* HTTPNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F1382A831F2F00C093C8 /* HTTPNetwork.swift */; };
 		5BA8F13C2A83FEBD00C093C8 /* EditExpertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */; };
 		5BB651C52AA13B1500CD8957 /* Clever Cat.expert in Resources */ = {isa = PBXBuildFile; fileRef = 5BB651C42AA13B1500CD8957 /* Clever Cat.expert */; };
-		5BEB69182AAFC7A40031AB7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BEB69172AAFC7A30031AB7C /* GoogleService-Info.plist */; };
-		5BEB691B2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5BEB691A2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		5B9451362A8083F100E30E9E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5B94511C2A8083F000E30E9E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5B9451232A8083F000E30E9E;
-			remoteInfo = CleverGrove;
-		};
-		5B9451402A8083F100E30E9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5B94511C2A8083F000E30E9E /* Project object */;
 			proxyType = 1;
@@ -130,9 +119,6 @@
 		5B94512F2A8083F100E30E9E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5B9451352A8083F100E30E9E /* CleverGroveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleverGroveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9451392A8083F100E30E9E /* EmbeddingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddingTests.swift; sourceTree = "<group>"; };
-		5B94513F2A8083F100E30E9E /* CleverGroveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleverGroveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITests.swift; sourceTree = "<group>"; };
-		5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleverGroveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B9451552A80848D00E30E9E /* OpenAICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAICoordinator.swift; sourceTree = "<group>"; };
 		5B9BD54B2A8EC4DE0098C1B2 /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
 		5B9BD5502A93B5260098C1B2 /* DocxDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocxDecoder.swift; sourceTree = "<group>"; };
@@ -153,7 +139,6 @@
 		5BA8F1382A831F2F00C093C8 /* HTTPNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPNetwork.swift; sourceTree = "<group>"; };
 		5BA8F13B2A83FEBD00C093C8 /* EditExpertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpertView.swift; sourceTree = "<group>"; };
 		5BB651C42AA13B1500CD8957 /* Clever Cat.expert */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clever Cat.expert"; sourceTree = "<group>"; };
-		5BEB69172AAFC7A30031AB7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,20 +146,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BEB691B2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift in Frameworks */,
 				5B9BD5542A93B5720098C1B2 /* XMLCoder in Frameworks */,
 				5B9BD54F2A93A0B70098C1B2 /* Zip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5B9451322A8083F100E30E9E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5B94513C2A8083F100E30E9E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -238,7 +215,6 @@
 			children = (
 				5B9451262A8083F000E30E9E /* CleverGrove */,
 				5B9451382A8083F100E30E9E /* CleverGroveTests */,
-				5B9451422A8083F100E30E9E /* CleverGroveUITests */,
 				5B9451252A8083F000E30E9E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -248,7 +224,6 @@
 			children = (
 				5B9451242A8083F000E30E9E /* CleverGrove.app */,
 				5B9451352A8083F100E30E9E /* CleverGroveTests.xctest */,
-				5B94513F2A8083F100E30E9E /* CleverGroveUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,7 +233,6 @@
 			children = (
 				5BA671D62AD6025E00872C84 /* Deprecated Files */,
 				5B58A16D2A853B240008C270 /* Info.plist */,
-				5BEB69172AAFC7A30031AB7C /* GoogleService-Info.plist */,
 				5B9451272A8083F000E30E9E /* CleverGroveApp.swift */,
 				5B3C07FB2A966702009DEA7F /* Files */,
 				5BA8F13A2A83FE9800C093C8 /* Expert */,
@@ -296,15 +270,6 @@
 				5BA671DC2AD6D47100872C84 /* ChatCompletionResponse.json */,
 			);
 			path = CleverGroveTests;
-			sourceTree = "<group>";
-		};
-		5B9451422A8083F100E30E9E /* CleverGroveUITests */ = {
-			isa = PBXGroup;
-			children = (
-				5B9451432A8083F100E30E9E /* CleverGroveUITests.swift */,
-				5B9451452A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift */,
-			);
-			path = CleverGroveUITests;
 			sourceTree = "<group>";
 		};
 		5BA671D62AD6025E00872C84 /* Deprecated Files */ = {
@@ -402,7 +367,6 @@
 			packageProductDependencies = (
 				5B9BD54E2A93A0B70098C1B2 /* Zip */,
 				5B9BD5532A93B5720098C1B2 /* XMLCoder */,
-				5BEB691A2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift */,
 			);
 			productName = CleverGrove;
 			productReference = 5B9451242A8083F000E30E9E /* CleverGrove.app */;
@@ -426,24 +390,6 @@
 			productReference = 5B9451352A8083F100E30E9E /* CleverGroveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5B94513E2A8083F100E30E9E /* CleverGroveUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5B94514F2A8083F100E30E9E /* Build configuration list for PBXNativeTarget "CleverGroveUITests" */;
-			buildPhases = (
-				5B94513B2A8083F100E30E9E /* Sources */,
-				5B94513C2A8083F100E30E9E /* Frameworks */,
-				5B94513D2A8083F100E30E9E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5B9451412A8083F100E30E9E /* PBXTargetDependency */,
-			);
-			name = CleverGroveUITests;
-			productName = CleverGroveUITests;
-			productReference = 5B94513F2A8083F100E30E9E /* CleverGroveUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -461,10 +407,6 @@
 						CreatedOnToolsVersion = 14.3.1;
 						TestTargetID = 5B9451232A8083F000E30E9E;
 					};
-					5B94513E2A8083F100E30E9E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = 5B9451232A8083F000E30E9E;
-					};
 				};
 			};
 			buildConfigurationList = 5B94511F2A8083F000E30E9E /* Build configuration list for PBXProject "CleverGrove" */;
@@ -479,7 +421,6 @@
 			packageReferences = (
 				5B9BD54D2A93A0B70098C1B2 /* XCRemoteSwiftPackageReference "Zip" */,
 				5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */,
-				5BEB69192AAFCA5C0031AB7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 5B9451252A8083F000E30E9E /* Products */;
 			projectDirPath = "";
@@ -487,7 +428,6 @@
 			targets = (
 				5B9451232A8083F000E30E9E /* CleverGrove */,
 				5B9451342A8083F100E30E9E /* CleverGroveTests */,
-				5B94513E2A8083F100E30E9E /* CleverGroveUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -499,7 +439,6 @@
 			files = (
 				5BB651C52AA13B1500CD8957 /* Clever Cat.expert in Resources */,
 				5B9451302A8083F100E30E9E /* Preview Assets.xcassets in Resources */,
-				5BEB69182AAFC7A40031AB7C /* GoogleService-Info.plist in Resources */,
 				5BA8F1182A81714500C093C8 /* OpenAI-Info.plist in Resources */,
 				5B94512C2A8083F100E30E9E /* Assets.xcassets in Resources */,
 			);
@@ -511,13 +450,6 @@
 			files = (
 				5BA671DD2AD6D47100872C84 /* ChatCompletionResponse.json in Resources */,
 				5BA8F1372A83095700C093C8 /* EmbeddingResponse.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5B94513D2A8083F100E30E9E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,15 +520,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5B94513B2A8083F100E30E9E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5B9451442A8083F100E30E9E /* CleverGroveUITests.swift in Sources */,
-				5B9451462A8083F100E30E9E /* CleverGroveUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -604,11 +527,6 @@
 			isa = PBXTargetDependency;
 			target = 5B9451232A8083F000E30E9E /* CleverGrove */;
 			targetProxy = 5B9451362A8083F100E30E9E /* PBXContainerItemProxy */;
-		};
-		5B9451412A8083F100E30E9E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5B9451232A8083F000E30E9E /* CleverGrove */;
-			targetProxy = 5B9451402A8083F100E30E9E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -852,50 +770,6 @@
 			};
 			name = Release;
 		};
-		5B9451502A8083F100E30E9E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R78KK4824D;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = GOUR.CleverGroveUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = CleverGrove;
-			};
-			name = Debug;
-		};
-		5B9451512A8083F100E30E9E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R78KK4824D;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = GOUR.CleverGroveUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = CleverGrove;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -926,15 +800,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5B94514F2A8083F100E30E9E /* Build configuration list for PBXNativeTarget "CleverGroveUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5B9451502A8083F100E30E9E /* Debug */,
-				5B9451512A8083F100E30E9E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -954,14 +819,6 @@
 				minimumVersion = 0.17.1;
 			};
 		};
-		5BEB69192AAFCA5C0031AB7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -974,11 +831,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B9BD5522A93B5720098C1B2 /* XCRemoteSwiftPackageReference "XMLCoder" */;
 			productName = XMLCoder;
-		};
-		5BEB691A2AAFCA5C0031AB7C /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5BEB69192AAFCA5C0031AB7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 
