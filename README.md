@@ -20,7 +20,7 @@ CleverGrove is an app for training LLM powered experts using documents. Specific
 #### Training an Expert
 Train an expert on PDF, DocX, or Txt files. Choose files from your iCloud storage, or "share" a document with CleverGrove to either train a new expert or add a document to an existing expert.
 
-![Training an Expert](/app_images/trainExpert.jpeg)
+![Training an Expert](/app_images/trainExpert.png)
 
 You can customize an expert's name, image and personality. The expert's personality will affect how they interact with you. 
 
@@ -51,7 +51,7 @@ You can customize an expert's name, image and personality. The expert's personal
 
 Chat with your expert using a familiar Messages-style interface.
 
-![Chat with an Expert](/app_images/expertChat.jpeg)
+![Chat with an Expert](/app_images/expertChat.png)
 
 ## Installation
 1. Install Xcode
